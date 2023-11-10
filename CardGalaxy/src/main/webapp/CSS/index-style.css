@@ -1,0 +1,100 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("../photos/galaxy-back.jpg");
+    background-repeat: repeat;
+    background-size: 1800px;
+    color: white;
+}
+
+header {
+    background-color: purple;
+    padding: 0;
+    text-align: center;
+}
+
+nav {
+    background-color: purple;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 10px;
+}
+
+nav li {
+    margin: 0 40px;
+    font-family: "Agency FB", serif;
+    font-size: 24px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    padding: 100px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    margin-top: 20px;
+    text-align: center;
+    width: 98%;
+    background-color: steelblue;
+}
+
+footer {
+    background-color: purple;
+    text-align: center;
+    padding: 50px;
+    color: white;
+    margin-top: 20px;
+    font-family: "Agency FB", serif;
+    font-size: 24px;
+}
+
+ #logo {
+     height: 250px;
+     width: 250px;
+ }
+
+ .welcome{
+     font-family: "Agency FB", serif;
+     font-size: 80px;
+ }
+
+ .welcome-animation{
+     width: 350px;
+     height: 350px;
+ }
+
+ .para_index{
+     font-size: 45px;
+     font-family: "Agency FB", serif;
+ }
+
+ .promo-cards{
+     margin-top: 40px;
+ }
+
+ .index-link{
+     color: black;
+ }

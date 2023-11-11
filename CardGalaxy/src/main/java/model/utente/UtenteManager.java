@@ -58,6 +58,8 @@ public class UtenteManager extends Manager
                 set.close();
                 return u;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,6 +85,8 @@ public class UtenteManager extends Manager
                 set.close();
                 return u;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -103,6 +107,8 @@ public class UtenteManager extends Manager
                 ps.executeUpdate();
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -121,6 +127,8 @@ public class UtenteManager extends Manager
                 ps.executeUpdate();
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -131,6 +139,8 @@ public class UtenteManager extends Manager
                 ps.executeUpdate();
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

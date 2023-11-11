@@ -6,9 +6,9 @@ public class Ordine {
     private int codice;
     private double prezzoTotale;
     private Date dataAcquisto;
-    private Utente utente;
+    private int utente;
 
-    public Ordine(int codice, double prezzoTotale, Date dataAcquisto, Utente utente)
+    public Ordine(int codice, double prezzoTotale, Date dataAcquisto, int utente)
     {
         this.codice = codice;
         this.prezzoTotale = prezzoTotale;
@@ -44,11 +44,11 @@ public class Ordine {
         this.dataAcquisto = dataAcquisto;
     }
 
-    public Utente getUtente() {
+    public int getUtente() {
         return utente;
     }
 
-    public void setUtente(Utente utente) {
+    public void setUtente(int utente) {
         this.utente = utente;
     }
 }

@@ -15,7 +15,7 @@ public class Utente
     private  int cap;
     private String citta;
     private String nazione;
-    private java.sql.Date dataNascita;
+    private Date dataNascita;
 
     public Utente(int id, String email, String nome, String cognome, String username, String password, String via, int cap, String citta, String nazione, Date dataNascita) {
         this.id = id;

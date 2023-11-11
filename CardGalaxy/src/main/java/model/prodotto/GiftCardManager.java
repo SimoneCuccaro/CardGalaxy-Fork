@@ -29,6 +29,8 @@ public class GiftCardManager
                 rs.close();
                 return giftCards;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -49,6 +51,8 @@ public class GiftCardManager
                 rs.close();
                 return gift;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -64,6 +68,8 @@ public class GiftCardManager
                     ps.executeUpdate();
                     return true;
                 }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -78,6 +84,8 @@ public class GiftCardManager
                     ps.executeUpdate();
                     return true;
                 }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -88,6 +96,8 @@ public class GiftCardManager
                     ps.executeUpdate();
                     return true;
                 }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -101,6 +111,8 @@ public class GiftCardManager
                     }
                     return size;
                 }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }

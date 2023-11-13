@@ -9,8 +9,5 @@
         <module name="CardGalaxy" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="CardGalaxy" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

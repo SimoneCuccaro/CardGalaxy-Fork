@@ -1,8 +1,7 @@
 package model.ordine;
 
 import model.storage.Manager;
-import model.utente.Utente;
-import model.utente.UtenteQuery;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,9 +16,9 @@ public class OrdineManager extends Manager{
                 while(set.next()){
                     Ordine o=new Ordine();
                     o.setCodice(set.getInt("codice"));
-                    o.setPrezzoTotale(set.getDouble("prezzoTotale"));
-                    o.setDataAcquisto(set.getDate("dataAcquisto"));
-                    o.setUtente(set.getInt("utente"));
+                    o.setPrezzototale(set.getDouble("prezzoTotale"));
+                    o.setDataacquisto(set.getDate("dataAcquisto"));
+                    o.setIdutente(set.getInt("utente"));
                     ordini.add(o);
                 }
                 set.close();
@@ -50,9 +49,9 @@ public class OrdineManager extends Manager{
                 Ordine o=new Ordine();
                 if (set.next()) {
                     o.setCodice(set.getInt("codice"));
-                    o.setPrezzoTotale(set.getDouble("prezzoTotale"));
-                    o.setDataAcquisto(set.getDate("dataAcquisto"));
-                    o.setUtente(set.getInt("utente"));
+                    o.setPrezzototale(set.getDouble("prezzoTotale"));
+                    o.setDataacquisto(set.getDate("dataAcquisto"));
+                    o.setIdutente(set.getInt("utente"));
                 }
                 set.close();
                 return o;
@@ -64,12 +63,17 @@ public class OrdineManager extends Manager{
 
     public boolean creaOrdine(Ordine ordine) throws SQLException {
         try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.creaOrdine())){
-                ps.setInt(1,ordine.getCodice());
-                ps.setDouble(2,ordine.getPrezzoTotale());
-                ps.setDate(3, (Date) ordine.getDataAcquisto());
-                ps.setInt(2,ordine.getUtente());
-                ps.executeUpdate();
+            try(PreparedStatement ps = con.prepareStatement(QUERY.creaOrdine(),Statement.RETURN_GENERATED_KEYS)){
+                ps.setDouble(1,ordine.getPrezzototale());
+                ps.setDate(2, (Date) ordine.getDataacquisto());
+                ps.setInt(3,ordine.getIdutente());
+                if (ps.executeUpdate() != 1) {
+                    throw new RuntimeException("INSERT error.");
+                }
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                int codice = rs.getInt(1);
+                ordine.setCodice(codice);
                 return true;
             }
         }
@@ -80,7 +84,7 @@ public class OrdineManager extends Manager{
 
     public int lastOrder() throws SQLException{
         try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.maxID())){
+            try(PreparedStatement ps = con.prepareStatement(QUERY.lastOrder())){
                 ResultSet set= ps.executeQuery();
                 int lastId=0;
                 if(set.next()){

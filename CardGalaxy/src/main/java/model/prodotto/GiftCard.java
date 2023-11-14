@@ -1,14 +1,14 @@
 package model.prodotto;
 
 public class GiftCard {
-    private int idProdotto;
+    private int id;
     private String nome;
     private String piattaforma;
     private String descrizione;
     private double prezzo;
 
-    public GiftCard(int idProdotto, String nome, String piattaforma, String descrizione, double prezzo) {
-        this.idProdotto = idProdotto;
+    public GiftCard(int id, String nome, String piattaforma, String descrizione, double prezzo) {
+        this.id = id;
         this.nome = nome;
         this.piattaforma = piattaforma;
         this.descrizione = descrizione;
@@ -17,12 +17,12 @@ public class GiftCard {
 
     public GiftCard() {}
 
-    public int getIdProdotto() {
-        return idProdotto;
+    public int getId() {
+        return id;
     }
 
-    public void setIdProdotto(int idProdotto) {
-        this.idProdotto = idProdotto;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

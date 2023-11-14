@@ -1,16 +1,16 @@
 package model.rispostasupporto;
 
 import model.richiestasupporto.RichiestaSupporto;
-import model.admin.Admin;
+import model.utente.Utente;
 
 public class RispostaSupporto
 {
     private int idRispostaSupporto;
     private String risposta;
-    private Admin admin;
+    private Utente admin;
     private RichiestaSupporto richiestaSupporto;
 
-    public RispostaSupporto(int idRispostaSupporto, String risposta, Admin admin, RichiestaSupporto richiestaSupporto)
+    public RispostaSupporto(int idRispostaSupporto, String risposta, Utente admin, RichiestaSupporto richiestaSupporto)
     {
         this.idRispostaSupporto = idRispostaSupporto;
         this.risposta = risposta;
@@ -36,11 +36,11 @@ public class RispostaSupporto
         this.risposta = risposta;
     }
 
-    public Admin getAdmin() {
+    public Utente getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Admin admin) {
+    public void setAdmin(Utente admin) {
         this.admin = admin;
     }
 

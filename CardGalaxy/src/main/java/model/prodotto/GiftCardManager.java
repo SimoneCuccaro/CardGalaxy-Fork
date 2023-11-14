@@ -1,11 +1,9 @@
 package model.prodotto;
-import model.prodotto.GiftCard;
+
 import model.storage.Manager;
-import model.prodotto.GiftCardQuery;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+
+import java.sql.*;
 import java.util.ArrayList;
 public class GiftCardManager
 {
@@ -19,7 +17,7 @@ public class GiftCardManager
                 ArrayList<GiftCard> giftCards = new ArrayList<>();
                 while(rs.next()){
                     GiftCard gift = new GiftCard();
-                    gift.setIdProdotto(rs.getInt("id"));
+                    gift.setId(rs.getInt("id"));
                     gift.setNome(rs.getString("nome"));
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
@@ -42,7 +40,7 @@ public class GiftCardManager
                 ResultSet rs = ps.executeQuery();
                 gift = new GiftCard();
                 if (rs.next()) {
-                    gift.setIdProdotto(id);
+                    gift.setId(id);
                     gift.setNome(rs.getString("nome"));
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
@@ -59,13 +57,18 @@ public class GiftCardManager
 
         public boolean inserisciGiftCard (GiftCard gift) throws SQLException {
             try (Connection con = Manager.getConnection()) {
-                try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciGiftCard())) {
-                    ps.setInt(1, gift.getIdProdotto());
-                    ps.setString(2, gift.getNome());
-                    ps.setString(3, gift.getPiattaforma());
-                    ps.setString(4, gift.getDescrizione());
-                    ps.setDouble(5, gift.getPrezzo());
-                    ps.executeUpdate();
+                try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciGiftCard(), Statement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, gift.getNome());
+                    ps.setString(2, gift.getPiattaforma());
+                    ps.setString(3, gift.getDescrizione());
+                    ps.setDouble(4, gift.getPrezzo());
+                    if (ps.executeUpdate() != 1) {
+                        throw new RuntimeException("INSERT error.");
+                    }
+                    ResultSet rs = ps.getGeneratedKeys();
+                    rs.next();
+                    int id = rs.getInt(1);
+                    gift.setId(id);
                     return true;
                 }
             }catch (SQLException e) {
@@ -73,14 +76,13 @@ public class GiftCardManager
             }
         }
 
-        public boolean aggiornaScarpa (GiftCard gift) throws SQLException {
+        public boolean aggiornaGiftCard (GiftCard gift) throws SQLException {
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.aggiornaGiftCard())) {
-                    ps.setInt(1, gift.getIdProdotto());
-                    ps.setString(2, gift.getNome());
-                    ps.setString(3, gift.getPiattaforma());
-                    ps.setString(4, gift.getDescrizione());
-                    ps.setDouble(5, gift.getPrezzo());
+                    ps.setString(1, gift.getNome());
+                    ps.setString(2, gift.getPiattaforma());
+                    ps.setString(3, gift.getDescrizione());
+                    ps.setDouble(4, gift.getPrezzo());
                     ps.executeUpdate();
                     return true;
                 }

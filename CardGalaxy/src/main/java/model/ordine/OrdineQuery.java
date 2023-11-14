@@ -13,7 +13,7 @@ public class OrdineQuery extends TableQuery
 
     public String countAllOrdini() {return String.format("SELECT count(*) AS ordiniTotali FROM %s;",this.table);}
 
-    public String creaOrdine() { return String.format("INSERT INTO %s (codice, prezzototale, datacquisto, idutente) VALUES (?, ?, ?, ?);",this.table);}
+    public String creaOrdine() { return String.format("INSERT INTO %s (prezzototale, datacquisto, idutente) VALUES (?, ?, ?);",this.table);}
 
-    public String maxID() { return String.format("SELECT max(codice) as lastorder from %s;",this.table);}
+    public String lastOrder() { return String.format("SELECT max(codice) as lastorder from %s;",this.table);}
 }

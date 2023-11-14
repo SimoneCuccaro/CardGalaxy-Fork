@@ -1,7 +1,9 @@
 package model.utente;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Utente
 {
@@ -10,25 +12,23 @@ public class Utente
     private String nome;
     private String cognome;
     private String username;
-    private String password;
-    private String via;
-    private  int cap;
-    private String citta;
-    private String nazione;
-    private Date dataNascita;
+    private String pass;
+    private String indirizzo;
+    private String dataNascita;
 
-    public Utente(int id, String email, String nome, String cognome, String username, String password, String via, int cap, String citta, String nazione, Date dataNascita) {
+    private boolean isAdmin;
+
+
+    public Utente(int id, String email, String nome, String cognome, String username, String pass, String indirizzo,String dataNascita,boolean isAdmin) {
         this.id = id;
         this.email = email;
         this.nome = nome;
         this.cognome = cognome;
         this.username = username;
-        this.password = password;
-        this.via = via;
-        this.cap = cap;
-        this.citta = citta;
-        this.nazione = nazione;
+        this.pass = pass;
+        this.indirizzo=indirizzo;
         this.dataNascita = dataNascita;
+        this.isAdmin=isAdmin;
     }
     public  Utente(){}
 
@@ -72,51 +72,44 @@ public class Utente
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        try {
+            MessageDigest digest =
+                    MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(pass.getBytes(StandardCharsets.UTF_8));
+            this.pass= String.format("%040x", new
+                    BigInteger(1, digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public String getVia() {
-        return via;
+    public String getIndirizzo() {
+        return indirizzo;
     }
 
-    public void setVia(String via) {
-        this.via = via;
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
     }
 
-    public int getCap() {
-        return cap;
-    }
-
-    public void setCap(int cap) {
-        this.cap = cap;
-    }
-
-    public String getCitta() {
-        return citta;
-    }
-
-    public void setCitta(String citta) {
-        this.citta = citta;
-    }
-
-    public String getNazione() {
-        return nazione;
-    }
-
-    public void setNazione(String nazione) {
-        this.nazione = nazione;
-    }
-
-    public Date getDataNascita() {
+    public String getDataNascita() {
         return dataNascita;
     }
 
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(String dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

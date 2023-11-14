@@ -74,6 +74,7 @@ footer {
  #logo {
      height: 250px;
      width: 250px;
+     align-content: center;
  }
 
  .welcome{
@@ -102,3 +103,33 @@ footer {
  .salerno_map{
      margin-top: 20px;
  }
+
+ .user-svg {
+     float: left;
+     margin-top: 20px;
+     margin-left: 20px;
+ }
+
+ .cart-svg {
+     float: right;
+     margin-top: 20px;
+     margin-right: 20px;
+ }
+
+.cart-svg > .badge {
+    position: absolute;
+    top: 8px;
+    margin-right: 10px;
+    font-size: .9rem;
+    color: white;
+}
+
+.username{
+    display: inline;
+    font-family: "Agency FB", serif;
+    font-size: 10px;
+}
+
+footer p {
+    margin-top: 20px;
+}

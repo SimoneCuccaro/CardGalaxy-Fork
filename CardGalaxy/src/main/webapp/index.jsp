@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./CSS/index-style.css">
-    <title>Home</title>
+    <link rel="stylesheet" href="./CSS/support-button.css">
+    <title>Homepage</title>
 </head>
 <body>
 <header>
+    <div class="user-svg">
+        <%@include file="icons/user-solid.svg"%>
+    </div>
+    <div class="cart-svg">
+        <%@include file="icons/cart.svg"%>
+        <span class="badge">0</span>
+    </div>
     <img id="logo" src="photos/cardgalaxylogo.png" alt="website logo">
 </header>
 <nav>
@@ -32,6 +40,10 @@
 </main>
 <footer>
     &copy; 2023 CardGalaxy Inc. All rights reserved.
+    <p>
+        Need Help?
+    </p>
+    <button type="button" class="button"> CLICK HERE </button>
 </footer>
 </body>
 </html>

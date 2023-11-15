@@ -21,12 +21,10 @@ public class UtenteManager extends Manager
                     u.setNome(set.getString("nome"));
                     u.setCognome(set.getString("cognome"));
                     u.setUsername(set.getString("username"));
-                    u.setPassword(set.getString("pass"));
-                    u.setDataNascita(set.getDate("dataNascita"));
-                    u.setVia(set.getString("via"));
-                    u.setCitta(set.getString("citta"));
-                    u.setCap(set.getInt("cap"));
-                    u.setNazione(set.getString("nazione"));
+                    u.setPass(set.getString("pass"));
+                    u.setIndirizzo(set.getString("indirizzo"));
+                    u.setDataNascita(set.getString("dataNascita"));
+                    u.setAdmin(set.getBoolean("isAdmin"));
                     utenti.add(u);
                 }
                 set.close();
@@ -45,19 +43,20 @@ public class UtenteManager extends Manager
                 Utente u = new Utente();
                 if (set.next()) {
                     u.setId(set.getInt("id"));
+                    u.setEmail(set.getString("email"));
                     u.setNome(set.getString("nome"));
                     u.setCognome(set.getString("cognome"));
-                    u.setEmail(set.getString("email"));
-                    u.setPassword(set.getString("pass"));
-                    u.setDataNascita(set.getDate("dataNascita"));
-                    u.setVia(set.getString("via"));
-                    u.setCitta(set.getString("citta"));
-                    u.setCap(set.getInt("cap"));
-                    u.setNazione(set.getString("nazione"));
+                    u.setUsername(set.getString("username"));
+                    u.setPass(set.getString("pass"));
+                    u.setIndirizzo(set.getString("indirizzo"));
+                    u.setDataNascita(set.getString("dataNascita"));
+                    u.setAdmin(set.getBoolean("isAdmin"));
                 }
                 set.close();
                 return u;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -69,40 +68,45 @@ public class UtenteManager extends Manager
                 Utente u = new Utente();
                 if (set.next()) {
                     u.setId(set.getInt("id"));
+                    u.setEmail(set.getString("email"));
                     u.setNome(set.getString("nome"));
                     u.setCognome(set.getString("cognome"));
-                    u.setEmail(set.getString("email"));
-                    u.setPassword(set.getString("pass"));
-                    u.setDataNascita(set.getDate("dataNascita"));
-                    u.setVia(set.getString("via"));
-                    u.setCitta(set.getString("citta"));
-                    u.setCap(set.getInt("cap"));
-
-                    u.setNazione(set.getString("nazione"));
+                    u.setUsername(set.getString("username"));
+                    u.setPass(set.getString("pass"));
+                    u.setIndirizzo(set.getString("indirizzo"));
+                    u.setDataNascita(set.getString("dataNascita"));
+                    u.setAdmin(set.getBoolean("isAdmin"));
                 }
                 set.close();
                 return u;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public boolean creaUtente(Utente utente) throws SQLException {
         try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.inserisciUtente())){
-                ps.setInt(1,utente.getId());
-                ps.setString(3,utente.getNome());
-                ps.setString(4,utente.getCognome());
-                ps.setString(2,utente.getEmail());
-                ps.setString(5,utente.getUsername());
-                ps.setString(6,utente.getPassword());
-                ps.setDate(11, utente.getDataNascita());
-                ps.setString(7,utente.getVia());
-                ps.setString(9,utente.getCitta());
-                ps.setInt(8,utente.getCap());
-                ps.setString(10,utente.getNazione());
-                ps.executeUpdate();
+            try(PreparedStatement ps = con.prepareStatement(QUERY.inserisciUtente(),Statement.RETURN_GENERATED_KEYS)){
+                ps.setString(1,utente.getNome());
+                ps.setString(2,utente.getCognome());
+                ps.setString(3,utente.getEmail());
+                ps.setString(4,utente.getUsername());
+                ps.setString(5,utente.getPass());
+                ps.setString(6,utente.getIndirizzo());
+                ps.setString(7, utente.getDataNascita());
+                ps.setBoolean(8,utente.isAdmin());
+                if (ps.executeUpdate() != 1) {
+                    throw new RuntimeException("INSERT error.");
+                }
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                int id = rs.getInt(1);
+                utente.setId(id);
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -112,15 +116,15 @@ public class UtenteManager extends Manager
                 ps.setString(1,utente.getNome());
                 ps.setString(2,utente.getCognome());
                 ps.setString(3,utente.getEmail());
-                ps.setString(5, String.valueOf((Date) utente.getDataNascita()));
-                ps.setString(8,utente.getVia());
-                ps.setString(9,utente.getCitta());
-                ps.setInt(10,utente.getCap());
-                ps.setString(12,utente.getNazione());
-                ps.setString(13,utente.getEmail());
+                ps.setString(4,utente.getUsername());
+                ps.setString(5,utente.getIndirizzo());
+                ps.setString(6,utente.getDataNascita());
+                ps.setBoolean(7,utente.isAdmin());
                 ps.executeUpdate();
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -131,6 +135,8 @@ public class UtenteManager extends Manager
                 ps.executeUpdate();
                 return true;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

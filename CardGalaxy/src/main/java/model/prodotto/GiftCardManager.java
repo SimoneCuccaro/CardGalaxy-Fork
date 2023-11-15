@@ -22,6 +22,7 @@ public class GiftCardManager
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
                     gift.setPrezzo(rs.getDouble("prezzo"));
+                    gift.setFoto(rs.getString("foto"));
                     giftCards.add(gift);
                 }
                 rs.close();
@@ -45,6 +46,7 @@ public class GiftCardManager
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
                     gift.setPrezzo(rs.getDouble("prezzo"));
+                    gift.setFoto(rs.getString("foto"));
                 }
                 rs.close();
                 return gift;
@@ -62,6 +64,7 @@ public class GiftCardManager
                     ps.setString(2, gift.getPiattaforma());
                     ps.setString(3, gift.getDescrizione());
                     ps.setDouble(4, gift.getPrezzo());
+                    ps.setString(5, gift.getFoto());
                     if (ps.executeUpdate() != 1) {
                         throw new RuntimeException("INSERT error.");
                     }
@@ -83,6 +86,7 @@ public class GiftCardManager
                     ps.setString(2, gift.getPiattaforma());
                     ps.setString(3, gift.getDescrizione());
                     ps.setDouble(4, gift.getPrezzo());
+                    ps.setString(5, gift.getFoto());
                     ps.executeUpdate();
                     return true;
                 }

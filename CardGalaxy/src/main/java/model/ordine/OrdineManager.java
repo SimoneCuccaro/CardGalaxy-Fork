@@ -1,10 +1,13 @@
 package model.ordine;
 
+import model.prodotto.GiftCard;
 import model.storage.Manager;
 
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
+
 public class OrdineManager extends Manager{
     private static final OrdineQuery QUERY = new OrdineQuery("ordine");
 
@@ -35,6 +38,7 @@ public class OrdineManager extends Manager{
                 if(set.next()){
                     count=set.getInt("ordiniTotali");
                 }
+                set.close();
                 return count;
             }
         }catch (SQLException e){
@@ -74,6 +78,7 @@ public class OrdineManager extends Manager{
                 rs.next();
                 int codice = rs.getInt(1);
                 ordine.setCodice(codice);
+                rs.close();
                 return true;
             }
         }
@@ -90,9 +95,36 @@ public class OrdineManager extends Manager{
                 if(set.next()){
                     lastId=set.getInt("lastorder");
                 }
+                set.close();
                 return lastId;
             }
         }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Hashtable<GiftCard,Integer> retriveProdotti(int id){
+        Hashtable<GiftCard,Integer> prodotti=new Hashtable<>();
+        int quantita;
+        GiftCard giftCard;
+        try(Connection con=Manager.getConnection()){
+            try(PreparedStatement ps=con.prepareStatement(QUERY.retriveProdotti(),Statement.RETURN_GENERATED_KEYS)){
+                ResultSet rs= ps.executeQuery();
+                while(rs.next()){
+                    giftCard=new GiftCard();
+                    giftCard.setId(rs.getInt("id"));
+                    giftCard.setNome(rs.getString("nome"));
+                    giftCard.setPiattaforma(rs.getString("piattaforma"));
+                    giftCard.setDescrizione(rs.getString("descrizione"));
+                    giftCard.setPrezzo(rs.getDouble("prezzo"));
+                    giftCard.setFoto(rs.getString("foto"));
+                    quantita=rs.getInt("quantita");
+                    prodotti.put(giftCard,quantita);
+                }
+                rs.close();
+                return prodotti;
+            }
+        }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }

@@ -13,9 +13,9 @@ import model.storage.TableQuery;
 
         public String retrieveGiftCardByID() { return String.format("SELECT * FROM %s WHERE id=?;",this.table);}
 
-        public String inserisciGiftCard() { return String.format("INSERT INTO %s (nome , piattaforma , descrizione , prezzo) VALUES (?, ?, ?, ?);", this.table);}
+        public String inserisciGiftCard() { return String.format("INSERT INTO %s (nome , piattaforma , descrizione , prezzo, foto) VALUES (?, ?, ?, ?, ?);", this.table);}
 
-        public String aggiornaGiftCard() { return String.format("UPDATE %s SET nome = ?, piattaforma = ?, descrizione = ?, prezzo = ?,  WHERE id = ?;", this.table);}
+        public String aggiornaGiftCard() { return String.format("UPDATE %s SET nome = ?, piattaforma = ?, descrizione = ?, prezzo = ?, foto = ?,  WHERE id = ?;", this.table);}
 
         public String rimuoviGiftCard() {return String.format("DELETE FROM %s WHERE id = ?;",this.table);}
 

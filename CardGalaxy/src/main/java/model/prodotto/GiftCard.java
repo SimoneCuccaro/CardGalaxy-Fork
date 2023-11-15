@@ -7,12 +7,15 @@ public class GiftCard {
     private String descrizione;
     private double prezzo;
 
-    public GiftCard(int id, String nome, String piattaforma, String descrizione, double prezzo) {
+    private String foto;
+
+    public GiftCard(int id, String nome, String piattaforma, String descrizione, double prezzo,String foto) {
         this.id = id;
         this.nome = nome;
         this.piattaforma = piattaforma;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
+        this.foto=foto;
     }
 
     public GiftCard() {}
@@ -55,5 +58,13 @@ public class GiftCard {
 
     public void setPrezzo(double prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

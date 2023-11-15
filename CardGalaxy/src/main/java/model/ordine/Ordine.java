@@ -1,19 +1,18 @@
 package model.ordine;
-import model.utente.Utente;
 import java.util.Date;
 
 public class Ordine {
     private int codice;
-    private double prezzoTotale;
-    private Date dataAcquisto;
-    private Utente utente;
+    private double prezzototale;
+    private Date dataacquisto;
+    private int idutente;
 
-    public Ordine(int codice, double prezzoTotale, Date dataAcquisto, Utente utente)
+    public Ordine(int codice, double prezzototale, Date dataacquisto, int idutente)
     {
         this.codice = codice;
-        this.prezzoTotale = prezzoTotale;
-        this.dataAcquisto = dataAcquisto;
-        this.utente = utente;
+        this.prezzototale = prezzototale;
+        this.dataacquisto = dataacquisto;
+        this.idutente = idutente;
     }
 
     public Ordine()
@@ -28,27 +27,27 @@ public class Ordine {
         this.codice = codice;
     }
 
-    public double getPrezzoTotale() {
-        return prezzoTotale;
+    public double getPrezzototale() {
+        return prezzototale;
     }
 
-    public void setPrezzoTotale(double prezzoTotale) {
-        this.prezzoTotale = prezzoTotale;
+    public void setPrezzototale(double prezzototale) {
+        this.prezzototale = prezzototale;
     }
 
-    public Date getDataAcquisto() {
-        return dataAcquisto;
+    public Date getDataacquisto() {
+        return dataacquisto;
     }
 
-    public void setDataAcquisto(Date dataAcquisto) {
-        this.dataAcquisto = dataAcquisto;
+    public void setDataacquisto(Date dataAcquisto) {
+        this.dataacquisto = dataacquisto;
     }
 
-    public Utente getUtente() {
-        return utente;
+    public int getIdutente() {
+        return idutente;
     }
 
-    public void setUtente(Utente utente) {
-        this.utente = utente;
+    public void setIdutente(int idutente) {
+        this.idutente = idutente;
     }
 }

@@ -1,5 +1,5 @@
 package model.prodotto;
-import model.prodotto.GiftCard;
+
 
 import model.storage.TableQuery;
 
@@ -13,9 +13,9 @@ import model.storage.TableQuery;
 
         public String retrieveGiftCardByID() { return String.format("SELECT * FROM %s WHERE id=?;",this.table);}
 
-        public String inserisciGiftCard() { return String.format("INSERT INTO %s (id, nome , piattaforma , descrizione , prezzo) VALUES (?, ?, ?, ?, ?);", this.table);}
+        public String inserisciGiftCard() { return String.format("INSERT INTO %s (nome , piattaforma , descrizione , prezzo) VALUES (?, ?, ?, ?);", this.table);}
 
-        public String aggiornaGiftCard() { return String.format("UPDATE %s SET id = ?, nome = ?, piattaforma = ?, descrizione = ?, prezzo = ?,  WHERE id = ?;", this.table);}
+        public String aggiornaGiftCard() { return String.format("UPDATE %s SET nome = ?, piattaforma = ?, descrizione = ?, prezzo = ?,  WHERE id = ?;", this.table);}
 
         public String rimuoviGiftCard() {return String.format("DELETE FROM %s WHERE id = ?;",this.table);}
 

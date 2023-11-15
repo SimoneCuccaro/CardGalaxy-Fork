@@ -1,0 +1,29 @@
+.para-about{
+    color : white;
+    margin-top: 30px;
+    background-color: purple;
+}
+
+.digital-img {
+    width: 550px;
+    height: 400px;
+    margin-top: 30px;
+}
+
+.add-margin-top {
+    margin-top: 20px;
+}
+
+.add-margin-bottom {
+    margin-bottom: 20px;
+}
+
+.about-heading {
+    font-family: "Agency FB", serif;
+    font-size: 50px;
+}
+
+.purplish {
+    color: purple;
+    background-color: white;
+}

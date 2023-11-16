@@ -43,7 +43,7 @@
     <p>
         Need Help?
     </p>
-    <button type="button" class="button"> CLICK HERE </button>
+    <button type="submit" class="button"> CLICK HERE </button>
 </footer>
 </body>
 </html>

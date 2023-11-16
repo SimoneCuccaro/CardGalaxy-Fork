@@ -1,0 +1,23 @@
+.login {
+    background-color: purple;
+    color : white;
+    box-sizing: border-box;
+    border-radius: 10px;
+    position: relative;
+    padding-top: 20px;
+    min-width: 0;
+    font-family: "Agency FB", serif;
+    align-items: center;
+    font-size: 30px;
+    margin: 20px 30%;
+}
+
+.grid-y {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.larger {
+    height: 30px;
+    width: 180px;
+}

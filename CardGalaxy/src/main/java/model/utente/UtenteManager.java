@@ -103,6 +103,7 @@ public class UtenteManager extends Manager
                 rs.next();
                 int id = rs.getInt(1);
                 utente.setId(id);
+                rs.close();
                 return true;
             }
         }catch (SQLException e) {

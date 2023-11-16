@@ -16,4 +16,6 @@ public class OrdineQuery extends TableQuery
     public String creaOrdine() { return String.format("INSERT INTO %s (prezzototale, datacquisto, idutente) VALUES (?, ?, ?);",this.table);}
 
     public String lastOrder() { return String.format("SELECT max(codice) as lastorder from %s;",this.table);}
+
+    public String retriveProdotti(){ return String.format("SELECT * FROM prodotto,contenuto WHERE prodotto.id=contenuto.idprodotto AND contenuto.codiceordine = ?;");}
 }

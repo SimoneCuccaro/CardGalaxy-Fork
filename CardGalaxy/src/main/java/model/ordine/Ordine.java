@@ -1,11 +1,16 @@
 package model.ordine;
+import model.prodotto.GiftCard;
+
 import java.util.Date;
+import java.util.Hashtable;
 
 public class Ordine {
     private int codice;
     private double prezzototale;
     private Date dataacquisto;
     private int idutente;
+
+    private Hashtable<GiftCard,Integer> prodottoList;
 
     public Ordine(int codice, double prezzototale, Date dataacquisto, int idutente)
     {
@@ -49,5 +54,13 @@ public class Ordine {
 
     public void setIdutente(int idutente) {
         this.idutente = idutente;
+    }
+
+    public Hashtable<GiftCard, Integer> getProdottoList() {
+        return prodottoList;
+    }
+
+    public void setProdottoList(Hashtable<GiftCard, Integer> prodottoList) {
+        this.prodottoList = prodottoList;
     }
 }

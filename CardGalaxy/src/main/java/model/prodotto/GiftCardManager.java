@@ -121,4 +121,21 @@ public class GiftCardManager
                 throw new RuntimeException(e);
             }
         }
+
+        public boolean addToOrder(int codiceordine,int idprodotto, int quantita) throws SQLException{
+            try (Connection con = Manager.getConnection()) {
+                try (PreparedStatement ps = con.prepareStatement(QUERY.addToOrder())) {
+                    ps.setInt(1,codiceordine);
+                    ps.setInt(2,idprodotto);
+                    ps.setInt(3,quantita);
+                    ResultSet resultSet = ps.executeQuery();
+                    if(ps.executeUpdate()!=1){
+                        throw new RuntimeException("INSERT error.");
+                    }
+                    return true;
+                }
+             }catch(SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
     }

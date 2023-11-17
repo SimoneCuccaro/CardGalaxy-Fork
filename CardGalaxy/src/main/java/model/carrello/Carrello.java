@@ -7,34 +7,26 @@ import java.util.ArrayList;
 
 public class Carrello
 {
-    private Utente utente;
-    private ArrayList<GiftCard> prodotto;
+    private int idutente;
+    private int codiceordine;
 
-    public Carrello(Utente utente, ArrayList<GiftCard> prodotto)
+    public Carrello(int idutente,int codiceordine)
     {
-        this.utente = utente;
-        this.prodotto = prodotto;
+        this.idutente = idutente;
+        this.codiceordine = codiceordine;
     }
 
     public Carrello() {}
 
-    public Utente getUtente()
+    public int getIdutente()
     {
-        return utente;
+        return idutente;
     }
+    public void setIdutente(int idutente)
+    {
+        this.idutente = idutente;
+    }
+    public int getCodiceordine(){return codiceordine;}
+    public void setCodiceordine(int codiceordine){this.codiceordine=codiceordine;}
 
-    public void setUtente(Utente utente)
-    {
-        this.utente = utente;
-    }
-
-    public ArrayList<GiftCard> getProdotto()
-    {
-        return prodotto;
-    }
-
-    public void setProdotto(ArrayList<GiftCard> prodotto)
-    {
-        this.prodotto = prodotto;
-    }
 }

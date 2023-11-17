@@ -15,7 +15,6 @@ public class Utente
     private String pass;
     private String indirizzo;
     private String dataNascita;
-
     private boolean isAdmin;
 
 

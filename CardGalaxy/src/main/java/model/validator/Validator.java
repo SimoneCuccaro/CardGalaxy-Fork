@@ -69,8 +69,13 @@ public class Validator {
         return assertMatch(value,pattern,msg);
     }
 
-    public boolean assertDestinazione(String destinazione, String msg) {
+    public boolean assertIndirizzo(String destinazione, String msg) {
         Pattern pattern=Pattern.compile("^[a-zA-Z ]+[,][a-zA-Z ]*[0-9]{1,3}$");
         return assertMatch(destinazione,pattern,msg);
+    }
+
+    public boolean assertData(String data, String msg){
+        Pattern pattern=Pattern.compile("^(((0[1-9]|[12]\\d|3[01])\\/(0[13578]|1[02])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\/(0[13456789]|1[012])\\/((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\/02\\/((19|[2-9]\\d)\\d{2}))|(29\\/02\\/((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$");
+        return assertMatch(data,pattern,msg);
     }
 }

@@ -21,5 +21,7 @@ import model.storage.TableQuery;
 
         public String countAllGiftCard() { return String.format("SELECT count(*) AS giftCardTotali FROM %s;",this.table);}
 
+        public String addToOrder(){return String.format("INSERT INTO contenuto (codiceordine,idprodotto,quantita) VALUES (?,?,?");}
+
     }
 

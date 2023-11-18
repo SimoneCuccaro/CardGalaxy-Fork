@@ -3,26 +3,26 @@ package model.richiestasupporto;
 import model.utente.Utente;
 public class RichiestaSupporto
 {
-    private int idSupporto;
+    private int id;
     private String richiesta;
-    private String oggettoRichiesta;
-    private Utente utente;
+    private String oggettorichiesta;
+    private int idutente;
 
-    public RichiestaSupporto(int idSupporto, String richiesta, String oggettoRichiesta, Utente utente) {
-        this.idSupporto = idSupporto;
+    public RichiestaSupporto(int id, String richiesta, String oggettorichiesta, int idutente) {
+        this.id = id;
         this.richiesta = richiesta;
-        this.oggettoRichiesta = oggettoRichiesta;
-        this.utente = utente;
+        this.oggettorichiesta = oggettorichiesta;
+        this.idutente = idutente;
     }
 
     public RichiestaSupporto() {}
 
-    public int getIdSupporto() {
-        return idSupporto;
+    public int getId() {
+        return id;
     }
 
-    public void setIdSupporto(int idSupporto) {
-        this.idSupporto = idSupporto;
+    public void setId(int idSupporto) {
+        this.id = id;
     }
 
     public String getRichiesta() {
@@ -33,19 +33,19 @@ public class RichiestaSupporto
         this.richiesta = richiesta;
     }
 
-    public String getOggettoRichiesta() {
-        return oggettoRichiesta;
+    public String getOggettorichiesta() {
+        return oggettorichiesta;
     }
 
-    public void setOggettoRichiesta(String oggettoRichiesta) {
-        this.oggettoRichiesta = oggettoRichiesta;
+    public void setOggettorichiesta(String oggettorichiesta) {
+        this.oggettorichiesta = oggettorichiesta;
     }
 
-    public Utente getUtente() {
-        return utente;
+    public int getIdutente() {
+        return idutente;
     }
 
-    public void setUtente(Utente utente) {
-        this.utente = utente;
+    public void setIdutente(int idutente) {
+        this.idutente = idutente;
     }
 }

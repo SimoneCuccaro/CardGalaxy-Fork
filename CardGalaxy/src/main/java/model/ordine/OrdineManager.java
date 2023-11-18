@@ -19,8 +19,8 @@ public class OrdineManager extends Manager{
                 while(set.next()){
                     Ordine o=new Ordine();
                     o.setCodice(set.getInt("codice"));
-                    o.setPrezzototale(set.getDouble("prezzoTotale"));
-                    o.setDataacquisto(set.getDate("dataAcquisto"));
+                    o.setPrezzototale(set.getDouble("prezzototale"));
+                    o.setDataAcquisto(set.getString("dataAcquisto"));
                     o.setIdutente(set.getInt("utente"));
                     ordini.add(o);
                 }
@@ -53,8 +53,8 @@ public class OrdineManager extends Manager{
                 Ordine o=new Ordine();
                 if (set.next()) {
                     o.setCodice(set.getInt("codice"));
-                    o.setPrezzototale(set.getDouble("prezzoTotale"));
-                    o.setDataacquisto(set.getDate("dataAcquisto"));
+                    o.setPrezzototale(set.getDouble("prezzototale"));
+                    o.setDataAcquisto(set.getString("dataAcquisto"));
                     o.setIdutente(set.getInt("utente"));
                 }
                 set.close();
@@ -69,7 +69,7 @@ public class OrdineManager extends Manager{
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.creaOrdine(),Statement.RETURN_GENERATED_KEYS)){
                 ps.setDouble(1,ordine.getPrezzototale());
-                ps.setDate(2, (Date) ordine.getDataacquisto());
+                ps.setString(2,ordine.getDataAcquisto());
                 ps.setInt(3,ordine.getIdutente());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("INSERT error.");
@@ -103,12 +103,13 @@ public class OrdineManager extends Manager{
         }
     }
 
-    public Hashtable<GiftCard,Integer> retriveProdotti(int id){
+    public Hashtable<GiftCard,Integer> retriveProdotti(int codiceordine){
         Hashtable<GiftCard,Integer> prodotti=new Hashtable<>();
         int quantita;
         GiftCard giftCard;
         try(Connection con=Manager.getConnection()){
             try(PreparedStatement ps=con.prepareStatement(QUERY.retriveProdotti(),Statement.RETURN_GENERATED_KEYS)){
+                ps.setInt(1,codiceordine);
                 ResultSet rs= ps.executeQuery();
                 while(rs.next()){
                     giftCard=new GiftCard();

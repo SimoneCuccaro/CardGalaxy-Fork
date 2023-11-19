@@ -93,6 +93,11 @@
     cursor: pointer;
 }
 
+.container .card .contentBx p {
+    font-family: "Agency FB", serif;
+    font-size: 20px;
+}
+
 .container .card:hover .contentBx button {
     opacity: 1;
     transform: translateY(0px);

@@ -1,0 +1,58 @@
+.table.purple {
+    background-color: purple;
+    width: 70%;
+    text-align: center;
+    border-collapse: collapse;
+    font-family: "Agency FB", serif;
+}
+
+.table.purple.ut {
+    margin-bottom: 400px;
+}
+
+.table.purple td, table.purple th {
+    border: 2px solid white;
+    padding: 10px 10px;
+    height: 50px;
+}
+.table.purple tbody td {
+    font-size: 25px;
+    font-family: "Agency FB", serif;
+    color: white;
+}
+
+.table.purple.brands tbody td {
+    font-size: 12px;
+}
+
+h4.name {
+    font-size: 20px;
+}
+
+.table.purple thead {
+    background: purple;
+}
+.table.purple thead th {
+    font-size: 30px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.table{
+    margin-top: 0.8rem;
+}
+
+.table.purple.extend {
+    width: fit-content;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.table.purple.extend-fix {
+    width: 30%;
+    font-size: 17px;
+}
+
+.align-center {
+    align-items: center;
+}

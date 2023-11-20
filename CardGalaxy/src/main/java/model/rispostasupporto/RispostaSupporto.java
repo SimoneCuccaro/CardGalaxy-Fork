@@ -5,27 +5,25 @@ import model.utente.Utente;
 
 public class RispostaSupporto
 {
-    private int idRispostaSupporto;
+    private int id;
     private String risposta;
-    private Utente admin;
-    private RichiestaSupporto richiestaSupporto;
+    private int richiestasupporto;
 
-    public RispostaSupporto(int idRispostaSupporto, String risposta, Utente admin, RichiestaSupporto richiestaSupporto)
+    public RispostaSupporto(int id, String risposta, int richiestasupporto)
     {
-        this.idRispostaSupporto = idRispostaSupporto;
+        this.id = id;
         this.risposta = risposta;
-        this.admin = admin;
-        this.richiestaSupporto = richiestaSupporto;
+        this.richiestasupporto = richiestasupporto;
     }
 
     public RispostaSupporto() {}
 
-    public int getIdRispostaSupporto() {
-        return idRispostaSupporto;
+    public int getId() {
+        return id;
     }
 
-    public void setIdRispostaSupporto(int idRispostaSupporto) {
-        this.idRispostaSupporto = idRispostaSupporto;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRisposta() {
@@ -36,19 +34,11 @@ public class RispostaSupporto
         this.risposta = risposta;
     }
 
-    public Utente getAdmin() {
-        return admin;
+    public int getRichiestasupporto() {
+        return richiestasupporto;
     }
 
-    public void setAdmin(Utente admin) {
-        this.admin = admin;
-    }
-
-    public RichiestaSupporto getRichiestaSupporto() {
-        return richiestaSupporto;
-    }
-
-    public void setRichiestaSupporto(RichiestaSupporto richiestaSupporto) {
-        this.richiestaSupporto = richiestaSupporto;
+    public void setRichiestasupporto(int richiestasupporto) {
+        this.richiestasupporto = richiestasupporto;
     }
 }

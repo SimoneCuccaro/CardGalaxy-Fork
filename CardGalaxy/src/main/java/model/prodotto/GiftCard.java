@@ -6,7 +6,6 @@ public class GiftCard {
     private String piattaforma;
     private String descrizione;
     private double prezzo;
-
     private String foto;
 
     public GiftCard(int id, String nome, String piattaforma, String descrizione, double prezzo,String foto) {

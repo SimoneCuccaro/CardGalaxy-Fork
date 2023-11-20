@@ -1,0 +1,16 @@
+.bigger-area-object {
+    width: 45%;
+    height: 30px;
+    font-size: 25px;
+    font-family: "Agency FB", serif;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+textarea{
+    padding: 2px;
+    font-family: "Agency FB", serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}

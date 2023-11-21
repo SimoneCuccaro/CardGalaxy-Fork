@@ -12,6 +12,7 @@
     transition: 0.5s;
     z-index: 1;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .button:hover {

@@ -216,3 +216,10 @@ h1 {
     bottom: 50%;
 }
 
+.button-for-table {
+    margin-top: 5px;
+}
+
+.add-margin-bottom{
+    margin-bottom: 20px;
+}

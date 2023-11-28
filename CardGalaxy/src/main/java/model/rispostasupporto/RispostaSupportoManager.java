@@ -9,7 +9,7 @@ public class RispostaSupportoManager {
     private static final RispostaSupportoQuery QUERY = new RispostaSupportoQuery("rispostasupporto");
 
 
-    public ArrayList<RispostaSupporto> retrieveTutteGiftCard() throws SQLException {
+    public ArrayList<RispostaSupporto> retrieveTutteGiftCard(){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRisposteSupporto())) {
                 ResultSet rs = ps.executeQuery();
@@ -29,7 +29,7 @@ public class RispostaSupportoManager {
         }
     }
 
-    public boolean inserisciRispostaSupporto(RispostaSupporto risposta) throws SQLException {
+    public boolean inserisciRispostaSupporto(RispostaSupporto risposta){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRispostaSupporto(), Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, risposta.getRisposta());

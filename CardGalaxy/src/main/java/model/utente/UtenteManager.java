@@ -9,12 +9,12 @@ public class UtenteManager extends Manager
 {
     private static final UtenteQuery QUERY = new UtenteQuery("utente");
 
-    public ArrayList<Utente> retrieveUtenti() throws SQLException {
+    public ArrayList<Utente> retrieveUtenti(){
         try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.tuttiUtenti())){
+            try(PreparedStatement ps = con.prepareStatement(QUERY.tuttiUtenti())) {
                 ResultSet set = ps.executeQuery();
                 ArrayList<Utente> utenti = new ArrayList<>();
-                while(set.next()){
+                while (set.next()) {
                     Utente u = new Utente();
                     u.setId(set.getInt("id"));
                     u.setEmail(set.getString("email"));
@@ -30,11 +30,13 @@ public class UtenteManager extends Manager
                 set.close();
                 return utenti;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
 
-    public Utente retrieveUtentePass(String email, String password) throws SQLException {
+    public Utente retrieveUtentePass(String email, String password){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.singoloUtenteConPass())) {
                 ps.setString(1, email);
@@ -60,7 +62,7 @@ public class UtenteManager extends Manager
         }
     }
 
-    public Utente retrieveUtente(String email) throws SQLException {
+    public Utente retrieveUtente(String email){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.singoloUtente())) {
                 ps.setString(1, email);
@@ -85,7 +87,7 @@ public class UtenteManager extends Manager
         }
     }
 
-    public boolean creaUtente(Utente utente) throws SQLException {
+    public boolean creaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.inserisciUtente(),Statement.RETURN_GENERATED_KEYS)){
                 ps.setString(1,utente.getNome());
@@ -111,7 +113,7 @@ public class UtenteManager extends Manager
         }
     }
 
-    public boolean aggiornaUtente(Utente utente) throws SQLException {
+    public boolean aggiornaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.aggiornaUtente())){
                 ps.setString(1,utente.getNome());
@@ -129,7 +131,7 @@ public class UtenteManager extends Manager
         }
     }
 
-    public boolean cancellaUtente(String email) throws SQLException {
+    public boolean cancellaUtente(String email){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.eliminaUtente())){
                 ps.setString(1,email);

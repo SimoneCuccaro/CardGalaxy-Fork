@@ -10,7 +10,7 @@ public class RecensioneManager{
     private static final RecensioneQuery QUERY = new RecensioneQuery("recensioni");
 
 
-    public ArrayList<Recensione> retrieveRecensioni() throws SQLException{
+    public ArrayList<Recensione> retrieveRecensioni(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.retriveRecensioni())){
                 ResultSet rs = ps.executeQuery();
@@ -31,7 +31,7 @@ public class RecensioneManager{
         }
     }
 
-    public ArrayList<Recensione> retrieveRecensioniByProdotto(int codiceprodotto) throws SQLException {
+    public ArrayList<Recensione> retrieveRecensioniByProdotto(int codiceprodotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveRecensioniByProdotto())) {
                 ps.setInt(1, codiceprodotto);
@@ -54,7 +54,7 @@ public class RecensioneManager{
     }
 
 
-    public boolean inserisciRecensione (Recensione rec) throws SQLException {
+    public boolean inserisciRecensione (Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRecensione())) {
                 ps.setInt(1, rec.getIdutente());
@@ -71,7 +71,7 @@ public class RecensioneManager{
         }
     }
 
-    public boolean aggiornaRecensione(Recensione rec) throws SQLException {
+    public boolean aggiornaRecensione(Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.aggiornaRecensione())) {
                 ps.setInt(1, rec.getIdutente());
@@ -86,7 +86,7 @@ public class RecensioneManager{
         }
     }
 
-    public boolean rimuoviRecensione(int idutente,int codiceProdotto) throws SQLException {
+    public boolean rimuoviRecensione(int idutente,int codiceProdotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.rimuoviRecensione())) {
                 ps.setInt(1, idutente);

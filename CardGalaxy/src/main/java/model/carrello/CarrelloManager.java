@@ -12,7 +12,7 @@ public class CarrelloManager {
     private static final CarrelloQuery QUERY = new CarrelloQuery("carrello");
 
 
-    public ArrayList<Carrello> retrieveAllCarrelli() throws SQLException{
+    public ArrayList<Carrello> retrieveAllCarrelli(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveAllCarrelli())){
                 ResultSet rs = ps.executeQuery();
@@ -33,7 +33,7 @@ public class CarrelloManager {
 
 
 
-    public Carrello retrieveCarrelloByUtente(int idutente) throws SQLException {
+    public Carrello retrieveCarrelloByUtente(int idutente){
         Carrello carrello;
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveCarrelloByUtente())) {
@@ -53,7 +53,7 @@ public class CarrelloManager {
     }
 
 
-    public boolean rimuoviCarrelloUtente(int idutente) throws SQLException {
+    public boolean rimuoviCarrelloUtente(int idutente){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.deleteCarrelloUtente())) {
                 ps.setInt(1, idutente);

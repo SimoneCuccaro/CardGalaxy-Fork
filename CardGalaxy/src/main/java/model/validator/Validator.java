@@ -48,7 +48,7 @@ public class Validator {
     }
 
     public boolean assertEmail(String value,String msg){
-        Pattern pattern=Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
+        Pattern pattern=Pattern.compile("^[a-zA-Z0-9.!#$%&’*+\\=?^_`{|}~-]{1,29}+@[a-zA-Z0-9-]{1,29}+(?:\\.[a-zA-Z0-9-]+){1,10}$");
         return assertMatch(value,pattern,msg);
     }
 
@@ -65,7 +65,7 @@ public class Validator {
     }
 
     public boolean assertPassword(String value,String msg){
-        Pattern pattern=Pattern.compile("^((?=\\S*?[A-Z])(?=\\S*?[a-z])(?=\\S*?[0-9]).{6,})\\S$");
+        Pattern pattern=Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,15}$");
         return assertMatch(value,pattern,msg);
     }
 

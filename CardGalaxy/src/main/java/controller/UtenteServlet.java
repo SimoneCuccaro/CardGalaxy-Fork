@@ -90,7 +90,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 try {
-                    String path = request.getPathInfo();
+                    String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
                     switch (path) {
                         case "/home":
                             //pagina iniziale

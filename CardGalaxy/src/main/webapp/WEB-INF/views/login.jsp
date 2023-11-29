@@ -11,8 +11,8 @@
     <title>Login</title>
 </head>
 <body>
-<%@include file="../../WEB-INF/partials/siteheader.jsp"%>
-<%@include file="../../WEB-INF/partials/sitenavbar.jsp"%>
+<%@include file="../partials/siteheader.jsp"%>
+<%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
         <h1 class="welcome">Login</h1>
@@ -36,12 +36,6 @@
         <button type="submit" class="button add-margin-bottom"> REGISTER </button>
     </div>
 </main>
-<footer>
-    &copy; 2023 CardGalaxy Inc. All rights reserved.
-    <p>
-        Need Help?
-    </p>
-    <button type="submit" class="button"> CLICK HERE </button>
-</footer>
+<%@include file="../partials/sitefooter.jsp"%>
 </body>
 </html>

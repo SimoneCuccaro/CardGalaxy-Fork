@@ -11,23 +11,23 @@ public class UtenteQuery extends TableQuery
     }
 
     public String singoloUtenteConPass(){
-        return String.format("SELECT * FROM %s WHERE email = ? AND password = SHA1(?);", this.table);
+        return String.format("SELECT * FROM %s WHERE username = ? AND password = SHA1(?);", this.table);
     }
 
     public String singoloUtente(){
-        return String.format("SELECT * FROM %s WHERE email = ?;", this.table);
+        return String.format("SELECT * FROM %s WHERE id = ?;", this.table);
     }
 
     public String inserisciUtente(){
-        return String.format("INSERT INTO %s (nome, cognome, email,username, pass,indirizzo, dataNascita,isAdmin) VALUES (?,?,?,?,?,?,?,?);", this.table);
+        return String.format("INSERT INTO %s (email, nome, cognome, username, pass, indirizzo, nazione , citta, cap, data_nascita, is_admin) VALUES (?,?,?,?,?,?,?,?,?,?,?);", this.table);
     }
 
     public String aggiornaUtente(){
-        return String.format("UPDATE %s SET nome = ?, cognome = ?, email = ?, username= ?, indrizzo = ?, dataNascita = ?, isAdmin = ? WHERE email = ?;", this.table);
+        return String.format("UPDATE %s SET email = ?,nome = ?, cognome = ?, username= ?, indrizzo = ?,nazione = ?,citta = ?,cap = ?, data_nascita = ?, is_admin = ? WHERE id = ?;", this.table);
     }
 
     public String eliminaUtente(){
-        return String.format("DELETE FROM %s WHERE email=?;", this.table);
+        return String.format("DELETE FROM %s WHERE id=?;", this.table);
     }
 
 

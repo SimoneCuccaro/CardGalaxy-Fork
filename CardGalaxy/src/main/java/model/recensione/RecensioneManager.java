@@ -17,8 +17,8 @@ public class RecensioneManager{
                 ArrayList<Recensione> recensioni = new ArrayList<>();
                 while(rs.next()){
                     Recensione rec=new Recensione();
-                    rec.setIdutente(rs.getInt("idutente"));
-                    rec.setCodiceprodotto(rs.getInt("codiceprodotto"));
+                    rec.setId_utente(rs.getInt("id_utente"));
+                    rec.setId_prodotto(rs.getInt("id_prodotto"));
                     rec.setDatarecensione(rs.getString("datarecensione"));
                     rec.setTesto(rs.getString("testo"));
                     recensioni.add(rec);
@@ -31,16 +31,16 @@ public class RecensioneManager{
         }
     }
 
-    public ArrayList<Recensione> retrieveRecensioniByProdotto(int codiceprodotto){
+    public ArrayList<Recensione> retrieveRecensioniByProdotto(int id_prodotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveRecensioniByProdotto())) {
-                ps.setInt(1, codiceprodotto);
+                ps.setInt(1, id_prodotto);
                 ResultSet rs = ps.executeQuery();
                 ArrayList<Recensione> recensioniProd = new ArrayList<>();
                 if (rs.next()) {
                     Recensione rec=new Recensione();
-                    rec.setIdutente(rs.getInt("idutente"));
-                    rec.setCodiceprodotto(rs.getInt("codiceprodotto"));
+                    rec.setId_utente(rs.getInt("id_utente"));
+                    rec.setId_prodotto(rs.getInt("id_prodotto"));
                     rec.setDatarecensione(rs.getString("datarecensione"));
                     rec.setTesto(rs.getString("testo"));
                     recensioniProd.add(rec);
@@ -57,8 +57,8 @@ public class RecensioneManager{
     public boolean inserisciRecensione (Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRecensione())) {
-                ps.setInt(1, rec.getIdutente());
-                ps.setInt(2, rec.getCodiceprodotto());
+                ps.setInt(1, rec.getId_utente());
+                ps.setInt(2, rec.getId_prodotto());
                 ps.setString(3, rec.getDatarecensione());
                 ps.setString(4, rec.getTesto());
                 if (ps.executeUpdate() != 1) {
@@ -74,10 +74,10 @@ public class RecensioneManager{
     public boolean aggiornaRecensione(Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.aggiornaRecensione())) {
-                ps.setInt(1, rec.getIdutente());
-                ps.setInt(2, rec.getCodiceprodotto());
-                ps.setString(3, rec.getDatarecensione());
-                ps.setString(4, rec.getTesto());
+                ps.setString(1, rec.getTesto());
+                ps.setString(2, rec.getDatarecensione());
+                ps.setInt(3, rec.getId_utente());
+                ps.setInt(4, rec.getId_prodotto());
                 ps.executeUpdate();
                 return true;
             }
@@ -86,11 +86,11 @@ public class RecensioneManager{
         }
     }
 
-    public boolean rimuoviRecensione(int idutente,int codiceProdotto){
+    public boolean rimuoviRecensione(int id_utente,int id_prodotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.rimuoviRecensione())) {
-                ps.setInt(1, idutente);
-                ps.setInt(2, codiceProdotto);
+                ps.setInt(1, id_utente);
+                ps.setInt(2, id_prodotto);
                 ps.executeUpdate();
                 return true;
             }

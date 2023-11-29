@@ -12,7 +12,7 @@ public class UtenteSession {
         this.cognome = utente.getCognome();
         this.email=utente.getEmail();
         this.username=utente.getUsername();
-        this.isAdmin = utente.isAdmin();
+        this.isAdmin = utente.is_admin();
     }
 
     public int getId() {

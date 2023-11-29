@@ -36,9 +36,9 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     //effettuazione del login
                     request.setAttribute("back", "/WEB-INF/views/login.jsp");
                     Utente tmpUtente=new Utente();
-                    tmpUtente.setEmail(request.getParameter("email"));
+                    tmpUtente.setEmail(request.getParameter("username"));
                     tmpUtente.setPass(request.getParameter("password"));
-                    tmpUtente = utenteManager.retrieveUtentePass(tmpUtente.getEmail(), tmpUtente.getPass());
+                    tmpUtente = utenteManager.retrieveUtentePass(tmpUtente.getUsername(), tmpUtente.getPass());
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);

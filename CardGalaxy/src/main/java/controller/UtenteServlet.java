@@ -1,5 +1,6 @@
 package controller;
 
+import jakarta.servlet.annotation.MultipartConfig;
 import model.Controller;
 import model.errors.InvalidRequestException;
 import model.errors.ErrorHandler;
@@ -16,7 +17,8 @@ import java.io.IOException;
 import java.util.List;
 
 
-@WebServlet(name = "UtenteServlet", value = "/UtenteServlet/*")
+@WebServlet(name = "UtenteServlet", value = "/user/*")
+@MultipartConfig
 public class UtenteServlet extends Controller implements ErrorHandler{
 
     private UtenteManager utenteManager;

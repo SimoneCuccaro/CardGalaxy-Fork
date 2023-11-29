@@ -1,25 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  type="text/css" href="../../CSS/index-style.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/aboutus-style.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
+    <%@include file="../utils/head.jsp"%>
     <title>Login</title>
 </head>
 <body>
-<header>
-    <img id="logo" src="../../photos/cardgalaxylogo.png" alt="website logo">
-</header>
-<nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Shop Now</a></li>
-    </ul>
-</nav>
+<%@include file="../../WEB-INF/partials/siteheader.jsp"%>
+<%@include file="../../WEB-INF/partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
         <h1 class="welcome">Login</h1>

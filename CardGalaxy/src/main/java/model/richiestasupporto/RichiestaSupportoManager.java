@@ -8,7 +8,7 @@ public class RichiestaSupportoManager {
     private static final RichiestaSupportoQuery QUERY = new RichiestaSupportoQuery("richiestasupporto");
 
 
-    public ArrayList<RichiestaSupporto> retrieveTutteGiftCard() throws SQLException {
+    public ArrayList<RichiestaSupporto> retrieveTutteGiftCard(){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRichiesteSupporto())) {
                 ResultSet rs = ps.executeQuery();
@@ -29,7 +29,7 @@ public class RichiestaSupportoManager {
         }
     }
 
-    public boolean inserisciRichiestaSupporto(RichiestaSupporto richiesta) throws SQLException {
+    public boolean inserisciRichiestaSupporto(RichiestaSupporto richiesta){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRichiestaSupporto(), Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, richiesta.getRichiesta());

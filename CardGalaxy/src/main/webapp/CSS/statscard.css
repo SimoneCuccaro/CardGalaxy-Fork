@@ -1,0 +1,51 @@
+.cards {
+    gap: 32px;
+    padding: 20px;
+}
+
+.container-title {
+    text-align: center;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 40px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.card {
+    max-width: 550px;
+    border: 0;
+    width: 50%;
+    margin-inline: auto;
+}
+
+.container-card {
+    position: relative;
+    border: 2px solid transparent;
+    background-color: purple;
+    border-radius: 20px;
+    padding: 10px;
+    font-family: "Agency FB", serif;
+}
+
+.card-title {
+    font-weight: 600;
+    color: white;
+    line-height: 20px;
+    font-size: 50px;
+    padding-bottom: 8px;
+}
+
+.card-description {
+    font-weight: 600;
+    line-height: 32px;
+    color: lightskyblue;
+    font-size: 50px;
+}
+
+.card-icon {
+    margin-top: 30px;
+    width: 120px;
+    height: 120px;
+}

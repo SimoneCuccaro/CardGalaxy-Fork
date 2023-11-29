@@ -16,7 +16,7 @@ public abstract class Manager
             p.setUrl("jdbc:mysql://localhost:3306/progettois?serverTimezone=" + TimeZone.getDefault().getID());
             p.setDriverClassName("com.mysql.cj.jdbc.Driver");
             p.setUsername("root");
-            p.setPassword("Palladino512");
+            p.setPassword("sqlPass");
             p.setInitialSize(10);
             p.setMinIdle(10);
             p.setRemoveAbandonedTimeout(60);

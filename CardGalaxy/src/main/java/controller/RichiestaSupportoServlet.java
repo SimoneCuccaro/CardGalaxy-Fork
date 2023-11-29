@@ -1,10 +1,10 @@
 package controller;
 
+import jakarta.servlet.RequestDispatcher;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
 import model.richiestasupporto.RichiestaSupportoManager;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RichiestaSupportoServlet", value = "/RichiestaSupportoServlet/*")
+@WebServlet(name = "RichiestaSupportoServlet", value = "/help/*")
 public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandler {
     private RichiestaSupportoManager richiestaSupportoManager;
     public void init() throws ServletException{
@@ -40,10 +40,13 @@ public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandle
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String path = request.getPathInfo();
+            String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
+            RequestDispatcher dispatcher;
+            String resource;
             switch (path) {
                 case "/create":
-                    //click per andare sulla pagina di invio richiesta
+                    resource = "/WEB-INF/views/help.jsp";
+                    request.getRequestDispatcher(resource).forward(request,response);
                     break;
                 case "/showall":
                     //per andare sulla pagina admin e visualizzare tutte le richieste

@@ -23,12 +23,6 @@
         </p>
     </div>
 </main>
-<footer>
-    &copy; 2023 CardGalaxy Inc. All rights reserved.
-    <p>
-        Need Help?
-    </p>
-    <button type="submit" class="button"> CLICK HERE </button>
-</footer>
+<%@include file="./WEB-INF/partials/sitefooter.jsp"%>
 </body>
 </html>

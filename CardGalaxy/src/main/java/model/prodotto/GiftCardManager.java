@@ -10,7 +10,7 @@ public class GiftCardManager
     private static final GiftCardQuery QUERY = new GiftCardQuery("giftCard");
 
 
-    public ArrayList<GiftCard> retrieveTutteGiftCard() throws SQLException{
+    public ArrayList<GiftCard> retrieveTutteGiftCard(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.tutteGiftCard())){
                 ResultSet rs = ps.executeQuery();
@@ -33,7 +33,7 @@ public class GiftCardManager
         }
     }
 
-    public GiftCard retrieveGiftCardByID(int id) throws SQLException {
+    public GiftCard retrieveGiftCardByID(int id){
         GiftCard gift;
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveGiftCardByID())) {
@@ -57,7 +57,7 @@ public class GiftCardManager
     }
 
 
-        public boolean inserisciGiftCard (GiftCard gift) throws SQLException {
+        public boolean inserisciGiftCard (GiftCard gift){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciGiftCard(), Statement.RETURN_GENERATED_KEYS)) {
                     ps.setString(1, gift.getNome());
@@ -79,7 +79,7 @@ public class GiftCardManager
             }
         }
 
-        public boolean aggiornaGiftCard (GiftCard gift) throws SQLException {
+        public boolean aggiornaGiftCard (GiftCard gift){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.aggiornaGiftCard())) {
                     ps.setString(1, gift.getNome());
@@ -95,7 +95,7 @@ public class GiftCardManager
             }
         }
 
-        public boolean rimuoviGiftCard(int idGiftCard) throws SQLException {
+        public boolean rimuoviGiftCard(int idGiftCard){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.rimuoviGiftCard())) {
                     ps.setInt(1, idGiftCard);
@@ -107,7 +107,7 @@ public class GiftCardManager
             }
         }
 
-        public int countAllGiftCard () throws SQLException {
+        public int countAllGiftCard (){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.countAllGiftCard())) {
                     ResultSet resultSet = ps.executeQuery();
@@ -122,7 +122,7 @@ public class GiftCardManager
             }
         }
 
-        public boolean addToOrder(int codiceordine,int idprodotto, int quantita) throws SQLException{
+        public boolean addToOrder(int codiceordine,int idprodotto, int quantita){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.addToOrder())) {
                     ps.setInt(1,codiceordine);

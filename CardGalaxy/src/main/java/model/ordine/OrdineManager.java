@@ -11,7 +11,7 @@ import java.util.Hashtable;
 public class OrdineManager extends Manager{
     private static final OrdineQuery QUERY = new OrdineQuery("ordine");
 
-    public ArrayList<Ordine> retrieveOrdini() throws SQLException {
+    public ArrayList<Ordine> retrieveOrdini(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveAllOrdini())){
                 ResultSet set = ps.executeQuery();
@@ -27,10 +27,12 @@ public class OrdineManager extends Manager{
                 set.close();
                 return ordini;
             }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public int contaOrdini() throws SQLException{
+    public int contaOrdini(){
         try(Connection con=Manager.getConnection()){
             try(PreparedStatement ps=con.prepareStatement(QUERY.countAllOrdini())){
                 ResultSet set= ps.executeQuery();
@@ -45,7 +47,7 @@ public class OrdineManager extends Manager{
             throw new RuntimeException(e);
         }
     }
-    public Ordine retrieveOrdineById(int id) throws SQLException {
+    public Ordine retrieveOrdineById(int id){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveOrdineById())) {
                 ps.setInt(1, id);
@@ -65,7 +67,7 @@ public class OrdineManager extends Manager{
         }
     }
 
-    public boolean creaOrdine(Ordine ordine) throws SQLException {
+    public boolean creaOrdine(Ordine ordine){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.creaOrdine(),Statement.RETURN_GENERATED_KEYS)){
                 ps.setDouble(1,ordine.getPrezzototale());
@@ -87,7 +89,7 @@ public class OrdineManager extends Manager{
         }
     }
 
-    public int lastOrder() throws SQLException{
+    public int lastOrder(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.lastOrder())){
                 ResultSet set= ps.executeQuery();

@@ -1,5 +1,7 @@
 package model.carrello;
 
+import model.prodotto.GiftCard;
+import model.prodotto.GiftCardManager;
 import model.storage.Manager;
 
 
@@ -12,40 +14,20 @@ public class CarrelloManager {
     private static final CarrelloQuery QUERY = new CarrelloQuery("carrello");
 
 
-    public ArrayList<Carrello> retrieveAllCarrelli(){
-        try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveAllCarrelli())){
-                ResultSet rs = ps.executeQuery();
-                ArrayList<Carrello> carrelli = new ArrayList<>();
-                while(rs.next()){
-                    Carrello carrello=new Carrello();
-                    carrello.setIdutente(rs.getInt("idutente"));
-                    carrello.setCodiceordine(rs.getInt("codiceordine"));
-                    carrelli.add(carrello);
-                }
-                rs.close();
-                return carrelli;
-            }
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-
-
-    public Carrello retrieveCarrelloByUtente(int idutente){
-        Carrello carrello;
+    public ArrayList<GiftCard> retrieveCarrelloByUtente(int idutente){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveCarrelloByUtente())) {
                 ps.setInt(1, idutente);
+                GiftCardManager giftCardManager=new GiftCardManager();
+                ArrayList<GiftCard> prodotti_carrello=new ArrayList<>();
                 ResultSet rs = ps.executeQuery();
-                carrello=new Carrello();
-                if (rs.next()) {
-                    carrello.setIdutente(rs.getInt("idutente"));
-                    carrello.setCodiceordine(rs.getInt("codiceordine"));
+                while(rs.next()){
+                    GiftCard gc=giftCardManager.retrieveGiftCardByID(rs.getInt("id_prodotto"));
+                    prodotti_carrello.add(gc);
                 }
                 rs.close();
-                return carrello;
+                return prodotti_carrello;
             }
         }catch (SQLException e) {
             throw new RuntimeException(e);
@@ -53,10 +35,10 @@ public class CarrelloManager {
     }
 
 
-    public boolean rimuoviCarrelloUtente(int idutente){
+    public boolean rimuoviCarrelloUtente(int id_utente){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.deleteCarrelloUtente())) {
-                ps.setInt(1, idutente);
+                ps.setInt(1, id_utente);
                 ps.executeUpdate();
                 return true;
             }

@@ -16,9 +16,9 @@ public class RispostaSupportoManager {
                 ArrayList<RispostaSupporto> risposte = new ArrayList<>();
                 while (rs.next()) {
                     RispostaSupporto rispostaSupporto = new RispostaSupporto();
-                    rispostaSupporto.setId(rs.getInt("id"));
+                    rispostaSupporto.setId_utente(rs.getInt("id_utente"));
                     rispostaSupporto.setRisposta(rs.getString("risposta"));
-                    rispostaSupporto.setRichiestasupporto(rs.getInt("idrichiestasupporto"));
+                    rispostaSupporto.setId_richiesta_supporto(rs.getInt("id_richiesta_supporto"));
                     risposte.add(rispostaSupporto);
                 }
                 rs.close();
@@ -31,16 +31,13 @@ public class RispostaSupportoManager {
 
     public boolean inserisciRispostaSupporto(RispostaSupporto risposta){
         try (Connection con = Manager.getConnection()) {
-            try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRispostaSupporto(), Statement.RETURN_GENERATED_KEYS)) {
-                ps.setString(1, risposta.getRisposta());
-                ps.setInt(2, risposta.getRichiestasupporto());
+            try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRispostaSupporto())) {
+                ps.setInt(1,risposta.getId_utente());
+                ps.setString(2, risposta.getRisposta());
+                ps.setInt(3, risposta.getId_richiesta_supporto());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("INSERT error.");
                 }
-                ResultSet rs = ps.getGeneratedKeys();
-                rs.next();
-                int id = rs.getInt(1);
-                risposta.setId(id);
                 return true;
             }
         } catch (SQLException e) {

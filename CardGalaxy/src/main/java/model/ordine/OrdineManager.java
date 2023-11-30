@@ -18,10 +18,10 @@ public class OrdineManager extends Manager{
                 ArrayList<Ordine> ordini = new ArrayList<>();
                 while(set.next()){
                     Ordine o=new Ordine();
-                    o.setCodice(set.getInt("codice"));
-                    o.setPrezzototale(set.getDouble("prezzototale"));
-                    o.setDataAcquisto(set.getString("dataAcquisto"));
-                    o.setIdutente(set.getInt("utente"));
+                    o.setId(set.getInt("id"));
+                    o.setPrezzo_totale(set.getDouble("prezzo_totale"));
+                    o.setData_acquisto(set.getString("data_acquisto"));
+                    o.setId_utente(set.getInt("id_utente"));
                     ordini.add(o);
                 }
                 set.close();
@@ -32,6 +32,25 @@ public class OrdineManager extends Manager{
         }
     }
 
+    public Ordine retrieveOrdineById(int id){
+        try(Connection con = Manager.getConnection()){
+            try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveOrdineById())) {
+                ps.setInt(1, id);
+                ResultSet set = ps.executeQuery();
+                Ordine o=new Ordine();
+                if (set.next()) {
+                    o.setId(set.getInt("id"));
+                    o.setPrezzo_totale(set.getDouble("prezzo_totale"));
+                    o.setData_acquisto(set.getString("data_acquisto"));
+                    o.setId_utente(set.getInt("id_utente"));
+                }
+                set.close();
+                return o;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public int contaOrdini(){
         try(Connection con=Manager.getConnection()){
             try(PreparedStatement ps=con.prepareStatement(QUERY.countAllOrdini())){
@@ -47,39 +66,21 @@ public class OrdineManager extends Manager{
             throw new RuntimeException(e);
         }
     }
-    public Ordine retrieveOrdineById(int id){
-        try(Connection con = Manager.getConnection()){
-            try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveOrdineById())) {
-                ps.setInt(1, id);
-                ResultSet set = ps.executeQuery();
-                Ordine o=new Ordine();
-                if (set.next()) {
-                    o.setCodice(set.getInt("codice"));
-                    o.setPrezzototale(set.getDouble("prezzototale"));
-                    o.setDataAcquisto(set.getString("dataAcquisto"));
-                    o.setIdutente(set.getInt("utente"));
-                }
-                set.close();
-                return o;
-            }
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     public boolean creaOrdine(Ordine ordine){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.creaOrdine(),Statement.RETURN_GENERATED_KEYS)){
-                ps.setDouble(1,ordine.getPrezzototale());
-                ps.setString(2,ordine.getDataAcquisto());
-                ps.setInt(3,ordine.getIdutente());
+                ps.setDouble(1,ordine.getPrezzo_totale());
+                ps.setString(2,ordine.getData_acquisto());
+                ps.setInt(3,ordine.getId_utente());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("INSERT error.");
                 }
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
-                int codice = rs.getInt(1);
-                ordine.setCodice(codice);
+                int id= rs.getInt(1);
+                ordine.setId(id);
                 rs.close();
                 return true;
             }
@@ -115,7 +116,7 @@ public class OrdineManager extends Manager{
                 ResultSet rs= ps.executeQuery();
                 while(rs.next()){
                     giftCard=new GiftCard();
-                    giftCard.setId(rs.getInt("id"));
+                    giftCard.setId_prodotto(rs.getInt("id_prodotto"));
                     giftCard.setNome(rs.getString("nome"));
                     giftCard.setPiattaforma(rs.getString("piattaforma"));
                     giftCard.setDescrizione(rs.getString("descrizione"));

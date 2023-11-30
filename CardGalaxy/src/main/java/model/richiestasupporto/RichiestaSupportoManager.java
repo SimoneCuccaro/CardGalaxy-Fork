@@ -15,10 +15,10 @@ public class RichiestaSupportoManager {
                 ArrayList<RichiestaSupporto> richieste = new ArrayList<>();
                 while (rs.next()) {
                     RichiestaSupporto richiestaSupporto = new RichiestaSupporto();
-                    richiestaSupporto.setId(rs.getInt("id"));
+                    richiestaSupporto.setId_richiesta(rs.getInt("id_richiesta"));
                     richiestaSupporto.setRichiesta(rs.getString("richiesta"));
-                    richiestaSupporto.setOggettorichiesta(rs.getString("oggeettorichiesta"));
-                    richiestaSupporto.setIdutente(rs.getInt("idutente"));
+                    richiestaSupporto.setOggetto_richiesta(rs.getString("oggeetto_richiesta"));
+                    richiestaSupporto.setId_utente(rs.getInt("id_utente"));
                     richieste.add(richiestaSupporto);
                 }
                 rs.close();
@@ -33,15 +33,15 @@ public class RichiestaSupportoManager {
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRichiestaSupporto(), Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, richiesta.getRichiesta());
-                ps.setString(2, richiesta.getOggettorichiesta());
-                ps.setInt(3, richiesta.getIdutente());
+                ps.setString(2, richiesta.getOggetto_richiesta());
+                ps.setInt(3, richiesta.getId_utente());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("INSERT error.");
                 }
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 int id = rs.getInt(1);
-                richiesta.setId(id);
+                richiesta.setId_richiesta(id);
                 return true;
             }
         } catch (SQLException e) {

@@ -14,11 +14,14 @@ public class Utente
     private String username;
     private String pass;
     private String indirizzo;
-    private String dataNascita;
-    private boolean isAdmin;
+    private String nazione;
+    private String citta;
+    private int cap;
+    private String data_nascita;
+    private boolean is_admin;
 
 
-    public Utente(int id, String email, String nome, String cognome, String username, String pass, String indirizzo,String dataNascita,boolean isAdmin) {
+    public Utente(int id, String email, String nome, String cognome, String username, String pass, String indirizzo,String nazione,String citta,int cap,String data_nascita,boolean is_admin) {
         this.id = id;
         this.email = email;
         this.nome = nome;
@@ -26,8 +29,11 @@ public class Utente
         this.username = username;
         this.pass = pass;
         this.indirizzo=indirizzo;
-        this.dataNascita = dataNascita;
-        this.isAdmin=isAdmin;
+        this.nazione=nazione;
+        this.citta=citta;
+        this.cap=cap;
+        this.data_nascita = data_nascita;
+        this.is_admin=is_admin;
     }
     public  Utente(){}
 
@@ -95,20 +101,31 @@ public class Utente
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
+    public String getNazione() {return nazione;}
 
-    public String getDataNascita() {
-        return dataNascita;
+    public void setNazione(String nazione) {this.nazione = nazione;}
+
+    public String getCitta() {return citta;}
+
+    public void setCitta(String citta) {this.citta = citta;}
+
+    public int getCap() {return cap;}
+
+    public void setCap(int cap) {this.cap = cap;}
+
+    public String getData_nascita() {
+        return data_nascita;
     }
 
-    public void setDataNascita(String dataNascita) {
-        this.dataNascita = dataNascita;
+    public void setData_nascita(String data_nascita) {
+        this.data_nascita = data_nascita;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public boolean is_admin() {
+        return is_admin;
     }
 
     public void setAdmin(boolean admin) {
-        isAdmin = admin;
+        is_admin = admin;
     }
 }

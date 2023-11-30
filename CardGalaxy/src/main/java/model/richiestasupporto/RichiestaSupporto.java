@@ -3,49 +3,33 @@ package model.richiestasupporto;
 import model.utente.Utente;
 public class RichiestaSupporto
 {
-    private int id;
+    private int id_richiesta;
     private String richiesta;
-    private String oggettorichiesta;
-    private int idutente;
+    private String oggetto_richiesta;
+    private int id_utente;
 
-    public RichiestaSupporto(int id, String richiesta, String oggettorichiesta, int idutente) {
-        this.id = id;
+    public RichiestaSupporto(int id_richiesta, String richiesta, String oggetto_richiesta, int id_utente) {
+        this.id_richiesta = id_richiesta;
         this.richiesta = richiesta;
-        this.oggettorichiesta = oggettorichiesta;
-        this.idutente = idutente;
+        this.oggetto_richiesta = oggetto_richiesta;
+        this.id_utente = id_utente;
     }
 
-    public RichiestaSupporto() {}
+    public RichiestaSupporto(){}
 
-    public int getId() {
-        return id;
-    }
+    public int getId_richiesta() {return id_richiesta;}
 
-    public void setId(int idSupporto) {
-        this.id = id;
-    }
+    public void setId_richiesta(int id_richiesta) {this.id_richiesta = id_richiesta;}
 
-    public String getRichiesta() {
-        return richiesta;
-    }
+    public String getRichiesta() {return richiesta;}
 
-    public void setRichiesta(String richiesta) {
-        this.richiesta = richiesta;
-    }
+    public void setRichiesta(String richiesta) {this.richiesta = richiesta;}
 
-    public String getOggettorichiesta() {
-        return oggettorichiesta;
-    }
+    public String getOggetto_richiesta() {return oggetto_richiesta;}
 
-    public void setOggettorichiesta(String oggettorichiesta) {
-        this.oggettorichiesta = oggettorichiesta;
-    }
+    public void setOggetto_richiesta(String oggetto_richiesta) {this.oggetto_richiesta = oggetto_richiesta;}
 
-    public int getIdutente() {
-        return idutente;
-    }
+    public int getId_utente() {return id_utente;}
 
-    public void setIdutente(int idutente) {
-        this.idutente = idutente;
-    }
+    public void setId_utente(int id_utente) {this.id_utente = id_utente;}
 }

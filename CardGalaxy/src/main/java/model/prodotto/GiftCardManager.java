@@ -17,7 +17,7 @@ public class GiftCardManager
                 ArrayList<GiftCard> giftCards = new ArrayList<>();
                 while(rs.next()){
                     GiftCard gift = new GiftCard();
-                    gift.setId(rs.getInt("id"));
+                    gift.setId_prodotto(rs.getInt("id_prodotto"));
                     gift.setNome(rs.getString("nome"));
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
@@ -33,15 +33,15 @@ public class GiftCardManager
         }
     }
 
-    public GiftCard retrieveGiftCardByID(int id){
+    public GiftCard retrieveGiftCardByID(int id_prodotto){
         GiftCard gift;
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveGiftCardByID())) {
-                ps.setInt(1, id);
+                ps.setInt(1, id_prodotto);
                 ResultSet rs = ps.executeQuery();
                 gift = new GiftCard();
                 if (rs.next()) {
-                    gift.setId(id);
+                    gift.setId_prodotto(rs.getInt("id_prodotto"));
                     gift.setNome(rs.getString("nome"));
                     gift.setPiattaforma(rs.getString("piattaforma"));
                     gift.setDescrizione(rs.getString("descrizione"));
@@ -70,8 +70,8 @@ public class GiftCardManager
                     }
                     ResultSet rs = ps.getGeneratedKeys();
                     rs.next();
-                    int id = rs.getInt(1);
-                    gift.setId(id);
+                    int id_prodotto = rs.getInt(1);
+                    gift.setId_prodotto(id_prodotto);
                     return true;
                 }
             }catch (SQLException e) {
@@ -87,6 +87,7 @@ public class GiftCardManager
                     ps.setString(3, gift.getDescrizione());
                     ps.setDouble(4, gift.getPrezzo());
                     ps.setString(5, gift.getFoto());
+                    ps.setInt(6,gift.getId_prodotto());
                     ps.executeUpdate();
                     return true;
                 }
@@ -95,10 +96,10 @@ public class GiftCardManager
             }
         }
 
-        public boolean rimuoviGiftCard(int idGiftCard){
+        public boolean rimuoviGiftCard(int id_prodotto){
             try (Connection con = Manager.getConnection()) {
                 try (PreparedStatement ps = con.prepareStatement(QUERY.rimuoviGiftCard())) {
-                    ps.setInt(1, idGiftCard);
+                    ps.setInt(1, id_prodotto);
                     ps.executeUpdate();
                     return true;
                 }
@@ -122,19 +123,29 @@ public class GiftCardManager
             }
         }
 
-        public boolean addToOrder(int codiceordine,int idprodotto, int quantita){
+        public boolean addToCart(int id_utente,int id_prodotto,int quantita){
             try (Connection con = Manager.getConnection()) {
-                try (PreparedStatement ps = con.prepareStatement(QUERY.addToOrder())) {
-                    ps.setInt(1,codiceordine);
-                    ps.setInt(2,idprodotto);
+                try (PreparedStatement ps = con.prepareStatement(QUERY.addToCart())) {
+                    ps.setInt(1,id_utente);
+                    ps.setInt(2,id_prodotto);
                     ps.setInt(3,quantita);
-                    ResultSet resultSet = ps.executeQuery();
-                    if(ps.executeUpdate()!=1){
-                        throw new RuntimeException("INSERT error.");
-                    }
+                     ps.executeUpdate();
                     return true;
                 }
-             }catch(SQLException e){
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public boolean removeFromCart(int id_utente,int id_prodotto){
+            try (Connection con = Manager.getConnection()) {
+                try (PreparedStatement ps = con.prepareStatement(QUERY.removeFromCart())) {
+                    ps.setInt(1,id_utente);
+                    ps.setInt(2,id_prodotto);
+                    ps.executeUpdate();
+                    return true;
+                }
+            }catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }

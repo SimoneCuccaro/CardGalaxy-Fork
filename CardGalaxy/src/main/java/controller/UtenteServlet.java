@@ -32,7 +32,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
         try {
             String path = request.getPathInfo();
             switch (path) {
-                case "/login":
+                case "/signin":
                     //effettuazione del login
                     request.setAttribute("back", "/WEB-INF/views/login.jsp");
                     Utente tmpUtente=new Utente();
@@ -90,7 +90,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 try {
-                    String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
+                    String path = request.getPathInfo();
                     switch (path) {
                         case "/home":
                             //pagina iniziale

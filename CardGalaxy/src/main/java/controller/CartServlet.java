@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CartServlet", value = "/CartServlet/*")
+@WebServlet(name = "CartServlet", value = "/cart/*")
 public class CartServlet extends HttpServlet implements ErrorHandler {
 
     private CarrelloManager carrelloManager;
@@ -47,7 +47,7 @@ public class CartServlet extends HttpServlet implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/show":
-                    //click su pagina visualizza carrello
+                    request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request,response);
                     break;
                 default:
                     notFound();

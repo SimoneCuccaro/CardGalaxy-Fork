@@ -8,7 +8,7 @@
         <a href="${contextPath}/user/login"><%@include file="../../icons/user-solid.svg"%></a>
     </div>
     <div class="cart-svg">
-        <%@include file="../../icons/cart.svg"%>
+        <a href="${contextPath}/cart/show"><%@include file="../../icons/cart.svg"%></a>
         <span class="badge">0</span>
     </div>
     <img id="logo" src="${contextPath}/photos/cardgalaxylogo.png" alt="website logo">

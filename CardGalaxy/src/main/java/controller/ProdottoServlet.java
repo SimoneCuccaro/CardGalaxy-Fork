@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ProdottoServlet", value = "/ProdottoServlet/*")
+@WebServlet(name = "ProdottoServlet", value = "/products/*")
 public class ProdottoServlet extends Controller implements ErrorHandler {
 
     private GiftCardManager giftCardManager;
@@ -59,8 +59,12 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     break;
                 case "/info":
                     //click su pagina info prodotto(admin)
+                    break;
                 case "/modify":
                     //click su pagina modifica prodotto
+                    break;
+                case "/shopnow":
+                    request.getRequestDispatcher("/WEB-INF/views/shopnow.jsp").forward(request, response);
                     break;
                 default:
                     notFound();

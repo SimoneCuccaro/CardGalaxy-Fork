@@ -31,41 +31,52 @@ public class UtenteServlet extends Controller implements ErrorHandler{
             throws ServletException, IOException {
         try {
             String path = request.getPathInfo();
+            String contextPath = request.getContextPath();
             switch (path) {
                 case "/signin":
                     //effettuazione del login
                     request.setAttribute("back", "/WEB-INF/views/login.jsp");
                     Utente tmpUtente=new Utente();
-                    tmpUtente.setEmail(request.getParameter("username"));
+                    tmpUtente.setUsername(request.getParameter("user"));
                     tmpUtente.setPass(request.getParameter("password"));
                     tmpUtente = utenteManager.retrieveUtentePass(tmpUtente.getUsername(), tmpUtente.getPass());
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
                         if (utenteSession.isAdmin()) {
-                            response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/admin");
+                            response.sendRedirect(contextPath + "/user/admin");
                         } else {
-                            response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
+                            response.sendRedirect(contextPath + "/user/home");
                         }
                     } else {
-                        throw new InvalidRequestException("Credenziali non valide", List.of("Credenziali non valide"), HttpServletResponse.SC_BAD_REQUEST);
+                        throw new InvalidRequestException("Invalid credentials", List.of("Invalid credentials"), HttpServletResponse.SC_BAD_REQUEST);
                     }
                 break;
                 case "/logout":
                     //effettuazione del logout
                     response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
                     break;
-                case "/create":
+                case "/register":
                     //effettuazione del register account
-                    request.setAttribute("back", "/WEB-INF/views/site/signup.jsp");
+                    request.setAttribute("back", "/WEB-INF/views/register.jsp");
                     validate(UtenteValidator.validateUtente(request));
                     Utente utente=new Utente();
-                    //mettere parametri registrazione qui
+                    utente.setEmail(request.getParameter("email"));
+                    utente.setNome(request.getParameter("name"));
+                    utente.setCognome(request.getParameter("surname"));
+                    utente.setUsername(request.getParameter("user"));
+                    utente.setPass(request.getParameter("password"));
+                    utente.setIndirizzo(request.getParameter("address"));
+                    utente.setNazione(request.getParameter("nation"));
+                    utente.setCitta(request.getParameter("city"));
+                    utente.setCap(Integer.parseInt(request.getParameter("cap")));
+                    utente.setData_nascita(request.getParameter("bday"));
+                    utente.setAdmin(false);
                     utenteManager.creaUtente(utente);
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
+                        response.sendRedirect(contextPath + "/user/home");
                     }else{
                         internalError();
                     }

@@ -11,7 +11,7 @@ public class UtenteQuery extends TableQuery
     }
 
     public String singoloUtenteConPass(){
-        return String.format("SELECT * FROM %s WHERE username = ? AND password = SHA1(?);", this.table);
+        return String.format("SELECT * FROM %s WHERE username = ? AND pass = ?;", this.table);
     }
 
     public String singoloUtente(){

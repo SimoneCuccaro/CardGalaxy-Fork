@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <%@include file="../utils/head.jsp"%>
     <title>Login</title>
 </head>
@@ -15,10 +16,13 @@
 <main>
     <div class="content">
         <h1 class="welcome">Login</h1>
-        <form class="login grid-y" action="" method="">
+        <form class="login grid-y" action="${contextPath}/user/signin" method="post">
+            <c:if test="${not empty alert}">
+                <%@include file="../utils/alert.jsp" %>
+            </c:if>
                 <span> Username : </span>
                 <label for="userid">
-                    <input class="larger" type="text" name="email" id="userid" placeholder="Username" required>
+                    <input class="larger" type="text" name="user" id="userid" placeholder="Username" required>
                 </label>
             <br>
                 <span> Password : </span>

@@ -45,8 +45,9 @@ public class UtenteManager extends Manager
                 ps.setString(1, username);
                 ps.setString(2,password);
                 ResultSet set = ps.executeQuery();
-                Utente u = new Utente();
+                Utente u = null;
                 if (set.next()) {
+                    u = new Utente();
                     u.setId(set.getInt("id"));
                     u.setEmail(set.getString("email"));
                     u.setNome(set.getString("nome"));

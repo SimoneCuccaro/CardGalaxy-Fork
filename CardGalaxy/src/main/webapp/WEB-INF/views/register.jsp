@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Register</title>
     <%@include file="../utils/head.jsp"%>
 </head>
@@ -15,7 +16,10 @@
 <main>
     <div class="content">
         <h1 class="welcome">Create Your Account</h1>
-        <form class="login grid-y" action="" method="">
+        <form class="login grid-y" action="${contextPath}/user/register" method="post">
+            <c:if test="${not empty alert}">
+                <%@include file="../utils/alert.jsp" %>
+            </c:if>
             <span> Email : </span>
             <label for="emailid">
                 <input class="larger" type="email" name="email" id="emailid" placeholder="example@mail.com" required>

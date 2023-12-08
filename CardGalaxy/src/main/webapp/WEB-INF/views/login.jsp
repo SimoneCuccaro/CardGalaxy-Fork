@@ -2,11 +2,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  type="text/css" href="../../CSS/index-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/aboutus-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/support-button.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
+    <link rel="stylesheet"  type="text/css" href="${contextPath}/CSS/index-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <%@include file="../utils/head.jsp"%>
     <title>Login</title>
 </head>
@@ -33,7 +32,9 @@
         <p class="para_index">
             Don't have an account?
         </p>
+        <form action="${contextPath}/user/register" method="get">
         <button type="submit" class="button add-margin-bottom"> REGISTER </button>
+        </form>
     </div>
 </main>
 <%@include file="../partials/sitefooter.jsp"%>

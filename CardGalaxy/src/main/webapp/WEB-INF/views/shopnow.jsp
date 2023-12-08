@@ -7,31 +7,30 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
-    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/help-style.css">
-    <title>Help</title>
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/cards.css">
     <%@include file="../utils/head.jsp"%>
+    <title>Shop Now</title>
 </head>
 <body>
 <%@include file="../partials/siteheader.jsp"%>
 <%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
-        <h1 class="welcome">Need Help?</h1>
-        <div>
-            <form action="" method="">
-            <p class="para_index"> Describe shortly your problem here :  </p>
-            <label for="objectid">
-                <input class="bigger-area-object" type="text" name="object" id="objectid" placeholder="Request Object" required>
-            </label>
-            <p class="para_index"> Insert all your problem details here : </p>
-            <label for="requestid">
-               <textarea id="requestid" name="request" rows="10" cols="96" required>
-               </textarea>
-            </label>
-                <div>
-                    <button type="submit" class="glowing-btn"> SUBMIT REQUEST </button>
+        <h1 class="welcome"> Discover Our Products </h1>
+        <div class="container">
+            <div class="card">
+                <div class="imgBx">
+                    <img src="${contextPath}/photos/steam.png" alt="steam gift card 20 euro" class="gift-img">
                 </div>
-            </form>
+                <div class="contentBx">
+                    <h2> Steam Card 20€ </h2>
+                    <p> Description of the Product</p>
+                    <br>
+                    <button type="submit"> SHOW REVIEWS </button>
+                    <br>
+                    <button type="submit"> ADD TO CART </button>
+                </div>
+            </div>
         </div>
     </div>
 </main>

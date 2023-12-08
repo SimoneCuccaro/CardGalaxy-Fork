@@ -124,6 +124,9 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             //click su lista utenti(admin)
                             request.getRequestDispatcher("/WEB-INF/admin-views/managecustomers.jsp").forward(request, response);
                             break;
+                        case "/aboutus":
+                            request.getRequestDispatcher("/WEB-INF/views/aboutus.jsp").forward(request, response);
+                            break;
                         default:
                             notFound();
                     }

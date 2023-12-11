@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RecensioneServlet", value = "/RecensioneServlet/*")
+@WebServlet(name = "RecensioneServlet", value = "/reviews/*")
 public class RecensioneServlet extends HttpServlet implements ErrorHandler {
 
     private RecensioneManager recensioneManager;
@@ -53,6 +53,10 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
                     //si dovra inserire pulsante elimina recensioni alle recensioni solo dell'utente in sessione
                     //(se utentesessionid==utenterecensioneid) allora mostra pulsante elimina recensione
                     //admin vede sempre pulsante elimina su tuttte le recensioni
+                    break;
+                case "/managereviews":
+                    request.getRequestDispatcher("/WEB-INF/admin-views/managereviews.jsp").forward(request,response);
+                    break;
                 default:
                     notFound();
             }

@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../../CSS/admin.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <title>Add Product</title>
+    <%@include file="../utils/head.jsp"%>
 </head>
 <body>
-<header class="grid-y align-center">
-    <h1>-Welcome Simone-</h1>
-</header>
-<aside class="sidebar">
-    <nav class="menu grid-y align-center">
-        <button type="submit" class="button btn-for-dash">LOGOUT</button>
-        <a href="#"><img src="../../photos/cardgalaxylogo.png" id="logosidebar" width="200" height="200" alt="logo"></a>
-        <a href="#"> Manage Customers </a>
-        <a href="#"> Manage Products </a>
-        <a href="#"> Manage Reviews </a>
-        <a href="#"> Manage Orders </a>
-        <a href="#"> Help Requests </a>
-    </nav>
-</aside>
+<%@include file="../partials/adminheader.jsp"%>
+<%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content align-center">
         <h1> Add Product </h1>

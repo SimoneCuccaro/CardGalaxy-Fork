@@ -18,8 +18,13 @@
         <div>
         <img src="${contextPath}/photos/profile.png" alt="profile pic" class="smiley-pc">
         </div>
+        <form action="${contextPath}/user/details" method="get">
         <button type="submit" class="glowing-btn"> VIEW ACCOUNT DETAILS </button>
+        </form>
         <button type="submit" class="glowing-btn"> VIEW ORDERS HISTORY </button>
+        <form action="${contextPath}/user/logout" method="post">
+        <button type="submit" class="glowing-btn"> LOGOUT </button>
+        </form>
     </div>
 </main>
 <%@include file="../partials/sitefooter.jsp"%>

@@ -23,7 +23,7 @@ public class UtenteQuery extends TableQuery
     }
 
     public String aggiornaUtente(){
-        return String.format("UPDATE %s SET email = ?,nome = ?, cognome = ?, username= ?, indrizzo = ?,nazione = ?,citta = ?,cap = ?, data_nascita = ?, is_admin = ? WHERE id = ?;", this.table);
+        return String.format("UPDATE %s SET email = ?,nome = ?, cognome = ?, username= ?, indirizzo = ?,nazione = ?,citta = ?,cap = ?, data_nascita = ?, is_admin = ?, pass = ? WHERE id = ?;", this.table);
     }
 
     public String eliminaUtente(){

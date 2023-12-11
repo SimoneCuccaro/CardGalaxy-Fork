@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  type="text/css" href="../../CSS/index-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/aboutus-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/support-button.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
+    <link rel="stylesheet"  type="text/css" href="${contextPath}/CSS/index-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <%@include file="../utils/head.jsp"%>
     <title>Login</title>
 </head>
@@ -16,10 +16,13 @@
 <main>
     <div class="content">
         <h1 class="welcome">Login</h1>
-        <form class="login grid-y" action="" method="">
+        <form class="login grid-y" action="${contextPath}/user/signin" method="post">
+            <c:if test="${not empty alert}">
+                <%@include file="../utils/alert.jsp" %>
+            </c:if>
                 <span> Username : </span>
                 <label for="userid">
-                    <input class="larger" type="text" name="email" id="userid" placeholder="Username" required>
+                    <input class="larger" type="text" name="user" id="userid" placeholder="Username" required>
                 </label>
             <br>
                 <span> Password : </span>
@@ -33,7 +36,9 @@
         <p class="para_index">
             Don't have an account?
         </p>
+        <form action="${contextPath}/user/register" method="get">
         <button type="submit" class="button add-margin-bottom"> REGISTER </button>
+        </form>
     </div>
 </main>
 <%@include file="../partials/sitefooter.jsp"%>

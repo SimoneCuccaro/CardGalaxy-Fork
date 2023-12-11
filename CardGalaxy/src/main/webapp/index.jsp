@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="./CSS/index-style.css">
-    <link rel="stylesheet" href="./CSS/support-button.css">
+    <link rel="stylesheet" href="${contextPath}/CSS/index-style.css">
+    <link rel="stylesheet" href="${contextPath}/CSS/support-button.css">
     <title>Homepage</title>
     <%@include file="./WEB-INF/utils/head.jsp"%>
 </head>
@@ -13,13 +13,13 @@
 <main>
     <div class="content">
         <h1 class="welcome">Welcome to the Galaxy of Gift Cards</h1>
-        <img class="welcome-animation" src="photos/card_anim_welcome.gif" alt="card animation">
+        <img class="welcome-animation" src="${contextPath}/photos/card_anim_welcome.gif" alt="card animation">
         <p class="para_index">
             All the Gift Cards that you need in ONE PLACE.
         </p>
-        <img class="promo-cards" src="photos/cards_promo.png" alt="promo cards">
+        <img class="promo-cards" src="${contextPath}/photos/cards_promo.png" alt="promo cards">
         <p class="para_index">
-             What are you waiting for? <a class="index-link" href="#">SHOP NOW</a>
+             What are you waiting for? <a class="index-link" href="${contextPath}/products/shopnow">SHOP NOW</a>
         </p>
     </div>
 </main>

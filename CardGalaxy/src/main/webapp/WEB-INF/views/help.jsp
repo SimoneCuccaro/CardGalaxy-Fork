@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet"  type="text/css" href="../../CSS/index-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/aboutus-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/support-button.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/userprofile.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/help-style.css">
+    <link rel="stylesheet"  type="text/css" href="${contextPath}/CSS/index-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/help-style.css">
     <title>Help</title>
     <%@include file="../utils/head.jsp"%>
 </head>

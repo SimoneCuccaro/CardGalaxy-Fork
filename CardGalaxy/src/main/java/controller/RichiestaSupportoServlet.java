@@ -49,7 +49,7 @@ public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandle
                     request.getRequestDispatcher(resource).forward(request,response);
                     break;
                 case "/showall":
-                    //per andare sulla pagina admin e visualizzare tutte le richieste
+                    request.getRequestDispatcher("/WEB-INF/admin-views/managehelprequests.jsp").forward(request, response);
                     break;
                 default:
                     notFound();

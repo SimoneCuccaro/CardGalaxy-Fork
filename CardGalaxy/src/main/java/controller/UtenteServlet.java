@@ -13,7 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,53 +33,99 @@ public class UtenteServlet extends Controller implements ErrorHandler{
             throws ServletException, IOException {
         try {
             String path = request.getPathInfo();
+            String contextPath = request.getContextPath();
+            HttpSession session = request.getSession(false);
             switch (path) {
-                case "/login":
+                case "/signin":
                     //effettuazione del login
                     request.setAttribute("back", "/WEB-INF/views/login.jsp");
                     Utente tmpUtente=new Utente();
-                    tmpUtente.setEmail(request.getParameter("email"));
+                    tmpUtente.setUsername(request.getParameter("user"));
                     tmpUtente.setPass(request.getParameter("password"));
-                    tmpUtente = utenteManager.retrieveUtentePass(tmpUtente.getEmail(), tmpUtente.getPass());
+                    tmpUtente = utenteManager.retrieveUtentePass(tmpUtente.getUsername(), tmpUtente.getPass());
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
                         if (utenteSession.isAdmin()) {
-                            response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/admin");
+                            response.sendRedirect(contextPath + "/user/admin");
                         } else {
-                            response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
+                            response.sendRedirect(contextPath + "/user/profile");
                         }
                     } else {
-                        throw new InvalidRequestException("Credenziali non valide", List.of("Credenziali non valide"), HttpServletResponse.SC_BAD_REQUEST);
+                        throw new InvalidRequestException("Invalid credentials", List.of("Invalid credentials"), HttpServletResponse.SC_BAD_REQUEST);
                     }
                 break;
                 case "/logout":
                     //effettuazione del logout
-                    response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
+                    session.removeAttribute("utenteSession");
+                    session.invalidate();
+                    response.sendRedirect(contextPath + "/user/home");
                     break;
-                case "/create":
-                    //effettuazione del register account
-                    request.setAttribute("back", "/WEB-INF/views/site/signup.jsp");
+                case "/register":
+                    // aggiungere alert di avvenuta operazione
+                    request.setAttribute("back", "/WEB-INF/views/register.jsp");
                     validate(UtenteValidator.validateUtente(request));
                     Utente utente=new Utente();
-                    //mettere parametri registrazione qui
+                    utente.setEmail(request.getParameter("email"));
+                    utente.setNome(request.getParameter("name"));
+                    utente.setCognome(request.getParameter("surname"));
+                    utente.setUsername(request.getParameter("user"));
+                    utente.setPass(request.getParameter("password"));
+                    utente.setIndirizzo(request.getParameter("address"));
+                    utente.setNazione(request.getParameter("nation"));
+                    utente.setCitta(request.getParameter("city"));
+                    utente.setCap(Integer.parseInt(request.getParameter("cap")));
+                    utente.setData_nascita(request.getParameter("bday"));
+                    utente.setAdmin(false);
                     utenteManager.creaUtente(utente);
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/home");
+                        response.sendRedirect(contextPath + "/user/home");
                     }else{
                         internalError();
                     }
                     break;
                 case "/update":
-                    //effettuazione del modify account(utente)
-                    response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/details");
+                    // aggiungere alert di avvenuta operazione
+                    request.setAttribute("back","/WEB-INF/views/editaccount.jsp");
+                    validate(UtenteValidator.validateUtente(request));
+                    Utente u = new Utente();
+                    u.setUsername(request.getParameter("user"));
+                    u.setNome(request.getParameter("name"));
+                    u.setCognome(request.getParameter("surname"));
+                    u.setEmail(request.getParameter("email"));
+                    u.setCap(Integer.parseInt(request.getParameter("cap")));
+                    u.setNazione(request.getParameter("nation"));
+                    u.setCitta(request.getParameter("city"));
+                    u.setIndirizzo(request.getParameter("address"));
+                    u.setData_nascita(request.getParameter("bday"));
+                    u.setPass(request.getParameter("password"));
+                    u.setAdmin(false);
+                    u.setId(getUtenteSession(session).getId());
+                    utenteManager.aggiornaUtente(u);
+                    if(u!=null){
+                        UtenteSession utenteSession = new UtenteSession(u);
+                        request.getSession(true).setAttribute("utenteSession", utenteSession);
+                        response.sendRedirect(contextPath + "/user/home");
+                    }else{
+                        internalError();
+                    }
                     break;
                 case "/delete":
-                    //anche un utente puo cancellare il suo account(mettere controllo e poi redirect alla home o pagina che conferma eliminazione account)
-                    response.sendRedirect("/CardGalaxy_war_exploded/UtenteServlet/showallusers");
+                    // aggiungere alert di avvenuta operazione
+                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
+                    utenteManager.cancellaUtente(getUtenteSession(session).getId());
+                    session.removeAttribute("utenteSession");
+                    session.invalidate();
+                    response.sendRedirect(contextPath + "/user/home");
                     break;
+                case "/remove":
+                    // aggiungere alert di avvenuta operazione
+                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
+                    utenteManager.cancellaUtente(Integer.parseInt(request.getParameter("customerid")));
+                    response.sendRedirect(contextPath + "/user/showallusers");
+                     break;
                 default:
                     notFound();
             }
@@ -90,7 +138,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 try {
-                    String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
+                    String path = request.getPathInfo();
+                    HttpSession session = request.getSession(false);
                     switch (path) {
                         case "/home":
                             //pagina iniziale
@@ -114,15 +163,24 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             break;
                         case "/details":
                             //click su dettagli account(utente)
+                            Utente u = utenteManager.retrieveUtente(getUtenteSession(session).getId());
+                            request.setAttribute("user",u);
                             request.getRequestDispatcher("/WEB-INF/views/accountdetails.jsp").forward(request, response);
                             break;
                         case "/modify":
                             //click su modifica account(utente)
+                            Utente ut = utenteManager.retrieveUtente(getUtenteSession(session).getId());
+                            request.setAttribute("user",ut);
                             request.getRequestDispatcher("/WEB-INF/views/editaccount.jsp").forward(request, response);
                             break;
                         case "/showallusers":
-                            //click su lista utenti(admin)
+                            ArrayList<Utente> utenti = utenteManager.retrieveUtenti();
+                            utenti.removeIf(Utente::is_admin);
+                            request.setAttribute("customers",utenti);
                             request.getRequestDispatcher("/WEB-INF/admin-views/managecustomers.jsp").forward(request, response);
+                            break;
+                        case "/aboutus":
+                            request.getRequestDispatcher("/WEB-INF/views/aboutus.jsp").forward(request, response);
                             break;
                         default:
                             notFound();

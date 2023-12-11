@@ -2,7 +2,7 @@
 <nav>
     <ul>
         <li><a href="${contextPath}/user/home">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Shop Now</a></li>
+        <li><a href="${contextPath}/user/aboutus">About Us</a></li>
+        <li><a href="${contextPath}/products/shopnow">Shop Now</a></li>
     </ul>
 </nav>

@@ -133,3 +133,9 @@ footer {
 footer p {
     margin-top: 20px;
 }
+
+.hi {
+    font-size: 17px;
+    font-family: "Agency FB", serif;
+    color: white;
+}

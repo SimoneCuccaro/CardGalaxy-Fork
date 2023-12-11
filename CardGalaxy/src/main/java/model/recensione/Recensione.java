@@ -6,33 +6,33 @@ import java.util.Date;
 
 public class Recensione
 {
-    private int idutente;
-    private int codiceprodotto;
+    private int id_utente;
+    private int id_prodotto;
     private String datarecensione;
     private String testo;
 
-    public Recensione(int idutente,int codiceprodotto,String datarecensione,String testo){
-        this.idutente=idutente;
-        this.codiceprodotto=codiceprodotto;
+    public Recensione(int id_utente,int id_prodotto,String datarecensione,String testo){
+        this.id_utente=id_utente;
+        this.id_prodotto=id_prodotto;
         this.datarecensione=datarecensione;
         this.testo=testo;
     }
     public Recensione() {}
 
-    public int getIdutente() {
-        return idutente;
+    public int getId_utente() {
+        return id_utente;
     }
 
-    public void setIdutente(int idutente) {
-        this.idutente = idutente;
+    public void setId_utente(int id_utente) {
+        this.id_utente = id_utente;
     }
 
-    public int getCodiceprodotto() {
-        return codiceprodotto;
+    public int getId_prodotto() {
+        return id_prodotto;
     }
 
-    public void setCodiceprodotto(int codiceprodotto) {
-        this.codiceprodotto = codiceprodotto;
+    public void setId_prodotto(int id_prodotto) {
+        this.id_prodotto = id_prodotto;
     }
 
     public String getDatarecensione() {

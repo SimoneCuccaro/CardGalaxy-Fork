@@ -1,3 +1,7 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.utente.Utente" %><%
+    ArrayList<Utente> customers = (ArrayList<Utente>) request.getAttribute("customers");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,18 +26,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>pasquale97@gmail.com</td>
-                <td>Pasquale</td>
-                <td>Verdi</td>
-                <td><button type="submit" class="button button-for-table">REMOVE</button></td>
-            </tr>
-            <tr>
-                <td>ethanpayne@hotmail.uk</td>
-                <td>Ethan</td>
-                <td>Payne</td>
-                <td><button type="submit" class="button button-for-table">REMOVE</button></td>
-            </tr>
+            <c:forEach items="${customers}" var="customer">
+                <tr>
+                    <td>${customer.email}</td>
+                    <td>${customer.nome}</td>
+                    <td>${customer.cognome}</td>
+                    <form action="${contextPath}/user/remove" method="post" onsubmit="return confirm('Are you sure?');">
+                    <td><button type="submit" class="button" name="customerid" value="${customer.id}"> X </button></td>
+                    </form>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

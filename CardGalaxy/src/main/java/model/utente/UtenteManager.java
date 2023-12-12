@@ -139,7 +139,8 @@ public class UtenteManager extends Manager
                 ps.setInt(8,utente.getCap());
                 ps.setString(9, utente.getData_nascita());
                 ps.setBoolean(10,utente.is_admin());
-                ps.setInt(11,utente.getId());
+                ps.setString(11,utente.getPass());
+                ps.setInt(12,utente.getId());
                 ps.executeUpdate();
                 return true;
             }

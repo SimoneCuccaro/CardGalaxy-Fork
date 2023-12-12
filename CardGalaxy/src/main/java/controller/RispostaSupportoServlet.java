@@ -45,6 +45,7 @@ public class RispostaSupportoServlet extends HttpServlet implements ErrorHandler
             switch (path) {
                 case "/create":
                     //click sul pulsante per inviare una risposta (all' interno della pagina in cui ci sono tutte le richieste?)
+                    authorize(request.getSession(false));
                     break;
                 default:
                     notFound();

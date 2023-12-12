@@ -26,9 +26,11 @@ public class CartServlet extends HttpServlet implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/add":
+                    authenticate(request.getSession(false));
                     //aggiunge prodotto al carrello
                     break;
                 case "/remove":
+                    authenticate(request.getSession(false));
                     //rimuovo prodotto dal carrello
                     break;
                 default:
@@ -47,6 +49,7 @@ public class CartServlet extends HttpServlet implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/show":
+                    authenticate(request.getSession(false));
                     request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request,response);
                     break;
                 default:

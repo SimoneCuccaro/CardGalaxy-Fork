@@ -45,10 +45,12 @@ public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandle
             String resource;
             switch (path) {
                 case "/create":
+                    authenticate(request.getSession(false));
                     resource = "/WEB-INF/views/help.jsp";
                     request.getRequestDispatcher(resource).forward(request,response);
                     break;
                 case "/showall":
+                    authorize(request.getSession(false));
                     request.getRequestDispatcher("/WEB-INF/admin-views/managehelprequests.jsp").forward(request, response);
                     break;
                 default:

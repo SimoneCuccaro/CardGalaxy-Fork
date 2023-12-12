@@ -132,4 +132,19 @@ public class OrdineManager extends Manager{
             throw new RuntimeException(e);
         }
     }
+    public double getGuadagno() {
+        double guadagno=0.0;
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.getGuadagno())) {
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    guadagno+=rs.getDouble(1);
+                }
+                return guadagno;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

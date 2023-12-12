@@ -8,13 +8,16 @@ public class GiftCard {
     private double prezzo;
     private String foto;
 
-    public GiftCard(int id_prodotto, String nome, String piattaforma, String descrizione, double prezzo,String foto) {
+    private boolean isAvailable;
+
+    public GiftCard(int id_prodotto, String nome, String piattaforma, String descrizione, double prezzo,String foto,boolean isAvailable) {
         this.id_prodotto = id_prodotto;
         this.nome = nome;
         this.piattaforma = piattaforma;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.foto=foto;
+        this.isAvailable=isAvailable;
     }
 
     public GiftCard() {}
@@ -66,4 +69,8 @@ public class GiftCard {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    public boolean isAvailable() {return isAvailable;}
+
+    public void setAvailable(boolean available) {isAvailable = available;}
 }

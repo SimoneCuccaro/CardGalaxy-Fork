@@ -160,4 +160,19 @@ public class UtenteManager extends Manager
             throw new RuntimeException(e);
         }
     }
+
+    public int countUsers (){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.contaUtenti())) {
+                ResultSet resultSet = ps.executeQuery();
+                int size = 0;
+                if (resultSet.next()) {
+                    size = resultSet.getInt("utentiTotali");
+                }
+                return size;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -55,6 +55,7 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
                     //admin vede sempre pulsante elimina su tuttte le recensioni
                     break;
                 case "/managereviews":
+                    authorize(request.getSession(false));
                     request.getRequestDispatcher("/WEB-INF/admin-views/managereviews.jsp").forward(request,response);
                     break;
                 default:

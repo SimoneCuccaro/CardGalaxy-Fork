@@ -30,6 +30,8 @@ public class UtenteQuery extends TableQuery
         return String.format("DELETE FROM %s WHERE id=?;", this.table);
     }
 
+    public String contaUtenti(){ return String.format("SELECT COUNT(*) as utentiTotali FROM %s",this.table);}
+
 
 }
 

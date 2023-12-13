@@ -18,4 +18,6 @@ public class OrdineQuery extends TableQuery
     public String lastOrder() { return String.format("SELECT max(id) as lastorder from %s;",this.table);}
 
     public String retriveProdotti(){ return String.format("SELECT * FROM prodotto,contenuto WHERE prodotto.id_prodotto=contenuto.id_prodotto AND contenuto.id_ordine = ?;");}
+
+    public String getGuadagno(){return String.format("SELECT prezzo_totale FROM %s;",this.table);}
 }

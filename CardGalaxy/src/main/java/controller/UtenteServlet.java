@@ -155,25 +155,30 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             break;
                         case "/admin":
                             //pagina iniziale admin
+                            authorize(request.getSession(false));
                             request.getRequestDispatcher("/WEB-INF/admin-views/dashboard.jsp").forward(request, response);
                             break;
                         case "/profile":
                             //click su pagina personale
+                            authenticate(request.getSession(false));
                             request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
                             break;
                         case "/details":
                             //click su dettagli account(utente)
+                            authenticate(request.getSession(false));
                             Utente u = utenteManager.retrieveUtente(getUtenteSession(session).getId());
                             request.setAttribute("user",u);
                             request.getRequestDispatcher("/WEB-INF/views/accountdetails.jsp").forward(request, response);
                             break;
                         case "/modify":
                             //click su modifica account(utente)
+                            authenticate(request.getSession(false));
                             Utente ut = utenteManager.retrieveUtente(getUtenteSession(session).getId());
                             request.setAttribute("user",ut);
                             request.getRequestDispatcher("/WEB-INF/views/editaccount.jsp").forward(request, response);
                             break;
                         case "/showallusers":
+                            authorize(request.getSession(false));
                             ArrayList<Utente> utenti = utenteManager.retrieveUtenti();
                             utenti.removeIf(Utente::is_admin);
                             request.setAttribute("customers",utenti);

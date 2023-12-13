@@ -50,15 +50,28 @@ public class OrdineServlet extends HttpServlet  implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/showall":
-                    //click su pagina che mostra tutti gli ordini(se admin pagina showallorders altrimenti utenteorders)
+                    //click su pagina che mostra tutti gli ordini(utente)
+                    authenticate(request.getSession(false));
+                    break;
+                case "/manageorder":
+                    //click su pagina che mostra tutti gli ordini(admin)
+                    authorize(request.getSession(false));
                     break;
                 case "/info":
-                    //click su pagina per specifiche ordine(se admin mostra pagina infoorderadmin altrimenti infoordineutente)
+                    //click su pagina per specifiche ordine(utente)
+                    authenticate(request.getSession(false));
+                    break;
+                case "/admininfo":
+                    //click su pagina per specifiche ordine(admin)
+                    authorize(request.getSession(false));
+                    break;
                 case "/modify":
                     //click su pagina per modificare ordine(solo lato utente)
+                    authenticate(request.getSession(false));
                     break;
                 case "/make":
                     //click su pagina per effettuare ordine
+                    authenticate(request.getSession(false));
                     break;
                 default:
                     notFound();

@@ -18,10 +18,13 @@ public class Ordine {
         this.prezzo_totale = prezzo_totale;
         this.data_acquisto = data_acquisto;
         this.id_utente = id_utente;
+        this.prodottoList=new Hashtable<>();
     }
 
     public Ordine()
-    {}
+    {
+        this.prodottoList=new Hashtable<>();
+    }
 
     public int getId() {return id;}
 

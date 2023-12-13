@@ -52,15 +52,19 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/showall":
+                    authorize(request.getSession(false));
                     request.getRequestDispatcher("/WEB-INF/admin-views/manageproducts.jsp").forward(request, response);
                     break;
                 case "/add":
+                    authorize(request.getSession(false));
                     request.getRequestDispatcher("/WEB-INF/admin-views/addproduct.jsp").forward(request, response);
                     break;
                 case "/info":
+                    authorize(request.getSession(false));
                     //click su pagina info prodotto(admin)
                     break;
                 case "/modify":
+                    authorize(request.getSession(false));
                     //click su pagina modifica prodotto
                     break;
                 case "/shopnow":

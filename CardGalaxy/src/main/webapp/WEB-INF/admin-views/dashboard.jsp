@@ -5,7 +5,21 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/statscard.css">
     <title>Admin Dashboard</title>
     <%@include file="../utils/head.jsp"%>
+    <script>
+        function alertUser(msg) {
+            alert(msg);
+        }
+    </script>
 </head>
+<%
+    Boolean done = (Boolean) session.getAttribute("done");
+    if(done){
+%>
+<body onload="alertUser('Welcome!')"
+<%
+    }
+    session.setAttribute("done",false);
+%>
 <body>
 <%@include file="../partials/adminheader.jsp"%>
 <%@include file="../partials/adminsidebar.jsp"%>
@@ -20,7 +34,7 @@
                         Galaxy Profits
                     </p>
                     <p class="card-description">
-                        500€
+                        ${countProfits}&euro;
                     </p>
                 </div>
             </div>
@@ -33,7 +47,7 @@
                         Galaxy Customers
                     </p>
                     <p class="card-description">
-                        30
+                        ${countUsers}
                     </p>
                 </div>
             </div>
@@ -46,7 +60,7 @@
                         Galaxy Cards
                     </p>
                     <p class="card-description">
-                        54
+                        ${countCards}
                     </p>
                 </div>
             </div>

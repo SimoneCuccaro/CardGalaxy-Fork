@@ -2,6 +2,7 @@ package controller;
 
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
+import model.recensione.Recensione;
 import model.recensione.RecensioneManager;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "RecensioneServlet", value = "/reviews/*")
 public class RecensioneServlet extends HttpServlet implements ErrorHandler {
@@ -28,7 +30,8 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
                     //inserimento recensione
                     break;
                 case "/delete":
-                    //eliminazione recensione(lato utente e admin da mettere controllo)
+                    break;
+                case  "/remove":
                     break;
                 case "/modify":
                     //click sul pulsante modifica recensione(lato utente)
@@ -56,6 +59,8 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
                     break;
                 case "/managereviews":
                     authorize(request.getSession(false));
+                    ArrayList<Recensione> recensione = recensioneManager.retrieveRecensioni();
+                    request.setAttribute("reviews",recensione);
                     request.getRequestDispatcher("/WEB-INF/admin-views/managereviews.jsp").forward(request,response);
                     break;
                 default:

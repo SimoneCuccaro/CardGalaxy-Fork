@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/partials/siteheader.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/utils/head.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/utils" />
+        <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views/profile.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views/register.html" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views/register.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/views" />
       </map>

@@ -28,24 +28,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Steam Card</td>
-                <td>Steam Inc.</td>
-                <td>Earn 20€ to buy some content on Steam!</td>
-                <td>20€</td>
-                <td><button type="submit" class="button button-for-table">X</button></td>
-                <td><button type="submit" class="button button-for-table">O</button></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>PlayStation Card</td>
-                <td>PlayStation Inc.</td>
-                <td>Earn 50€ to buy some content on the PS Store!!</td>
-                <td>50€</td>
-                <td><button type="submit" class="button button-for-table">X</button></td>
-                <td><button type="submit" class="button button-for-table">O</button></td>
-            </tr>
+            <c:forEach items="${giftCards}" var="giftCard">
+                <tr>
+                    <td>${giftCard.id_prodotto}</td>
+                    <td>${giftCard.nome}</td>
+                    <td>${giftCard.piattaforma}</td>
+                    <td>${giftCard.descrizione}</td>
+                    <td>${giftCard.prezzo}</td>
+                    <form action="${contextPath}/products/remove" method="post" onsubmit="return confirm('Are you sure?');">
+                        <td><button type="submit" class="button" name="giftid" value="${giftCard.id_prodotto}"> X </button></td>
+                    </form>
+                    <form action="${contextPath}/products/modify" method="get">
+                        <td><button type="submit" class="button" name="giftid" value="${giftCard.id_prodotto}"> O </button></td>
+                    </form>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 public class GiftCardManager
 {
-    private static final GiftCardQuery QUERY = new GiftCardQuery("giftCard");
+    private static final GiftCardQuery QUERY = new GiftCardQuery("prodotto");
 
 
     public ArrayList<GiftCard> retrieveTutteGiftCard(){

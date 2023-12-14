@@ -20,10 +20,10 @@ public class InvalidRequestException extends Exception{
     }
 
     public void handle(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        String backPath =(String) request.getAttribute("back");
         switch(errorCode){
             case HttpServletResponse.SC_BAD_REQUEST:
                 request.setAttribute("alert",new Alert(errors,"danger"));
-                String backPath=(String) request.getAttribute("back");
                 response.setStatus(errorCode);
                 request.getRequestDispatcher(backPath).forward(request,response);
                 break;

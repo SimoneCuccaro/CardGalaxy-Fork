@@ -4,6 +4,8 @@ import jakarta.servlet.annotation.MultipartConfig;
 import model.Controller;
 import model.errors.InvalidRequestException;
 import model.errors.ErrorHandler;
+import model.ordine.OrdineManager;
+import model.prodotto.GiftCardManager;
 import model.utente.Utente;
 import model.utente.UtenteManager;
 import model.utente.UtenteSession;
@@ -24,10 +26,14 @@ import java.util.List;
 public class UtenteServlet extends Controller implements ErrorHandler{
 
     private UtenteManager utenteManager;
+    private OrdineManager ordineManager;
+    private GiftCardManager giftCardManager;
 
     public void init()throws ServletException{
         super.init();
         utenteManager=new UtenteManager();
+        ordineManager = new OrdineManager();
+        giftCardManager = new GiftCardManager();
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -46,6 +52,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
+                        Boolean value = true;
+                        request.getSession(false).setAttribute("done",value);
                         if (utenteSession.isAdmin()) {
                             response.sendRedirect(contextPath + "/user/admin");
                         } else {
@@ -156,6 +164,12 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                         case "/admin":
                             //pagina iniziale admin
                             authorize(request.getSession(false));
+                            Integer allUsers = utenteManager.countUsers();
+                            Double allProfits = ordineManager.getGuadagno();
+                            Integer allCards = giftCardManager.countAllGiftCard();
+                            request.setAttribute("countUsers",allUsers);
+                            request.setAttribute("countProfits",allProfits);
+                            request.setAttribute("countCards",allCards);
                             request.getRequestDispatcher("/WEB-INF/admin-views/dashboard.jsp").forward(request, response);
                             break;
                         case "/profile":

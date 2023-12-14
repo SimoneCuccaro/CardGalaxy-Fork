@@ -3,6 +3,7 @@ package controller;
 import model.Controller;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
+import model.prodotto.GiftCard;
 import model.prodotto.GiftCardManager;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "ProdottoServlet", value = "/products/*")
 public class ProdottoServlet extends Controller implements ErrorHandler {
@@ -53,6 +55,8 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
             switch (path) {
                 case "/showall":
                     authorize(request.getSession(false));
+                    ArrayList<GiftCard> giftCards = giftCardManager.retrieveTutteGiftCard();
+                    request.setAttribute("giftCards",giftCards);
                     request.getRequestDispatcher("/WEB-INF/admin-views/manageproducts.jsp").forward(request, response);
                     break;
                 case "/add":

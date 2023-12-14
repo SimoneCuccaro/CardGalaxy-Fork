@@ -166,8 +166,10 @@ public class UtenteManager extends Manager
             try (PreparedStatement ps = con.prepareStatement(QUERY.contaUtenti())) {
                 ResultSet resultSet = ps.executeQuery();
                 int size = 0;
-                if (resultSet.next()) {
-                    size = resultSet.getInt("utentiTotali");
+                while (resultSet.next()) {
+                    if(!resultSet.getBoolean("is_admin")){
+                        size++;
+                    }
                 }
                 return size;
             }

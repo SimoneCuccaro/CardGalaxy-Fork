@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.prodotto.GiftCard" %>
+<%@ page import="model.recensione.Recensione" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,13 +26,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>mark00</td>
-                <td>Steam Card 20€</td>
-                <td>Very good</td>
-                <td>2023-12-09</td>
-                <td><button type="submit" class="button button-for-table">X</button></td>
-            </tr>
+            <c:forEach items="${reviews}" var="review">
+                <tr>
+                    <td>${review.id_utente}</td>
+                    <td>${review.id_prodotto}</td>
+                    <td>${review.testo}</td>
+                    <td>${review.datarecensione}</td>
+                    <form action="${contextPath}/reviews/remove" method="post" onsubmit="return confirm('Are you sure?');">
+                        <td><button type="submit" class="button" name="giftid" value="${review.id_prodotto}"> X </button></td>
+                        <input type="hidden" name="userid" value="${review.id_utente}">
+                    </form>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "OrdineServlet", value = "/OrdineServlet/*")
+@WebServlet(name = "OrdineServlet", value = "/orders/*")
 public class OrdineServlet extends HttpServlet  implements ErrorHandler {
 
     private OrdineManager ordineManager;
@@ -53,9 +53,10 @@ public class OrdineServlet extends HttpServlet  implements ErrorHandler {
                     //click su pagina che mostra tutti gli ordini(utente)
                     authenticate(request.getSession(false));
                     break;
-                case "/manageorder":
+                case "/manageorders":
                     //click su pagina che mostra tutti gli ordini(admin)
                     authorize(request.getSession(false));
+                    request.getRequestDispatcher("/WEB-INF/admin-views/manageorders.jsp").forward(request, response);
                     break;
                 case "/info":
                     //click su pagina per specifiche ordine(utente)
@@ -64,6 +65,7 @@ public class OrdineServlet extends HttpServlet  implements ErrorHandler {
                 case "/admininfo":
                     //click su pagina per specifiche ordine(admin)
                     authorize(request.getSession(false));
+                    request.getRequestDispatcher("/WEB-INF/admin-views/orderspecifics.jsp").forward(request, response);
                     break;
                 case "/modify":
                     //click su pagina per modificare ordine(solo lato utente)

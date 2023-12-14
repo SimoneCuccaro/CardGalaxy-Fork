@@ -8,7 +8,21 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
     <title>Your Profile</title>
     <%@include file="../utils/head.jsp"%>
+    <script>
+        function alertUser(msg) {
+            alert(msg);
+        }
+    </script>
 </head>
+<%
+    Boolean done = (Boolean) session.getAttribute("done");
+    if(done){
+%>
+<body onload="alertUser('Welcome!')"
+<%
+    }
+    session.setAttribute("done",false);
+%>
 <body>
 <%@include file="../partials/siteheader.jsp"%>
 <%@include file="../partials/sitenavbar.jsp"%>

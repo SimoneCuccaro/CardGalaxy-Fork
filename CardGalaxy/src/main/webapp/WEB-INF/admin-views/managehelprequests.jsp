@@ -18,14 +18,21 @@
                 <th>FROM</th>
                 <th>OBJECT</th>
                 <th>DETAILS</th>
+                <th>ANSWER</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>mark00</td>
-                <td>I wasn't able to claim your code.</td>
-                <td>Basically when I tried to claim the code of my PS Card it said it was already used. How can I solve??</td>
-            </tr>
+            <c:forEach items="${richieste}" var="request">
+                <tr>
+                    <td>${request.id_utente}</td>
+                    <td>${request.oggetto_richiesta}</td>
+                    <td>${request.richiesta}</td>
+                    <form action="${contextPath}/response/create" method="get">
+                        <td><button type="submit" class="button" name="requestid" value="${request.id_richiesta}"> Answer </button></td>
+                        <input type="hidden" name="userid" value="${request.id_utente}">
+                    </form>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

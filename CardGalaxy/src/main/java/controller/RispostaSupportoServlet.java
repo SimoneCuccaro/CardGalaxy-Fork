@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RispostaSupportoServlet", value = "/RispostaSupportoServlet/*")
+@WebServlet(name = "RispostaSupportoServlet", value = "/response/*")
 public class RispostaSupportoServlet extends HttpServlet implements ErrorHandler {
 
     private RispostaSupportoManager rispostaSupportoManager;

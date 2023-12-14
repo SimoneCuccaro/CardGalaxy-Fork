@@ -23,16 +23,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>mark00</td>
-                <td>2023-12-14</td>
-                <td>400&euro;</td>
-                <form action="${contextPath}/orders/admininfo" method="get">
-                <th><button type="submit" class="button">SEE</button> </th>
-                    <input type="hidden" name="customerid" value="">
-                </form>
-            </tr>
+            <c:forEach items="${ordini}" var="order">
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.id_utente}</td>
+                    <td>${order.data_acquisto}</td>
+                    <td>${order.prezzo_totale}</td>
+                    <form action="${contextPath}/orders/admininfo" method="get">
+                        <th><button type="submit" class="button" name="orderid" value="${order.id}">SEE</button> </th>
+                    </form>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

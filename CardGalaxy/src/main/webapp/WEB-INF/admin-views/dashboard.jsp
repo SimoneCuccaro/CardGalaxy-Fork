@@ -3,28 +3,21 @@
 <head>
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/statscard.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Admin Dashboard</title>
     <%@include file="../utils/head.jsp"%>
-    <script>
-        function alertUser(msg) {
-            alert(msg);
-        }
-    </script>
 </head>
-<%
-    Boolean done = (Boolean) session.getAttribute("done");
-    if(done){
-%>
-<body onload="alertUser('Welcome!')"
-<%
-    }
-    session.setAttribute("done",false);
-%>
 <body>
 <%@include file="../partials/adminheader.jsp"%>
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content align-center">
+        <c:if test="${sessionScope.done==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Welcome admin!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("done"); %>
+        </c:if>
         <h1> General Stats </h1>
         <div class="cards">
             <div class="card">

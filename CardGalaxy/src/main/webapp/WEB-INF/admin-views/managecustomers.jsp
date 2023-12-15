@@ -7,6 +7,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/table.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Manage Customers</title>
     <%@include file="../utils/head.jsp"%>
 </head>
@@ -15,6 +16,12 @@
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content grid-y align-center">
+        <c:if test="${sessionScope.removeDone==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="User removed successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("removeDone"); %>
+        </c:if>
         <h1> Manage Customers </h1>
         <table class="table purple ut">
             <thead>

@@ -6,19 +6,27 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Your Profile</title>
     <%@include file="../utils/head.jsp"%>
-    <c:if test="${sessionScope.done==true}">
-        <script src="${contextPath}/js/onload.js" defer></script>
-        <% request.getSession(false).removeAttribute("done"); %>
-    </c:if>
-
 </head>
 <body>
 <%@include file="../partials/siteheader.jsp"%>
 <%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
+        <c:if test="${sessionScope.done==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Welcome user!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("done"); %>
+        </c:if>
+        <c:if test="${sessionScope.update==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Update done successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("update"); %>
+        </c:if>
         <h1 class="welcome">Welcome <%=utenteSession.getUsername()%> </h1>
         <div>
         <img src="${contextPath}/photos/profile.png" alt="profile pic" class="smiley-pc">

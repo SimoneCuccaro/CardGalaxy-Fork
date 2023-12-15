@@ -26,7 +26,7 @@
             </tr>
             </thead>
             <tbody>
-            <%  ArrayList<RichiestaSupporto> richieste= (ArrayList<RichiestaSupporto>) request.getAttribute("ordini");
+            <%  ArrayList<RichiestaSupporto> richieste= (ArrayList<RichiestaSupporto>) request.getAttribute("richieste");
                 Utente u;
                 UtenteManager utenteManager=new UtenteManager();
                 for(RichiestaSupporto richiesta:richieste){

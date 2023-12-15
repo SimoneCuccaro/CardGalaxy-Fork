@@ -1,3 +1,7 @@
+<%@ page import="model.utente.UtenteManager" %>
+<%@ page import="model.utente.Utente" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.ordine.Ordine" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,17 +27,21 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${ordini}" var="order">
-                <tr>
-                    <td>${order.id}</td>
-                    <td>${order.id_utente}</td>
-                    <td>${order.data_acquisto}</td>
-                    <td>${order.prezzo_totale}</td>
-                    <form action="${contextPath}/orders/admininfo" method="get">
-                        <th><button type="submit" class="button" name="orderid" value="${order.id}">SEE</button> </th>
-                    </form>
-                </tr>
-            </c:forEach>
+            <%  ArrayList<Ordine> ordini= (ArrayList<Ordine>) request.getAttribute("ordini");
+                Utente u;
+                UtenteManager utenteManager=new UtenteManager();
+                for(Ordine ordine:ordini){
+                    u=utenteManager.retrieveUtente(ordine.getId_utente());%>
+            <tr>
+                <td><%=ordine.getId()%> </td>
+                <td><%=u.getUsername()%></td>
+                <td><%=ordine.getData_acquisto()%> </td>
+                <td><%=ordine.getPrezzo_totale()%></td>
+                <form action="${contextPath}/orders/admininfo" method="get">
+                    <th><button type="submit" class="button" name="orderid" value="<%=ordine.getId()%>">SEE</button> </th>
+                </form>
+            </tr>
+                <%}%>
             </tbody>
         </table>
     </div>

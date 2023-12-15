@@ -1,3 +1,7 @@
+<%@ page import="model.richiestasupporto.RichiestaSupporto" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.utente.Utente" %>
+<%@ page import="model.utente.UtenteManager" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,17 +26,21 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${richieste}" var="request">
-                <tr>
-                    <td>${request.id_utente}</td>
-                    <td>${request.oggetto_richiesta}</td>
-                    <td>${request.richiesta}</td>
-                    <form action="${contextPath}/response/create" method="get">
-                        <td><button type="submit" class="button" name="requestid" value="${request.id_richiesta}"> Answer </button></td>
-                        <input type="hidden" name="userid" value="${request.id_utente}">
-                    </form>
-                </tr>
-            </c:forEach>
+            <%  ArrayList<RichiestaSupporto> richieste= (ArrayList<RichiestaSupporto>) request.getAttribute("ordini");
+                Utente u;
+                UtenteManager utenteManager=new UtenteManager();
+                for(RichiestaSupporto richiesta:richieste){
+                    u=utenteManager.retrieveUtente(richiesta.getId_utente());%>
+            <tr>
+                <td><%=u.getUsername()%> </td>
+                <td><%=richiesta.getOggetto_richiesta()%></td>
+                <td><%=richiesta.getRichiesta()%> </td>
+                <form action="${contextPath}/response/create" method="get">
+                    <td><button type="submit" class="button" name="requestid" value="<%=richiesta.getId_richiesta()%>"> Answer </button></td>
+                    <input type="hidden" name="userid" value="<%=u.getUsername()%>">
+                </form>
+            </tr>
+            <%}%>
             </tbody>
         </table>
     </div>

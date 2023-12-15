@@ -1,6 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.prodotto.GiftCard" %>
 <%@ page import="model.recensione.Recensione" %>
+<%@ page import="model.utente.Utente" %>
+<%@ page import="model.utente.UtenteManager" %>
+<%@ page import="model.prodotto.GiftCardManager" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +29,25 @@
             </tr>
             </thead>
             <tbody>
+            <%  ArrayList<Recensione> recensioni= (ArrayList<Recensione>) request.getAttribute("ordini");
+                Utente u;
+                UtenteManager utenteManager=new UtenteManager();
+                GiftCard prodotto;
+                GiftCardManager giftCardManager=new GiftCardManager();
+                for(Recensione recensione:recensioni){
+                    u=utenteManager.retrieveUtente(recensione.getId_utente());
+                    prodotto=giftCardManager.retrieveGiftCardByID(recensione.getId_prodotto());%>
+            <tr>
+                <td><%=u.getUsername()%></td>
+                <td><%=prodotto.getNome()%></td>
+                <td><%=recensione.getTesto()%> </td>
+                <td><%=recensione.getDatarecensione()%></td>
+                <form action="${contextPath}/reviews/remove" method="post" onsubmit="return confirm('Are you sure?');">
+                    <td><button type="submit" class="button" name="giftid" value="<%=prodotto.getId_prodotto()%>"> X </button></td>
+                    <input type="hidden" name="userid" value="<%=u.getId()%>">
+                </form>
+            </tr>
+            <%}%>
             <c:forEach items="${reviews}" var="review">
                 <tr>
                     <td>${review.id_utente}</td>

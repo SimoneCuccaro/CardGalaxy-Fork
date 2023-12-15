@@ -1,3 +1,7 @@
+<%@ page import="model.utente.UtenteManager" %>
+<%@ page import="model.utente.Utente" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.ordine.Ordine" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,16 +27,21 @@
             </tr>
             </thead>
             <tbody>
+            <%  ArrayList<Ordine> ordini= (ArrayList<Ordine>) request.getAttribute("ordini");
+                Utente u;
+                UtenteManager utenteManager=new UtenteManager();
+                for(Ordine ordine:ordini){
+                    u=utenteManager.retrieveUtente(ordine.getId_utente());%>
             <tr>
-                <td>1</td>
-                <td>mark00</td>
-                <td>2023-12-14</td>
-                <td>400&euro;</td>
+                <td><%=ordine.getId()%> </td>
+                <td><%=u.getUsername()%></td>
+                <td><%=ordine.getData_acquisto()%> </td>
+                <td><%=ordine.getPrezzo_totale()%></td>
                 <form action="${contextPath}/orders/admininfo" method="get">
-                <th><button type="submit" class="button">SEE</button> </th>
-                    <input type="hidden" name="customerid" value="">
+                    <th><button type="submit" class="button" name="orderid" value="<%=ordine.getId()%>">SEE</button> </th>
                 </form>
             </tr>
+                <%}%>
             </tbody>
         </table>
     </div>

@@ -8,7 +8,7 @@ public class RichiestaSupportoManager {
     private static final RichiestaSupportoQuery QUERY = new RichiestaSupportoQuery("richiestasupporto");
 
 
-    public ArrayList<RichiestaSupporto> retrieveTutteGiftCard(){
+    public ArrayList<RichiestaSupporto> retrieveAllRequest(){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRichiesteSupporto())) {
                 ResultSet rs = ps.executeQuery();
@@ -17,7 +17,7 @@ public class RichiestaSupportoManager {
                     RichiestaSupporto richiestaSupporto = new RichiestaSupporto();
                     richiestaSupporto.setId_richiesta(rs.getInt("id_richiesta"));
                     richiestaSupporto.setRichiesta(rs.getString("richiesta"));
-                    richiestaSupporto.setOggetto_richiesta(rs.getString("oggeetto_richiesta"));
+                    richiestaSupporto.setOggetto_richiesta(rs.getString("oggetto_richiesta"));
                     richiestaSupporto.setId_utente(rs.getInt("id_utente"));
                     richieste.add(richiestaSupporto);
                 }

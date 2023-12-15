@@ -52,7 +52,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        Boolean value = true;
+                        Boolean value=true;
                         request.getSession(false).setAttribute("done",value);
                         if (utenteSession.isAdmin()) {
                             response.sendRedirect(contextPath + "/user/admin");

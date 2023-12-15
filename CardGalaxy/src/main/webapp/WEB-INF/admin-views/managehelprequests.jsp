@@ -1,3 +1,7 @@
+<%@ page import="model.richiestasupporto.RichiestaSupporto" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.utente.Utente" %>
+<%@ page import="model.utente.UtenteManager" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +22,25 @@
                 <th>FROM</th>
                 <th>OBJECT</th>
                 <th>DETAILS</th>
+                <th>ANSWER</th>
             </tr>
             </thead>
             <tbody>
+            <%  ArrayList<RichiestaSupporto> richieste= (ArrayList<RichiestaSupporto>) request.getAttribute("ordini");
+                Utente u;
+                UtenteManager utenteManager=new UtenteManager();
+                for(RichiestaSupporto richiesta:richieste){
+                    u=utenteManager.retrieveUtente(richiesta.getId_utente());%>
             <tr>
-                <td>mark00</td>
-                <td>I wasn't able to claim your code.</td>
-                <td>Basically when I tried to claim the code of my PS Card it said it was already used. How can I solve??</td>
+                <td><%=u.getUsername()%> </td>
+                <td><%=richiesta.getOggetto_richiesta()%></td>
+                <td><%=richiesta.getRichiesta()%> </td>
+                <form action="${contextPath}/response/create" method="get">
+                    <td><button type="submit" class="button" name="requestid" value="<%=richiesta.getId_richiesta()%>"> Answer </button></td>
+                    <input type="hidden" name="userid" value="<%=u.getUsername()%>">
+                </form>
             </tr>
+            <%}%>
             </tbody>
         </table>
     </div>

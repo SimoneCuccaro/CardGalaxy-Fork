@@ -8,6 +8,7 @@ public class OrdineQuery extends TableQuery
     }
 
     public String retrieveAllOrdini() { return String.format("SELECT * FROM %s;",this.table);}
+    public String retrieveOrderByUser() { return String.format("SELECT * FROM %s WHERE id_utente = ?;",this.table);}
 
     public String retrieveOrdineById() { return String.format("SELECT * FROM %s WHERE id = ?;",this.table);}
 

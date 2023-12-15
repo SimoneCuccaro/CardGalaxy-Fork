@@ -1,8 +1,11 @@
 package controller;
 
+import model.Controller;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
+import model.ordine.Ordine;
 import model.ordine.OrdineManager;
+import model.utente.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "OrdineServlet", value = "/orders/*")
-public class OrdineServlet extends HttpServlet  implements ErrorHandler {
+public class OrdineServlet extends Controller implements ErrorHandler {
 
     private OrdineManager ordineManager;
     public void init() throws ServletException{
@@ -52,10 +56,14 @@ public class OrdineServlet extends HttpServlet  implements ErrorHandler {
                 case "/showall":
                     //click su pagina che mostra tutti gli ordini(utente)
                     authenticate(request.getSession(false));
+                    ArrayList<Ordine> ordiniutente = ordineManager.retrieveOrdiniByUtente(getUtenteSession(request.getSession(false)).getId());
+                    request.setAttribute("ordiniutente",ordiniutente);
                     break;
                 case "/manageorders":
                     //click su pagina che mostra tutti gli ordini(admin)
                     authorize(request.getSession(false));
+                    ArrayList<Ordine> ordini = ordineManager.retrieveOrdini();
+                    request.setAttribute("ordini",ordini);
                     request.getRequestDispatcher("/WEB-INF/admin-views/manageorders.jsp").forward(request, response);
                     break;
                 case "/info":

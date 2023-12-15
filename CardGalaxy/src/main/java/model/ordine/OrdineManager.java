@@ -31,6 +31,27 @@ public class OrdineManager extends Manager{
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<Ordine> retrieveOrdiniByUtente(int id){
+        try(Connection con = Manager.getConnection()){
+            try(PreparedStatement ps = con.prepareStatement(QUERY.retrieveOrderByUser())){
+                ps.setInt(1, id);
+                ResultSet set = ps.executeQuery();
+                ArrayList<Ordine> ordini = new ArrayList<>();
+                while(set.next()){
+                    Ordine o=new Ordine();
+                    o.setId(set.getInt("id"));
+                    o.setPrezzo_totale(set.getDouble("prezzo_totale"));
+                    o.setData_acquisto(set.getString("data_acquisto"));
+                    o.setId_utente(set.getInt("id_utente"));
+                    ordini.add(o);
+                }
+                set.close();
+                return ordini;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Ordine retrieveOrdineById(int id){
         try(Connection con = Manager.getConnection()){

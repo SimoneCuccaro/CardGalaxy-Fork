@@ -1,8 +1,11 @@
 package controller;
 
 import jakarta.servlet.RequestDispatcher;
+import model.Controller;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
+import model.ordine.Ordine;
+import model.richiestasupporto.RichiestaSupporto;
 import model.richiestasupporto.RichiestaSupportoManager;
 
 import javax.servlet.ServletException;
@@ -11,9 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "RichiestaSupportoServlet", value = "/help/*")
-public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandler {
+public class RichiestaSupportoServlet extends Controller implements ErrorHandler {
     private RichiestaSupportoManager richiestaSupportoManager;
     public void init() throws ServletException{
         super.init();
@@ -51,6 +55,8 @@ public class RichiestaSupportoServlet extends HttpServlet implements ErrorHandle
                     break;
                 case "/showall":
                     authorize(request.getSession(false));
+                    ArrayList<RichiestaSupporto> richieste = richiestaSupportoManager.retrieveAllRequest();
+                    request.setAttribute("richieste",richieste);
                     request.getRequestDispatcher("/WEB-INF/admin-views/managehelprequests.jsp").forward(request, response);
                     break;
                 default:

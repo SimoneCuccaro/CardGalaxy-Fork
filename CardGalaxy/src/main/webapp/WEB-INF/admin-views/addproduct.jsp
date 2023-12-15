@@ -12,7 +12,7 @@
 <main class="app">
     <div class="content align-center">
         <h1> Add Product </h1>
-        <form class="login grid-y" action="" method="">
+        <form class="login grid-y" action="${contextPath}/products/add" method="post">
             <span> Name: </span>
             <label for="nameid">
                 <input class="larger" type="text" name="name" id="nameid" placeholder="XBOX Card" required>

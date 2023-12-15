@@ -52,8 +52,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        Boolean value=true;
-                        request.getSession(false).setAttribute("done",value);
+                        Boolean login=true;
+                        request.getSession(false).setAttribute("done",login);
                         if (utenteSession.isAdmin()) {
                             response.sendRedirect(contextPath + "/user/admin");
                         } else {
@@ -89,7 +89,9 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect(contextPath + "/user/home");
+                        Boolean register=true;
+                        request.getSession(false).setAttribute("done",register);
+                        response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
                     }
@@ -115,23 +117,26 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(u!=null){
                         UtenteSession utenteSession = new UtenteSession(u);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect(contextPath + "/user/home");
+                        Boolean update=true;
+                        request.getSession(false).setAttribute("update",update);
+                        response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
                     }
                     break;
                 case "/delete":
                     // aggiungere alert di avvenuta operazione
-                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
                     utenteManager.cancellaUtente(getUtenteSession(session).getId());
                     session.removeAttribute("utenteSession");
-                    session.invalidate();
-                    response.sendRedirect(contextPath + "/user/home");
+                    Boolean delete=true;
+                    request.getSession(false).setAttribute("deleteDone",delete);
+                    response.sendRedirect(contextPath + "/user/login");
                     break;
                 case "/remove":
                     // aggiungere alert di avvenuta operazione
-                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
                     utenteManager.cancellaUtente(Integer.parseInt(request.getParameter("customerid")));
+                    Boolean remove=true;
+                    request.getSession(false).setAttribute("removeDone",remove);
                     response.sendRedirect(contextPath + "/user/showallusers");
                      break;
                 default:

@@ -15,6 +15,12 @@
 <%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
+        <c:if test="${sessionScope.deleteDone==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="User deleted successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("deleteDone"); %>
+        </c:if>
         <h1 class="welcome">Login</h1>
         <form class="login grid-y" action="${contextPath}/user/signin" method="post">
             <c:if test="${not empty alert}">

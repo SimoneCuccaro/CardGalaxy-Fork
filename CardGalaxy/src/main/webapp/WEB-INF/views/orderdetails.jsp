@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  type="text/css" href="../../CSS/index-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/aboutus-style.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/support-button.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/login.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/userprofile.css">
-    <link rel="stylesheet" type="text/css" href="../../CSS/table.css">
+    <link rel="stylesheet"  type="text/css" href="${contextPath}/CSS/index-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/aboutus-style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/table.css">
+    <%@include file="../utils/head.jsp"%>
     <title>Order Details</title>
 </head>
 <body>
-<header>
-    <img id="logo" src="../../photos/cardgalaxylogo.png" alt="website logo">
-</header>
-<nav>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Shop Now</a></li>
-    </ul>
-</nav>
+<%@include file="../partials/siteheader.jsp"%>
+<%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
         <h1 class="welcome">Order Details</h1>
@@ -49,17 +40,13 @@
             </table>
             <div>
                 <button type="submit" class="glowing-btn"> DELETE ORDER </button>
+                <form action="${contextPath}/orders/modify" method="get">
                 <button type="submit" class="glowing-btn"> EDIT ORDER </button>
+                </form>
             </div>
         </div>
     </div>
 </main>
-<footer>
-    &copy; 2023 CardGalaxy Inc. All rights reserved.
-    <p>
-        Need Help?
-    </p>
-    <button type="submit" class="button"> CLICK HERE </button>
-</footer>
+<%@include file="../partials/sitefooter.jsp"%>
 </body>
 </html>

@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tbody>
-            <%  ArrayList<Recensione> recensioni= (ArrayList<Recensione>) request.getAttribute("ordini");
+            <%  ArrayList<Recensione> recensioni= (ArrayList<Recensione>) request.getAttribute("reviews");
                 Utente u;
                 UtenteManager utenteManager=new UtenteManager();
                 GiftCard prodotto;
@@ -48,18 +48,6 @@
                 </form>
             </tr>
             <%}%>
-            <c:forEach items="${reviews}" var="review">
-                <tr>
-                    <td>${review.id_utente}</td>
-                    <td>${review.id_prodotto}</td>
-                    <td>${review.testo}</td>
-                    <td>${review.datarecensione}</td>
-                    <form action="${contextPath}/reviews/remove" method="post" onsubmit="return confirm('Are you sure?');">
-                        <td><button type="submit" class="button" name="giftid" value="${review.id_prodotto}"> X </button></td>
-                        <input type="hidden" name="userid" value="${review.id_utente}">
-                    </form>
-                </tr>
-            </c:forEach>
             </tbody>
         </table>
     </div>

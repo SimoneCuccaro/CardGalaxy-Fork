@@ -69,7 +69,7 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     break;
                 case "/modify":
                     authorize(request.getSession(false));
-                    //click su pagina modifica prodotto
+                    request.getRequestDispatcher("/WEB-INF/admin-views/editproduct.jsp").forward(request, response);
                     break;
                 case "/shopnow":
                     request.getRequestDispatcher("/WEB-INF/views/shopnow.jsp").forward(request, response);

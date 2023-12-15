@@ -26,7 +26,9 @@
         <form action="${contextPath}/user/details" method="get">
         <button type="submit" class="glowing-btn"> VIEW ACCOUNT DETAILS </button>
         </form>
+        <form action="${contextPath}/orders/showall" method="get">
         <button type="submit" class="glowing-btn"> VIEW ORDERS HISTORY </button>
+        </form>
         <form action="${contextPath}/user/logout" method="post">
         <button type="submit" class="glowing-btn"> LOGOUT </button>
         </form>

@@ -58,6 +58,7 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                     authenticate(request.getSession(false));
                     ArrayList<Ordine> ordiniutente = ordineManager.retrieveOrdiniByUtente(getUtenteSession(request.getSession(false)).getId());
                     request.setAttribute("ordiniutente",ordiniutente);
+                    request.getRequestDispatcher("/WEB-INF/views/orderhistory.jsp").forward(request, response);
                     break;
                 case "/manageorders":
                     //click su pagina che mostra tutti gli ordini(admin)
@@ -69,6 +70,7 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                 case "/info":
                     //click su pagina per specifiche ordine(utente)
                     authenticate(request.getSession(false));
+                    request.getRequestDispatcher("/WEB-INF/views/orderdetails.jsp").forward(request, response);
                     break;
                 case "/admininfo":
                     //click su pagina per specifiche ordine(admin)
@@ -78,6 +80,7 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                 case "/modify":
                     //click su pagina per modificare ordine(solo lato utente)
                     authenticate(request.getSession(false));
+                    request.getRequestDispatcher("/WEB-INF/views/editorder.jsp").forward(request, response);
                     break;
                 case "/make":
                     //click su pagina per effettuare ordine

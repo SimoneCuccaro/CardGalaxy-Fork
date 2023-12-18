@@ -7,7 +7,6 @@ public class GiftCard {
     private String descrizione;
     private double prezzo;
     private String foto;
-
     private boolean isAvailable;
 
     public GiftCard(int id_prodotto, String nome, String piattaforma, String descrizione, double prezzo,String foto,boolean isAvailable) {
@@ -70,7 +69,7 @@ public class GiftCard {
         this.foto = foto;
     }
 
-    public boolean isAvailable() {return isAvailable;}
+    public boolean checkisAvailable() {return isAvailable;}
 
-    public void setAvailable(boolean available) {isAvailable = available;}
+    public void setAvailable(boolean available) {this.isAvailable = available;}
 }

@@ -3,6 +3,7 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views/editproduct.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views/manageorders.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views/managereviews.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/admin-views" />
         <entry key="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp/WEB-INF/partials/siteheader.jsp" value="file://$PROJECT_DIR$/CardGalaxy/src/main/webapp" />

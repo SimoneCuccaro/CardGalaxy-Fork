@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
     public void init()throws ServletException{
         super.init();
         giftCardManager=new GiftCardManager();
-        uploadRoot=FileServlet.getUploadPath()+File.separator+"uploads"+File.separator;
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -60,7 +60,9 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     fileName=timestamp.getTime()+fileName;
                     g.setFoto(fileName);
                     try (InputStream fileStream = filePart.getInputStream()) {
-                        File file = new File("C:\\Users\\giuli\\IdeaProjects\\CardGalaxy-Fork\\CardGalaxy\\src\\main\\webapp\\WEB-INF\\images"+fileName);
+                        Path dir= Path.of(getServletContext().getRealPath("/"));
+                        String directory=dir.getParent().getParent().toString().replaceAll("/","\\");
+                        File file = new File(directory+"\\src\\main\\webapp\\images\\"+fileName);
                         Files.copy(fileStream, file.toPath());
                     } catch (FileNotFoundException e) {
                         throw new InvalidRequestException("File non valido", List.of("File non valido"), HttpServletResponse.SC_BAD_REQUEST);
@@ -93,8 +95,10 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     fileName1=timestamp1.getTime()+fileName1;
                     g1.setFoto(fileName1);
                     try (InputStream fileStream = filePart1.getInputStream()) {
-                        File file1 = new File("C:\\Users\\giuli\\IdeaProjects\\CardGalaxy-Fork\\CardGalaxy\\src\\main\\webapp\\WEB-INF\\images"+fileName1);
-                        Files.copy(fileStream, file1.toPath());
+                        Path dir= Path.of(getServletContext().getRealPath("/"));
+                        String directory=dir.getParent().getParent().toString().replaceAll("/","\\");
+                        File file = new File(directory+"\\src\\main\\webapp\\images\\"+fileName1);
+                        Files.copy(fileStream, file.toPath());
                     } catch (FileNotFoundException e) {
                         throw new InvalidRequestException("File non valido", List.of("File non valido"), HttpServletResponse.SC_BAD_REQUEST);
                     }

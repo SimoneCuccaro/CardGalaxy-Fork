@@ -15,17 +15,23 @@
 <%@include file="../partials/sitenavbar.jsp"%>
 <main>
     <div class="content">
-        <c:if test="${sessionScope.done==true}">
+        <c:if test="${sessionScope.utenteSession==true}">
             <jsp:include page="../utils/goodAlert.jsp">
-                <jsp:param name="message" value="Welcome user!"/>
+                <jsp:param name="message" value="Welcome Users!"/>
             </jsp:include>
-            <% request.getSession(false).removeAttribute("done"); %>
+            <% request.getSession(false).removeAttribute("utenteSession"); %>
         </c:if>
-        <c:if test="${sessionScope.update==true}">
+        <c:if test="${sessionScope.userString==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Registration done successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("userString"); %>
+        </c:if>
+        <c:if test="${sessionScope.updateString==true}">
             <jsp:include page="../utils/goodAlert.jsp">
                 <jsp:param name="message" value="Update done successfully!"/>
             </jsp:include>
-            <% request.getSession(false).removeAttribute("update"); %>
+            <% request.getSession(false).removeAttribute("updateString"); %>
         </c:if>
         <h1 class="welcome">Welcome <%=utenteSession.getUsername()%> </h1>
         <div>

@@ -67,7 +67,7 @@ public class GiftCardManager
                     ps.setString(3, gift.getDescrizione());
                     ps.setDouble(4, gift.getPrezzo());
                     ps.setString(5, gift.getFoto());
-                    ps.setBoolean(6,gift.isAvailable());
+                    ps.setBoolean(6,gift.checkisAvailable());
                     if (ps.executeUpdate() != 1) {
                         throw new RuntimeException("INSERT error.");
                     }
@@ -90,7 +90,7 @@ public class GiftCardManager
                     ps.setString(3, gift.getDescrizione());
                     ps.setDouble(4, gift.getPrezzo());
                     ps.setString(5, gift.getFoto());
-                    ps.setBoolean(6,gift.isAvailable());
+                    ps.setBoolean(6,gift.checkisAvailable());
                     ps.setInt(7,gift.getId_prodotto());
                     ps.executeUpdate();
                     return true;

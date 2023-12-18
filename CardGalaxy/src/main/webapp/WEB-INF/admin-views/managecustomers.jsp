@@ -16,11 +16,11 @@
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content grid-y align-center">
-        <c:if test="${sessionScope.removeDone==true}">
+        <c:if test="${sessionScope.removeString==true}">
             <jsp:include page="../utils/goodAlert.jsp">
                 <jsp:param name="message" value="User removed successfully!"/>
             </jsp:include>
-            <% request.getSession(false).removeAttribute("removeDone"); %>
+            <% request.getSession(false).removeAttribute("removeString"); %>
         </c:if>
         <h1> Manage Customers </h1>
         <table class="table purple ut">

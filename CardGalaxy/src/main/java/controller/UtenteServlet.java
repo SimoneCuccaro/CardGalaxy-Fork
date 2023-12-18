@@ -11,12 +11,15 @@ import model.utente.UtenteManager;
 import model.utente.UtenteSession;
 import model.validator.UtenteValidator;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +55,13 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if (tmpUtente!=null) {
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        Boolean login=true;
-                        request.getSession(false).setAttribute("done",login);
                         if (utenteSession.isAdmin()) {
+                            Boolean adminString=true;
+                            request.getSession(false).setAttribute("adminString",adminString);
                             response.sendRedirect(contextPath + "/user/admin");
                         } else {
+                            Boolean userString=true;
+                            request.getSession(false).setAttribute("userString",userString);
                             response.sendRedirect(contextPath + "/user/profile");
                         }
                     } else {
@@ -89,8 +94,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        Boolean register=true;
-                        request.getSession(false).setAttribute("done",register);
+                        Boolean userString=true;
+                        request.getSession(false).setAttribute("userString",userString);
                         response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
@@ -117,8 +122,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(u!=null){
                         UtenteSession utenteSession = new UtenteSession(u);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        Boolean update=true;
-                        request.getSession(false).setAttribute("update",update);
+                        Boolean updateString=true;
+                        request.getSession(false).setAttribute("updateString",updateString);
                         response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
@@ -128,15 +133,15 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     // aggiungere alert di avvenuta operazione
                     utenteManager.cancellaUtente(getUtenteSession(session).getId());
                     session.removeAttribute("utenteSession");
-                    Boolean delete=true;
-                    request.getSession(false).setAttribute("deleteDone",delete);
+                    Boolean deleteString=true;
+                    request.getSession(false).setAttribute("deleteString",deleteString);
                     response.sendRedirect(contextPath + "/user/login");
                     break;
                 case "/remove":
                     // aggiungere alert di avvenuta operazione
                     utenteManager.cancellaUtente(Integer.parseInt(request.getParameter("customerid")));
-                    Boolean remove=true;
-                    request.getSession(false).setAttribute("removeDone",remove);
+                    Boolean removeString=true;
+                    request.getSession(false).setAttribute("removeString",removeString);
                     response.sendRedirect(contextPath + "/user/showallusers");
                      break;
                 default:

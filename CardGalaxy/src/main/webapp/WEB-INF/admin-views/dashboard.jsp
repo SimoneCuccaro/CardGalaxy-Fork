@@ -12,11 +12,11 @@
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content align-center">
-        <c:if test="${sessionScope.done==true}">
+        <c:if test="${sessionScope.adminString==true}">
             <jsp:include page="../utils/goodAlert.jsp">
-                <jsp:param name="message" value="Welcome admin!"/>
+                <jsp:param name="message" value="Welcome Admin"/>
             </jsp:include>
-            <% request.getSession(false).removeAttribute("done"); %>
+            <% request.getSession(false).removeAttribute("adminString"); %>
         </c:if>
         <h1> General Stats </h1>
         <div class="cards">

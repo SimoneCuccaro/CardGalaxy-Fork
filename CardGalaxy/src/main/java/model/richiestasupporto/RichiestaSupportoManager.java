@@ -1,5 +1,6 @@
 package model.richiestasupporto;
 
+import model.prodotto.GiftCard;
 import model.storage.Manager;
 
 import java.sql.*;
@@ -29,6 +30,26 @@ public class RichiestaSupportoManager {
         }
     }
 
+    public RichiestaSupporto retrieveRichiestaSupportoByID(int id_richiesta){
+        RichiestaSupporto request;
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRichiesteSupportoById())) {
+                ps.setInt(1, id_richiesta);
+                ResultSet rs = ps.executeQuery();
+                request=new RichiestaSupporto();
+                if (rs.next()) {
+                    request.setId_richiesta(rs.getInt("id_richiesta"));
+                    request.setRichiesta(rs.getString("richiesta"));
+                    request.setOggetto_richiesta(rs.getString("oggetto_richiesta"));
+                    request.setId_utente(Integer.parseInt(rs.getString("id_utente")));
+                }
+                rs.close();
+                return request;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public boolean inserisciRichiestaSupporto(RichiestaSupporto richiesta){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRichiestaSupporto(), Statement.RETURN_GENERATED_KEYS)) {

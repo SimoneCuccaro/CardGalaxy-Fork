@@ -26,6 +26,12 @@
             </jsp:include>
             <% request.getSession(false).removeAttribute("removeProduct"); %>
         </c:if>
+        <c:if test="${sessionScope.updateProduct==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Product updated successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("updateProduct"); %>
+        </c:if>
         <h1> Manage Products</h1>
         <form action="${contextPath}/products/add" method="get">
         <button type="submit" class="button add-margin-bottom">ADD A PRODUCT</button>

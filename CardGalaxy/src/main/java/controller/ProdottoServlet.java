@@ -103,8 +103,9 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                         throw new InvalidRequestException("File non valido", List.of("File non valido"), HttpServletResponse.SC_BAD_REQUEST);
                     }
                     giftCardManager.aggiornaGiftCard(g1);
+                    request.getSession(false).removeAttribute("giftCard");
                     Boolean editProduct=true;
-                    request.getSession(false).setAttribute("editProduct",editProduct);
+                    request.getSession(false).setAttribute("updateProduct",editProduct);
                     response.sendRedirect(contextPath + "/products/showall");
                     break;
                 default:
@@ -142,7 +143,7 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     authorize(request.getSession(false));
                     int id1= Integer.parseInt(request.getParameter("giftid"));
                     GiftCard giftCard1=giftCardManager.retrieveGiftCardByID(id1);
-                    request.setAttribute("giftCard",giftCard1);
+                    request.getSession(false).setAttribute("giftCard",giftCard1);
                     request.getRequestDispatcher("/WEB-INF/admin-views/editproduct.jsp").forward(request, response);
                     break;
                 case "/shopnow":

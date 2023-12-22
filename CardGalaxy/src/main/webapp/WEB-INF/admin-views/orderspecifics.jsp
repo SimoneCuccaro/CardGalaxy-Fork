@@ -17,13 +17,17 @@
             <tr>
                 <th>PRODUCT</th>
                 <th>PRICE</th>
+                <th>QUANTITY</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>PSCard</td>
-                <td>20&euro;</td>
-            </tr>
+            <c:forEach items="${order.prodottoList}" var="prodotto">
+                <tr>
+                    <td>${prodotto.key.nome}</td>
+                    <td>${prodotto.key.prezzo}&euro;</td>
+                    <td>x${prodotto.value}</td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

@@ -75,6 +75,10 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                 case "/admininfo":
                     //click su pagina per specifiche ordine(admin)
                     authorize(request.getSession(false));
+                    int id= Integer.parseInt(request.getParameter("orderid"));
+                    Ordine ordine=ordineManager.retrieveOrdineById(id);
+                    ordine.setProdottoList(ordineManager.retriveProdotti(ordine.getId()));
+                    request.setAttribute("order",ordine);
                     request.getRequestDispatcher("/WEB-INF/admin-views/orderspecifics.jsp").forward(request, response);
                     break;
                 case "/modify":

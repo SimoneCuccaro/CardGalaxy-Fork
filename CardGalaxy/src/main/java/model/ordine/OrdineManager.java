@@ -143,6 +143,7 @@ public class OrdineManager extends Manager{
                     giftCard.setDescrizione(rs.getString("descrizione"));
                     giftCard.setPrezzo(rs.getDouble("prezzo"));
                     giftCard.setFoto(rs.getString("foto"));
+                    giftCard.setAvailable(rs.getBoolean("isAvailable"));
                     quantita=rs.getInt("quantita");
                     prodotti.put(giftCard,quantita);
                 }

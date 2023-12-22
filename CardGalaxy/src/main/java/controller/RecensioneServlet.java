@@ -1,5 +1,6 @@
 package controller;
 
+import model.Controller;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
 import model.recensione.Recensione;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(name = "RecensioneServlet", value = "/reviews/*")
-public class RecensioneServlet extends HttpServlet implements ErrorHandler {
+public class RecensioneServlet extends Controller implements ErrorHandler {
 
     private RecensioneManager recensioneManager;
     public void init() throws ServletException{
@@ -25,6 +26,7 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
             throws ServletException, IOException {
         try {
             String path = request.getPathInfo();
+            String contextPath = request.getContextPath();
             switch (path) {
                 case "/add":
                     //inserimento recensione
@@ -32,6 +34,12 @@ public class RecensioneServlet extends HttpServlet implements ErrorHandler {
                 case "/delete":
                     break;
                 case  "/remove":
+                    int giftid= Integer.parseInt(request.getParameter("giftid"));
+                    int userid= Integer.parseInt(request.getParameter("userid"));
+                    recensioneManager.rimuoviRecensione(userid,giftid);
+                    Boolean removeString=true;
+                    request.getSession(false).setAttribute("removeString",removeString);
+                    response.sendRedirect(contextPath + "/reviews/managereviews");
                     break;
                 case "/modify":
                     //click sul pulsante modifica recensione(lato utente)

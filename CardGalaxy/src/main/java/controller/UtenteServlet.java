@@ -61,7 +61,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             response.sendRedirect(contextPath + "/user/admin");
                         } else {
                             Boolean userString=true;
-                            request.getSession(false).setAttribute("userString",userString);
+                            request.getSession(false).setAttribute("loginString",userString);
                             response.sendRedirect(contextPath + "/user/profile");
                         }
                     } else {
@@ -95,7 +95,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
                         Boolean userString=true;
-                        request.getSession(false).setAttribute("userString",userString);
+                        request.getSession(false).setAttribute("registerString",userString);
                         response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
@@ -119,6 +119,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     u.setAdmin(false);
                     u.setId(getUtenteSession(session).getId());
                     utenteManager.aggiornaUtente(u);
+                    request.getSession(false).removeAttribute("user");
                     if(u!=null){
                         UtenteSession utenteSession = new UtenteSession(u);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
@@ -198,7 +199,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             //click su modifica account(utente)
                             authenticate(request.getSession(false));
                             Utente ut = utenteManager.retrieveUtente(getUtenteSession(session).getId());
-                            request.setAttribute("user",ut);
+                            request.getSession(false).setAttribute("user",ut);
                             request.getRequestDispatcher("/WEB-INF/views/editaccount.jsp").forward(request, response);
                             break;
                         case "/showallusers":

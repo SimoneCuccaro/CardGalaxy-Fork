@@ -49,9 +49,12 @@ public class RichiestaSupportoServlet extends Controller implements ErrorHandler
             String resource;
             switch (path) {
                 case "/create":
-                    authenticate(request.getSession(false));
-                    resource = "/WEB-INF/views/help.jsp";
-                    request.getRequestDispatcher(resource).forward(request,response);
+                    if(getUtenteSession(request.getSession(false))==null){
+                        Boolean helpString=true;
+                        request.getSession(true).setAttribute("helpString",helpString);
+                        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request,response);
+                    }
+                    request.getRequestDispatcher("/WEB-INF/views/help.jsp").forward(request,response);
                     break;
                 case "/showall":
                     authorize(request.getSession(false));

@@ -5,6 +5,9 @@
 .notification.success {
     background-color: green;
 }
+.notification.info{
+    background-color: blueviolet;
+}
 .notification .close{
     position: absolute;
     top:10px;

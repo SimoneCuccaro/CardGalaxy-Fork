@@ -21,6 +21,12 @@
             </jsp:include>
             <% request.getSession(false).removeAttribute("deleteString"); %>
         </c:if>
+        <c:if test="${sessionScope.helpString==true}">
+            <jsp:include page="../utils/infoAlert.jsp">
+                <jsp:param name="message" value="You need to be logged in to make an help request!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("helpString"); %>
+        </c:if>
         <h1 class="welcome">Login</h1>
         <form class="login grid-y" action="${contextPath}/user/signin" method="post">
             <c:if test="${not empty alert}">

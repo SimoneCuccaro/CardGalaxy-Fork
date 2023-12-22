@@ -19,22 +19,22 @@
         <form class="login grid-y" action="${contextPath}/products/update" method="post" enctype="multipart/form-data">
             <span> Name: </span>
             <label for="nameid">
-                <input class="larger" type="text" name="name" id="nameid" value="${giftCard.nome}" required>
+                <input class="larger" type="text" name="name" id="nameid" value="${sessionScope.giftCard.nome}" required>
             </label>
             <br>
             <span> Platform : </span>
             <label for="platformid">
-                <input class="larger" type="text" name="platform" id="platformid" value="${giftCard.piattaforma}" required>
+                <input class="larger" type="text" name="platform" id="platformid" value="${sessionScope.giftCard.piattaforma}" required>
             </label>
             <br>
             <span> Description : </span>
             <label for="descriptionid">
-                <input class="larger" type="text" name="description" id="descriptionid" value="${giftCard.descrizione}" required>
+                <input class="larger" type="text" name="description" id="descriptionid" value="${sessionScope.giftCard.descrizione}" required>
             </label>
             <br>
             <span> Price : </span>
             <label for="priceid">
-                <input class="larger" type="number" name="price" id="priceid" value="${giftCard.prezzo}" required>
+                <input class="larger" type="number" name="price" id="priceid" value="${sessionScope.giftCard.prezzo}" required>
             </label>
             <br>
             <span> Photo : </span>
@@ -50,7 +50,7 @@
                 <input type="radio" id="availabilityidfalse" name="availability" value="false">False
             </label>
             <br>
-            <input type="hidden" name="giftid" value="${giftCard.id_prodotto}">
+            <input type="hidden" name="giftid" value="${sessionScope.giftCard.id_prodotto}">
             <button type="submit" class="button"> SAVE CHANGES </button>
             <br>
         </form>

@@ -7,6 +7,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/table.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Help Requests</title>
     <%@include file="../utils/head.jsp"%>
 </head>
@@ -15,6 +16,12 @@
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content grid-y align-center">
+        <c:if test="${sessionScope.responseDone==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Response sended successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("responseDone"); %>
+        </c:if>
         <h1> Help Requests </h1>
         <table class="table purple ut">
             <thead>
@@ -36,8 +43,8 @@
                 <td><%=richiesta.getOggetto_richiesta()%></td>
                 <td><%=richiesta.getRichiesta()%> </td>
                 <form action="${contextPath}/response/create" method="get">
-                    <td><button type="submit" class="button" name="requestid" value="<%=richiesta.getId_richiesta()%>"> Answer </button></td>
-                    <input type="hidden" name="userid" value="<%=u.getUsername()%>">
+                    <td><button type="submit" class="button" name="requestid" value="<%=richiesta.getId_richiesta()%>"> ANSWER </button></td>
+                    <input type="hidden" name="userid" value="<%=u.getId()%>">
                 </form>
             </tr>
             <%}%>

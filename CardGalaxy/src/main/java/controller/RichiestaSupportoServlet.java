@@ -7,6 +7,7 @@ import model.errors.InvalidRequestException;
 import model.ordine.Ordine;
 import model.richiestasupporto.RichiestaSupporto;
 import model.richiestasupporto.RichiestaSupportoManager;
+import model.validator.RichiestaValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,9 +28,19 @@ public class RichiestaSupportoServlet extends Controller implements ErrorHandler
             throws ServletException, IOException {
         try {
             String path = request.getPathInfo();
+            String contextPath = request.getContextPath();
             switch (path) {
                 case "/submit":
-                    //click sul pulsante invia la richiesta
+                    request.setAttribute("back","/WEB-INF/views/help.jsp");
+                    validate(RichiestaValidator.validateRichiesta(request));
+                    RichiestaSupporto richiestaSupporto=new RichiestaSupporto();
+                    richiestaSupporto.setRichiesta(request.getParameter("request"));
+                    richiestaSupporto.setOggetto_richiesta(request.getParameter("object"));
+                    richiestaSupporto.setId_utente(getUtenteSession(request.getSession(false)).getId());
+                    richiestaSupportoManager.inserisciRichiestaSupporto(richiestaSupporto);
+                    Boolean addRequest=true;
+                    request.getSession(false).setAttribute("addRequest",addRequest);
+                    response.sendRedirect(contextPath + "/help/create");
                     break;
                 default:
                     notFound();

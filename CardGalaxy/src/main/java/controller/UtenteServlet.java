@@ -131,7 +131,6 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     }
                     break;
                 case "/delete":
-                    // aggiungere alert di avvenuta operazione
                     utenteManager.cancellaUtente(getUtenteSession(session).getId());
                     session.removeAttribute("utenteSession");
                     Boolean deleteString=true;
@@ -139,7 +138,6 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     response.sendRedirect(contextPath + "/user/login");
                     break;
                 case "/remove":
-                    // aggiungere alert di avvenuta operazione
                     utenteManager.cancellaUtente(Integer.parseInt(request.getParameter("customerid")));
                     Boolean removeString=true;
                     request.getSession(false).setAttribute("removeString",removeString);

@@ -5,6 +5,7 @@ import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
 import model.ordine.Ordine;
 import model.ordine.OrdineManager;
+import model.prodotto.GiftCard;
 import model.utente.Utente;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 @WebServlet(name = "OrdineServlet", value = "/orders/*")
 public class OrdineServlet extends Controller implements ErrorHandler {
@@ -27,16 +30,37 @@ public class OrdineServlet extends Controller implements ErrorHandler {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            String contextPath = request.getContextPath();
             String path = request.getPathInfo();
             switch (path) {
                 case "/add":
                     //aggiungere ordine al database
                     break;
                 case "/update":
-                    //effettuare modifica ordine
+                    int orderid= Integer.parseInt(request.getParameter("orderid"));
+                    int productid= Integer.parseInt(request.getParameter("productid"));
+                    int quantity= Integer.parseInt(request.getParameter("quantity"));
+                    ordineManager.updateContenuto(quantity,orderid,productid);
+                    Hashtable<GiftCard,Integer> prodotti=ordineManager.retriveProdotti(orderid);
+                    double totale=0;
+                    Enumeration<GiftCard> e=prodotti.keys();
+                    while(e.hasMoreElements()){
+                        GiftCard k=e.nextElement();
+                        totale+= k.getPrezzo()*prodotti.get(k);
+                    }
+                    ordineManager.updateOrder(totale);
+                    Ordine ordinetmp=ordineManager.retrieveOrdineById(orderid);
+                    ordinetmp.setProdottoList(ordineManager.retriveProdotti(ordinetmp.getId()));
+                    request.getSession(false).setAttribute("order",ordinetmp);
+                    Boolean updateDone=true;
+                    request.getSession(false).setAttribute("updateDone",updateDone);
+                    response.sendRedirect(contextPath+"/orders/updateDone");
                     break;
-                case "/undone":
-                    //utente annulla ordine
+                case "/remove":
+                    ordineManager.removeOrder(Integer.parseInt(request.getParameter("orderid")));
+                    Boolean removeOrder=true;
+                    request.getSession(false).setAttribute("removeOrder",removeOrder);
+                    response.sendRedirect(contextPath + "/orders/showall");
                     break;
                 default:
                     notFound();
@@ -57,7 +81,7 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                     //click su pagina che mostra tutti gli ordini(utente)
                     authenticate(request.getSession(false));
                     ArrayList<Ordine> ordiniutente = ordineManager.retrieveOrdiniByUtente(getUtenteSession(request.getSession(false)).getId());
-                    request.setAttribute("ordiniutente",ordiniutente);
+                    request.setAttribute("orders",ordiniutente);
                     request.getRequestDispatcher("/WEB-INF/views/orderhistory.jsp").forward(request, response);
                     break;
                 case "/manageorders":
@@ -70,6 +94,10 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                 case "/info":
                     //click su pagina per specifiche ordine(utente)
                     authenticate(request.getSession(false));
+                    int idorder= Integer.parseInt(request.getParameter("orderid"));
+                    Ordine order=ordineManager.retrieveOrdineById(idorder);
+                    order.setProdottoList(ordineManager.retriveProdotti(order.getId()));
+                    request.setAttribute("order",order);
                     request.getRequestDispatcher("/WEB-INF/views/orderdetails.jsp").forward(request, response);
                     break;
                 case "/admininfo":
@@ -84,6 +112,17 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                 case "/modify":
                     //click su pagina per modificare ordine(solo lato utente)
                     authenticate(request.getSession(false));
+                    int idordine= Integer.parseInt(request.getParameter("orderid"));
+                    Ordine ordinetmp=ordineManager.retrieveOrdineById(idordine);
+                    ordinetmp.setProdottoList(ordineManager.retriveProdotti(ordinetmp.getId()));
+                    request.getSession(false).setAttribute("order",ordinetmp);
+                    request.getRequestDispatcher("/WEB-INF/views/editorder.jsp").forward(request, response);
+                    break;
+                case "/updateDone":
+                    Boolean check= (Boolean) request.getSession(false).getAttribute("updateDone");
+                    if(check==null || check==false){
+                        notAllowed();
+                    }
                     request.getRequestDispatcher("/WEB-INF/views/editorder.jsp").forward(request, response);
                     break;
                 case "/make":

@@ -147,6 +147,8 @@ public class ProdottoServlet extends Controller implements ErrorHandler {
                     request.getRequestDispatcher("/WEB-INF/admin-views/editproduct.jsp").forward(request, response);
                     break;
                 case "/shopnow":
+                    ArrayList<GiftCard> products = giftCardManager.retrieveTutteGiftCard();
+                    request.setAttribute("giftCards",products);
                     request.getRequestDispatcher("/WEB-INF/views/shopnow.jsp").forward(request, response);
                     break;
                 default:

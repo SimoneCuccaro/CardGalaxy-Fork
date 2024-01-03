@@ -17,6 +17,11 @@
     flex-flow: column wrap;
 }
 
+.grid-x{
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .larger {
     height: 30px;
     width: 180px;

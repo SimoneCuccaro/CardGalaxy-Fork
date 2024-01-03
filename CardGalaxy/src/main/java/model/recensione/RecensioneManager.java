@@ -37,13 +37,13 @@ public class RecensioneManager{
                 ps.setInt(1, id_prodotto);
                 ResultSet rs = ps.executeQuery();
                 ArrayList<Recensione> recensioniProd = new ArrayList<>();
-                if (rs.next()) {
-                    Recensione rec=new Recensione();
-                    rec.setId_utente(rs.getInt("id_utente"));
-                    rec.setId_prodotto(rs.getInt("id_prodotto"));
-                    rec.setDatarecensione(rs.getString("datarecensione"));
-                    rec.setTesto(rs.getString("testo"));
-                    recensioniProd.add(rec);
+                while (rs.next()) {
+                    Recensione rec1=new Recensione();
+                    rec1.setId_utente(rs.getInt("id_utente"));
+                    rec1.setId_prodotto(rs.getInt("id_prodotto"));
+                    rec1.setDatarecensione(rs.getString("datarecensione"));
+                    rec1.setTesto(rs.getString("testo"));
+                    recensioniProd.add(rec1);
                 }
                 rs.close();
                 return recensioniProd;

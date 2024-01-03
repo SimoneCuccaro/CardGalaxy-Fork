@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/table.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
+
     <title>Manage Customers</title>
     <%@include file="../utils/head.jsp"%>
 </head>
@@ -17,7 +18,8 @@
         <c:if test="${not empty alert}">
             <%@include file="../utils/alert.jsp" %>
         </c:if>
-        <h1>Response to user:${sessionScope.user_username} and his request:${sessionScope.request_object}</h1>
+        <h1> Response to user: ${sessionScope.user_username} </h1>
+        <h2> and his request: ${sessionScope.request_object} </h2>
         <form action="${contextPath}/response/submit" method="post">
             <label for="responseid">
                <textarea id="responseid" name="response" rows="10" cols="96" required></textarea>
@@ -25,7 +27,7 @@
             <input type="hidden" name="userid" value="${sessionScope.userid}">
             <input type="hidden" name="requestid" value="${sessionScope.requestid}">
             <div>
-                <button type="submit" class="glowing-btn"> SUBMIT RESPONSE </button>
+                <button type="submit" class="button add-margin-bottom"> SUBMIT RESPONSE </button>
             </div>
         </form>
     </div>

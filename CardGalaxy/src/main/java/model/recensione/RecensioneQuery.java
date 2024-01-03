@@ -15,7 +15,7 @@ public class RecensioneQuery extends TableQuery {
 
     public String inserisciRecensione() { return String.format("INSERT INTO %s (id_utente , id_prodotto , datarecensione , testo) VALUES (?, ?, ?, ?);", this.table);}
 
-    public String aggiornaRecensione() { return String.format("UPDATE %s SET testo = ?, data = ?,  WHERE id_utente = ? AND id_prodotto = ?;", this.table);}
+    public String aggiornaRecensione() { return String.format("UPDATE %s SET testo = ?, datarecensione = ?  WHERE id_utente = ? AND id_prodotto = ?;", this.table);}
 
     public String rimuoviRecensione() {return String.format("DELETE FROM %s WHERE id_utente = ? AND id_prodotto = ?;",this.table);}
 

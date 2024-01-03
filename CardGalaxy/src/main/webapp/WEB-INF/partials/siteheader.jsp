@@ -23,7 +23,14 @@
     </div>
     <div class="cart-svg">
         <a href="${contextPath}/cart/show"><%@include file="../../icons/cart.svg"%></a>
-        <span class="badge">0</span>
+        <c:choose>
+            <c:when test="${not empty cart}">
+                <span class="badge">${cart.quantita()}</span>
+            </c:when>
+            <c:otherwise>
+                <span class="badge">0</span>
+            </c:otherwise>
+        </c:choose>
     </div>
     <img id="logo" src="${contextPath}/photos/cardgalaxylogo.png" alt="website logo">
 </header>

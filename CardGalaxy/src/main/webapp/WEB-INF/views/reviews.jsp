@@ -34,6 +34,12 @@
             </jsp:include>
             <% request.getSession(false).removeAttribute("deleteString"); %>
         </c:if>
+        <c:if test="${sessionScope.updateString==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Review updated successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("updateString"); %>
+        </c:if>
         <c:if test="${sessionScope.addString==true}">
             <jsp:include page="../utils/goodAlert.jsp">
                 <jsp:param name="message" value="Review added successfully!"/>
@@ -66,7 +72,7 @@
                     if (utenteSession != null) {
                         if (recensione.getId_utente() == utenteSession.getId()) {
                 %>
-                <form action="${contextPath}/reviews/delete" method="post">
+                <form action="${contextPath}/reviews/delete" method="post" onsubmit="return confirm('Are you sure?');">
 
                     <button type="submit" class="button">DELETE REVIEW</button>
                 </form>
@@ -89,7 +95,7 @@
                     }
                 }
                 if (flag == 1) {%>
-        <form action="${contextPath}/reviews/modify" method="post">
+        <form action="${contextPath}/reviews/modify" method="post" onsubmit="return confirm('Are you sure?');">
             <p class="para_index"> change your review about this product : </p>
             <label for="reviewid1">
                 <textarea id="reviewid1" name="review" rows="5" cols="96" required><%=testo%></textarea>

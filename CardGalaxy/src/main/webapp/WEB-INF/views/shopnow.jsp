@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/cards.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <%@include file="../utils/head.jsp" %>
     <title>Shop Now</title>
 </head>
@@ -18,6 +19,9 @@
 <%@include file="../partials/sitenavbar.jsp" %>
 <main>
     <div class="content">
+        <c:if test="${not empty alert}">
+            <%@include file="../utils/infoAlert.jsp" %>
+        </c:if>
         <h1 class="welcome"> Discover Our Products </h1>
         <% ArrayList<GiftCard> products = (ArrayList<GiftCard>) request.getAttribute("giftCards");
             for (GiftCard giftCard : products) { %>
@@ -29,12 +33,16 @@
                 </div>
                 <div class="contentBx">
                     <h2><%=giftCard.getNome()%> <%=giftCard.getPrezzo()%>&euro;</h2>
-                    <p><%=giftCard.getDescrizione()%></p>
+                    <p><%=giftCard.getDescrizione()%>
+                    </p>
                     <form action="${contextPath}/reviews/show" method="get">
                         <input type="hidden" name="idprodotto" value="<%=giftCard.getId_prodotto()%>">
                         <button type="submit"> SHOW REVIEWS</button>
                     </form>
-                    <button type="submit"> ADD TO CART</button>
+                    <form action="${contextPath}/cart/add" method="post">
+                        <input type="hidden" name="idprod" value="<%=giftCard.getId_prodotto()%>">
+                        <button type="submit"> ADD TO CART</button>
+                    </form>
                 </div>
             </div>
         </div>

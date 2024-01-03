@@ -1,6 +1,8 @@
 package model;
 
 
+import model.carrello.Carrello;
+import model.carrello.CarrelloSession;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
 import model.utente.UtenteSession;
@@ -20,6 +22,10 @@ public class Controller extends HttpServlet implements ErrorHandler {
 
     protected UtenteSession getUtenteSession(HttpSession session){
         return (UtenteSession) session.getAttribute("utenteSession");
+    }
+
+    protected CarrelloSession getSessionCart(HttpSession session){
+        return (CarrelloSession) session.getAttribute("cart");
     }
 
 }

@@ -2,9 +2,14 @@ package controller;
 
 import jakarta.servlet.annotation.MultipartConfig;
 import model.Controller;
+import model.carrello.Carrello;
+import model.carrello.CarrelloManager;
+import model.carrello.CarrelloSession;
+import model.carrello.CartItems;
 import model.errors.InvalidRequestException;
 import model.errors.ErrorHandler;
 import model.ordine.OrdineManager;
+import model.prodotto.GiftCard;
 import model.prodotto.GiftCardManager;
 import model.utente.Utente;
 import model.utente.UtenteManager;
@@ -20,8 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @WebServlet(name = "UtenteServlet", value = "/user/*")
@@ -32,11 +36,14 @@ public class UtenteServlet extends Controller implements ErrorHandler{
     private OrdineManager ordineManager;
     private GiftCardManager giftCardManager;
 
+    private CarrelloManager carrelloManager;
+
     public void init()throws ServletException{
         super.init();
         utenteManager=new UtenteManager();
         ordineManager = new OrdineManager();
         giftCardManager = new GiftCardManager();
+        carrelloManager=new CarrelloManager();
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,6 +69,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                         } else {
                             Boolean userString=true;
                             request.getSession(false).setAttribute("loginString",userString);
+                            CarrelloSession cart=new CarrelloSession(carrelloManager.retrieveCarrelloByUtente(utenteSession.getId()));
+                            request.getSession(false).setAttribute("cart",cart);
                             response.sendRedirect(contextPath + "/user/profile");
                         }
                     } else {
@@ -70,7 +79,10 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                 break;
                 case "/logout":
                     //effettuazione del logout
+                    List<CartItems> items= (List<CartItems>) getSessionCart(request.getSession(false)).getItems();
+                    carrelloManager.saveToCart(getUtenteSession(request.getSession(false)).getId(),items);
                     session.removeAttribute("utenteSession");
+                    session.removeAttribute("cart");
                     session.invalidate();
                     response.sendRedirect(contextPath + "/user/home");
                     break;
@@ -94,6 +106,8 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
+                        CarrelloSession cart=new CarrelloSession();
+                        request.getSession(false).setAttribute("cart",cart);
                         Boolean userString=true;
                         request.getSession(false).setAttribute("registerString",userString);
                         response.sendRedirect(contextPath + "/user/profile");
@@ -133,6 +147,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                 case "/delete":
                     utenteManager.cancellaUtente(getUtenteSession(session).getId());
                     session.removeAttribute("utenteSession");
+                    session.removeAttribute("cart");
                     Boolean deleteString=true;
                     request.getSession(false).setAttribute("deleteString",deleteString);
                     response.sendRedirect(contextPath + "/user/login");

@@ -43,6 +43,12 @@ public class CartServlet extends Controller implements ErrorHandler {
                 case "/remove":
                     authenticate(request.getSession(false));
                     //rimuovo prodotto dal carrello
+                    int idprodotto= Integer.parseInt(request.getParameter("idprodotto"));
+                    carrelloManager.removeFromCart(getUtenteSession(request.getSession(false)).getId(),idprodotto);
+                    getSessionCart(request.getSession(false)).removeProduct(idprodotto);
+                    Boolean cartString=true;
+                    request.getSession(false).setAttribute("cartString",cartString);
+                    response.sendRedirect(contextPath+"/cart/show");
                     break;
                 default:
                     notFound();

@@ -43,6 +43,9 @@
                     <input type="hidden" value="${order.id}" name="orderid">
                     <button type="submit" class="glowing-btn"> EDIT ORDER</button>
                 </form>
+                <form action="${contextPath}/orders/showall" method="get">
+                    <button type="submit" class="glowing-btn">BACK</button>
+                </form>
             </div>
         </div>
     </div>

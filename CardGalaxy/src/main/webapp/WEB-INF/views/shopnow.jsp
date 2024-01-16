@@ -24,7 +24,8 @@
         </c:if>
         <h1 class="welcome"> Discover Our Products </h1>
         <% ArrayList<GiftCard> products = (ArrayList<GiftCard>) request.getAttribute("giftCards");
-            for (GiftCard giftCard : products) { %>
+            for (GiftCard giftCard : products) {
+                if (giftCard.checkisAvailable()) {%>
         <div class="container">
             <div class="card">
                 <div class="imgBx">
@@ -46,7 +47,8 @@
                 </div>
             </div>
         </div>
-        <% } %>
+        <% }
+        } %>
     </div>
 </main>
 <%@include file="../partials/sitefooter.jsp" %>

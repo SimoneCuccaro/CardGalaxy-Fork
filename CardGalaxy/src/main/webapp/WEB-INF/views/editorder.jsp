@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/support-button.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/login.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/userprofile.css">
     <title>Edit Order</title>
     <%@include file="../utils/head.jsp" %>
 </head>
@@ -21,8 +22,9 @@
             <% request.getSession(false).removeAttribute("updateDone"); %>
         </c:if>
         <h1 class="welcome">Edit Your Order</h1>
+        <div class="login1">
         <c:forEach items="${sessionScope.order.prodottoList}" var="product">
-            <form class="login grid-y" action="${contextPath}/orders/update" method="post">
+            <form class="login1 grid-y" action="${contextPath}/orders/update" method="post">
                 <span>${product.key.nome} ${product.key.prezzo}&euro;</span>
                 <label for="quantityid">
                     <input class="larger" type="number" min="1" max="10" name="quantity" id="quantityid"
@@ -35,9 +37,10 @@
                 <br>
             </form>
         </c:forEach>
+        </div>
         <form action="${contextPath}/orders/info" method="get">
             <input type="hidden" name="orderid" value="${sessionScope.order.id}">
-            <button class="button" type="submit"> BACK</button>
+            <button class="glowing-btn" type="submit"> BACK</button>
 
         </form>
         <br>

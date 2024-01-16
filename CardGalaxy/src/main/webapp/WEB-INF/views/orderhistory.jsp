@@ -22,6 +22,12 @@
             </jsp:include>
             <% request.getSession(false).removeAttribute("removeOrder"); %>
         </c:if>
+        <c:if test="${sessionScope.orderDone==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Order done successfully!"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("orderDone"); %>
+        </c:if>
         <h1 class="welcome">All Your Orders </h1>
         <div class="grid-y align-center">
         <table class="table purple ut">

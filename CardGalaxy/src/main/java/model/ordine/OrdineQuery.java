@@ -27,4 +27,6 @@ public class OrdineQuery extends TableQuery
     public String updateOrder(){return String.format("UPDATE %s SET prezzo_totale=?",this.table);}
 
     public String removeOrder(){return String.format("DELETE FROM %s WHERE id=?",this.table);}
+
+    public String saveContenuto(){return String.format("INSERT INTO contenuto (id_ordine, id_prodotto, quantita) VALUES (?, ?, ?)");}
 }

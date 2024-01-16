@@ -4,12 +4,14 @@ import model.prodotto.GiftCard;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarrelloSession {
     private List<CartItems> items;
 
     public CarrelloSession() {
+        this.items=new ArrayList<>();
     }
     public CarrelloSession(List<CartItems> items) {
         this.items = items;

@@ -1,6 +1,7 @@
 package controller;
 
 import model.Controller;
+import model.carrello.CarrelloManager;
 import model.errors.ErrorHandler;
 import model.errors.InvalidRequestException;
 import model.ordine.Ordine;
@@ -15,17 +16,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.*;
 
 @WebServlet(name = "OrdineServlet", value = "/orders/*")
 public class OrdineServlet extends Controller implements ErrorHandler {
 
     private OrdineManager ordineManager;
+    private CarrelloManager carrelloManager;
     public void init() throws ServletException{
         super.init();
         ordineManager=new OrdineManager();
+        carrelloManager=new CarrelloManager();
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,7 +35,22 @@ public class OrdineServlet extends Controller implements ErrorHandler {
             String path = request.getPathInfo();
             switch (path) {
                 case "/add":
-                    //aggiungere ordine al database
+                    Ordine order=new Ordine();
+                    order.setPrezzo_totale(getSessionCart(request.getSession(false)).totale());
+                    GregorianCalendar gregorianCalendar=new GregorianCalendar();
+                    int giorno=gregorianCalendar.get(Calendar.DATE);
+                    int mese=gregorianCalendar.get(Calendar.MONTH)+1;
+                    int anno=gregorianCalendar.get(Calendar.YEAR);
+                    String data=giorno+"/"+mese+"/"+anno;
+                    order.setData_acquisto(data);
+                    order.setId_utente(getUtenteSession(request.getSession(false)).getId());
+                    ordineManager.creaOrdine(order);
+                    ordineManager.saveContenuto(order,getSessionCart(request.getSession(false)).getItems());
+                    getSessionCart(request.getSession(false)).resetCart();
+                    carrelloManager.rimuoviCarrelloUtente(getUtenteSession(request.getSession(false)).getId());
+                    Boolean orderDone=true;
+                    request.getSession(false).setAttribute("orderDone",orderDone);
+                    response.sendRedirect(contextPath+"/orders/showall");
                     break;
                 case "/update":
                     int orderid= Integer.parseInt(request.getParameter("orderid"));
@@ -124,10 +140,6 @@ public class OrdineServlet extends Controller implements ErrorHandler {
                         notAllowed();
                     }
                     request.getRequestDispatcher("/WEB-INF/views/editorder.jsp").forward(request, response);
-                    break;
-                case "/make":
-                    //click su pagina per effettuare ordine
-                    authenticate(request.getSession(false));
                     break;
                 default:
                     notFound();

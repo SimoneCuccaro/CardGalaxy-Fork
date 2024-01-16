@@ -127,30 +127,5 @@ public class GiftCardManager
             }
         }
 
-        public boolean addToCart(int id_utente,int id_prodotto,int quantita){
-            try (Connection con = Manager.getConnection()) {
-                try (PreparedStatement ps = con.prepareStatement(QUERY.addToCart())) {
-                    ps.setInt(1,id_utente);
-                    ps.setInt(2,id_prodotto);
-                    ps.setInt(3,quantita);
-                     ps.executeUpdate();
-                    return true;
-                }
-            }catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
-        public boolean removeFromCart(int id_utente,int id_prodotto){
-            try (Connection con = Manager.getConnection()) {
-                try (PreparedStatement ps = con.prepareStatement(QUERY.removeFromCart())) {
-                    ps.setInt(1,id_utente);
-                    ps.setInt(2,id_prodotto);
-                    ps.executeUpdate();
-                    return true;
-                }
-            }catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }

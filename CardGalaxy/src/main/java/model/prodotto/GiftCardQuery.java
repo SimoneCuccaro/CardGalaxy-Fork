@@ -21,9 +21,7 @@ import model.storage.TableQuery;
 
         public String countAllGiftCard() { return String.format("SELECT count(*) AS giftCardTotali FROM %s WHERE isAvailable=1;",this.table);}
 
-        public String addToCart(){return String.format("INSERT INTO carrello (id_utente, id_prodotto, quantita) VALUES (?,?,?);");}
 
-        public String removeFromCart(){return String.format("DELETE FROM carrello WHERE id_utente = ? AND id_prodotto =?");}
 
     }
 

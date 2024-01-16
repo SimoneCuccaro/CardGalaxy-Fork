@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 @WebServlet(name = "RecensioneServlet", value = "/reviews/*")
@@ -40,9 +41,11 @@ public class RecensioneServlet extends Controller implements ErrorHandler {
                     GiftCard giftCard1 = (GiftCard) request.getSession(false).getAttribute("prodotto");
                     int idutente1=getUtenteSession(request.getSession(false)).getId();
                     String text=request.getParameter("review");
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                    LocalDateTime now = LocalDateTime.now();
-                    String data= String.valueOf(now);
+                    GregorianCalendar gregorianCalendar=new GregorianCalendar();
+                    int giorno=gregorianCalendar.get(Calendar.DATE);
+                    int mese=gregorianCalendar.get(Calendar.MONTH)+1;
+                    int anno=gregorianCalendar.get(Calendar.YEAR);
+                    String data=giorno+"/"+mese+"/"+anno;
                     Recensione recensione=new Recensione(idutente1,giftCard1.getId_prodotto(),data,text);
                     recensioneManager.inserisciRecensione(recensione);
                     Boolean addString=true;
@@ -67,6 +70,19 @@ public class RecensioneServlet extends Controller implements ErrorHandler {
                     break;
                 case "/modify":
                     //click sul pulsante modifica recensione(lato utente)
+                    GiftCard giftCard2 = (GiftCard) request.getSession(false).getAttribute("prodotto");
+                    int idutente2=getUtenteSession(request.getSession(false)).getId();
+                    String text1=request.getParameter("review");
+                    GregorianCalendar gregorianCalendar1=new GregorianCalendar();
+                    int giorno1=gregorianCalendar1.get(Calendar.DATE);
+                    int mese1=gregorianCalendar1.get(Calendar.MONTH)+1;
+                    int anno1=gregorianCalendar1.get(Calendar.YEAR);
+                    String data1=giorno1+"/"+mese1+"/"+anno1;
+                    Recensione recensione1=new Recensione(idutente2,giftCard2.getId_prodotto(),data1,text1);
+                    recensioneManager.aggiornaRecensione(recensione1);
+                    Boolean updateString=true;
+                    request.getSession(false).setAttribute("updateString",updateString);
+                    response.sendRedirect(contextPath+"/reviews/show2");
                     break;
                 default:
                     notFound();

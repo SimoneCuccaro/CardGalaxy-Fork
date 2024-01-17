@@ -1,5 +1,6 @@
 package model.ordine;
 
+import model.carrello.CartItems;
 import model.prodotto.GiftCard;
 import model.storage.Manager;
 
@@ -7,6 +8,7 @@ import model.storage.Manager;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 public class OrdineManager extends Manager {
     private static final OrdineQuery QUERY = new OrdineQuery("ordine");
@@ -209,4 +211,21 @@ public class OrdineManager extends Manager {
         }
     }
 
+    public boolean saveContenuto(Ordine ordine, List<CartItems> items) {
+        try (Connection con = Manager.getConnection()) {
+            for (CartItems prodotto : items) {
+                try (PreparedStatement ps = con.prepareStatement(QUERY.saveContenuto())) {
+                    ps.setInt(1, ordine.getId());
+                    ps.setInt(2, prodotto.getGiftCard().getId_prodotto());
+                    ps.setInt(3, prodotto.getQuantita());
+                    if (ps.executeUpdate() != 1) {
+                        throw new RuntimeException("INSERT error.");
+                    }
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

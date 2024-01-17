@@ -79,10 +79,12 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                 break;
                 case "/logout":
                     //effettuazione del logout
-                    List<CartItems> items= (List<CartItems>) getSessionCart(request.getSession(false)).getItems();
-                    carrelloManager.saveToCart(getUtenteSession(request.getSession(false)).getId(),items);
+                    if(!getUtenteSession(request.getSession(false)).isAdmin()){
+                        List<CartItems> items= (List<CartItems>) getSessionCart(request.getSession(false)).getItems();
+                        carrelloManager.saveToCart(getUtenteSession(request.getSession(false)).getId(),items);
+                        session.removeAttribute("cart");
+                    }
                     session.removeAttribute("utenteSession");
-                    session.removeAttribute("cart");
                     session.invalidate();
                     response.sendRedirect(contextPath + "/user/home");
                     break;

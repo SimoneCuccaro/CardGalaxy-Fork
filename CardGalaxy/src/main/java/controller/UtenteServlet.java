@@ -28,14 +28,36 @@ import java.nio.file.Paths;
 import java.util.*;
 
 
+/**La classe <code>UtenteServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo Utente
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "UtenteServlet", value = "/user/*")
 @MultipartConfig
 public class UtenteServlet extends Controller implements ErrorHandler{
 
+    /**Oggetto di tipo UtenteManager usato per la gestione degli utenti all' interno della servlet
+     *
+     */
     private UtenteManager utenteManager;
+
+    /**Oggetto di tipo OrdineManager usato per la gestione degli ordini all' interno della servlet
+     *
+     */
     private OrdineManager ordineManager;
+
+    /**Oggetto di tipo GiftCardManager usato per la gestione delle GiftCard all' interno della servlet
+     *
+     */
     private GiftCardManager giftCardManager;
 
+    /**Oggetto di tipo CarrelloManager usato per la gestione del carrello all' interno della servlet
+     *
+     */
     private CarrelloManager carrelloManager;
 
     public void init()throws ServletException{

@@ -17,8 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**La classe <code>RichiestaSupportoServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo RichiestaSupporto
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "RichiestaSupportoServlet", value = "/help/*")
 public class RichiestaSupportoServlet extends Controller implements ErrorHandler {
+
+    /**Oggetto di tipo RichiestaSupportoManager usato per la gestione delle richieste di supporto all' interno della servlet
+     *
+     */
     private RichiestaSupportoManager richiestaSupportoManager;
     public void init() throws ServletException{
         super.init();

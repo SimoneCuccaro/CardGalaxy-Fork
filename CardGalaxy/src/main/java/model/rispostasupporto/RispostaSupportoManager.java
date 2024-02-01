@@ -5,11 +5,26 @@ import model.storage.Manager;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+/** Un oggetto <code>RispostaSupportoManager</code> serve a gestire la memorizzazione delle
+ * informazioni relative agli oggetti RispostaSupporto all'interno del database
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 public class RispostaSupportoManager {
     private static final RispostaSupportoQuery QUERY = new RispostaSupportoQuery("rispostasupporto");
 
 
-    public ArrayList<RispostaSupporto> retrieveTutteGiftCard(){
+    /**Il metodo <code>retriveTutteRisposte</code> consente di ottenere tutti gli oggetti RipostaSupporto
+     * salvati nel database
+     *
+     * @return lista contenente gli oggetti RispostaSupporto presenti nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     */
+    public ArrayList<RispostaSupporto> retrieveTutteRisposte(){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRisposteSupporto())) {
                 ResultSet rs = ps.executeQuery();
@@ -29,6 +44,13 @@ public class RispostaSupportoManager {
         }
     }
 
+    /**Il metodo <code>inserisciRispostaSupporto</code> consente di inserire un oggetto RispostaSupporto
+     * all' interno del database
+     *
+     * @param risposta oggetto RispostaSupporto da salvare nel database
+     * @return booleano che conferma il successo dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     */
     public boolean inserisciRispostaSupporto(RispostaSupporto risposta){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRispostaSupporto())) {

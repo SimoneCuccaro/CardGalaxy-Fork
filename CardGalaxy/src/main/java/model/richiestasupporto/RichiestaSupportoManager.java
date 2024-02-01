@@ -5,10 +5,25 @@ import model.storage.Manager;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+/** Un oggetto <code>RichiestaSupportoManager</code> serve a gestire la memorizzazione delle
+ * informazioni relative agli oggetti RichiestaSupporto all'interno del database
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 public class RichiestaSupportoManager {
     private static final RichiestaSupportoQuery QUERY = new RichiestaSupportoQuery("richiestasupporto");
 
 
+    /**Il metodo <code>retriveAllRequest</code> consente di ottenere tutti gli oggetti RichiestaSupporto
+     * salvati nel database
+     *
+     * @return lista contenente gli oggetti RichiestaSupporto presenti nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     */
     public ArrayList<RichiestaSupporto> retrieveAllRequest(){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retriveRichiesteSupporto())) {
@@ -30,6 +45,13 @@ public class RichiestaSupportoManager {
         }
     }
 
+    /**Il metodo <code>retriveTutteRisposte</code> consente di ottenere un oggetto RichiestaSupporto con uno specifico id
+     * salvato nel database
+     *
+     * @param id_richiesta id dell' oggetto RichiestaSupporto di cui si vogliono recuperare le informazioni
+     * @return oggetto RichiestaSupporto con id fornito salvato nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     */
     public RichiestaSupporto retrieveRichiestaSupportoByID(int id_richiesta){
         RichiestaSupporto request;
         try (Connection con = Manager.getConnection()) {
@@ -50,6 +72,14 @@ public class RichiestaSupportoManager {
             throw new RuntimeException(e);
         }
     }
+
+    /**Il metodo <code>inserisciRichiestaSupporto</code> consente di inserire un oggetto RichiestaSupporto
+     * all' interno del database
+     *
+     * @param richiesta oggetto RichiestaSupporto da salvare nel database
+     * @return booleano che conferma il successo dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     */
     public boolean inserisciRichiestaSupporto(RichiestaSupporto richiesta){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRichiestaSupporto(), Statement.RETURN_GENERATED_KEYS)) {

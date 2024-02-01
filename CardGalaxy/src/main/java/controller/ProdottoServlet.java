@@ -27,10 +27,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**La classe <code>ProdottoServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo GiftCard
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "ProdottoServlet", value = "/products/*")
 @MultipartConfig
 public class ProdottoServlet extends Controller implements ErrorHandler {
 
+    /**Oggetto di tipo GiftCardManager usato per la gestione delle GiftCard all' interno della servlet
+     *
+     */
     private GiftCardManager giftCardManager;
     private static String uploadRoot;
 

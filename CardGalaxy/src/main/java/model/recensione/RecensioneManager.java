@@ -6,10 +6,26 @@ import model.storage.Manager;
 
 import java.sql.*;
 import java.util.ArrayList;
+
+/** Un oggetto <code>RecensioneManager</code> serve a gestire la memorizzazione delle
+ * informazioni relative agli oggetti Recensione all'interno del database
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 public class RecensioneManager{
     private static final RecensioneQuery QUERY = new RecensioneQuery("recensioni");
 
 
+    /**Il metodo <code>retriveRecensioni</code> consente di ottenere tutti gli oggetti Recensione
+     * salvati nel database
+     *
+     * @return lista contenente gli oggetti Recensione presenti nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post recensioni=recensioni->asSet()
+     */
     public ArrayList<Recensione> retrieveRecensioni(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.retriveRecensioni())){
@@ -31,6 +47,15 @@ public class RecensioneManager{
         }
     }
 
+    /**Il metodo <code>retriveRecensioniByProdotto</code> consente di ottenere tutti gli oggetti Recensione
+     * salvati nel database inerenti ad un singolo oggetto GiftCard
+     *
+     * @param id_prodotto id dell' oggetto GiftCard di cui si vogliono otteneree le recensioni
+     * @return lista di oggetti Recensione inerenti all' oggetto GiftCard fornito
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id_prodotto!=null
+     * @post recensioniProd=recensioni->select(r|r.id_prodotto=id_prodotto)->asSet()
+     */
     public ArrayList<Recensione> retrieveRecensioniByProdotto(int id_prodotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.retrieveRecensioniByProdotto())) {
@@ -53,7 +78,15 @@ public class RecensioneManager{
         }
     }
 
-
+    /**Il metodo <code>inserisciRecensione</code> serve ad inserire un oggetto Recensione
+     * all' interno del database
+     *
+     * @param rec oggetto Recensione da salvare nel database
+     * @return booleano che indica il risultato dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre rec.id_utente!=null&amp;&amp;rec.id_prodotto!=null&amp;&amp;rec.testo!=null&amp;&amp;!(recensioni->includes(rec))
+     * @post recensioni->includes(rec)
+     */
     public boolean inserisciRecensione (Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.inserisciRecensione())) {
@@ -71,6 +104,15 @@ public class RecensioneManager{
         }
     }
 
+    /**Il metodo <code>aggiornaRecensione</code> serve ad aggiornare un oggetto Recensione
+     * all' interno del database
+     *
+     * @param rec oggetto Recensione da aggiornare nel database
+     * @return booleano che indica il risultato dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre @pre rec.id_utente!=null&amp;&amp;rec.id_prodotto!=null&amp;&amp;rec.testo!=null&amp;&amp;recensioni->exist(r|r.id_utente=rec.id_utente&amp;&amp;r.id_prodotto=rec.id_prodotto)
+     * @post recensioni->includes(rec)
+     */
     public boolean aggiornaRecensione(Recensione rec){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.aggiornaRecensione())) {
@@ -86,6 +128,16 @@ public class RecensioneManager{
         }
     }
 
+    /**Il metodo <code>rimuoviRecensione</code> serve a rimuovere un oggetto Recensione
+     * dal database
+     *
+     * @param id_utente id dell' account utente che ha effettuato la recensione
+     * @param id_prodotto id del' oggetto GiftCard di cui si vuole rimuovere la recensione
+     * @return booleano che indica il risultato dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id_utente!=null&amp;&amp;id_prodotto!=null&amp;&amp;recensioni->exist(r|r.id_utente=id_utente&amp;&amp;r.id_prodotto=id_prodotto)
+     * @post !(recensioni->exists(r|r.id_utente=id_utente&amp;&amp;&amp;&amp;r.id_prodotto=id_prodotto))
+     */
     public boolean rimuoviRecensione(int id_utente,int id_prodotto){
         try (Connection con = Manager.getConnection()) {
             try (PreparedStatement ps = con.prepareStatement(QUERY.rimuoviRecensione())) {

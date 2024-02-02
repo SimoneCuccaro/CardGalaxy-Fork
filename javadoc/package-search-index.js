@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"controller"},{"l":"model"},{"l":"model.carrello"},{"l":"model.errors"},{"l":"model.ordine"},{"l":"model.prodotto"},{"l":"model.recensione"},{"l":"model.richiestasupporto"},{"l":"model.rispostasupporto"},{"l":"model.storage"},{"l":"model.utente"},{"l":"model.validator"}];updateSearchResults();

@@ -20,10 +20,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**La classe <code>RecensioneServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo Recensione
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "RecensioneServlet", value = "/reviews/*")
 public class RecensioneServlet extends Controller implements ErrorHandler {
 
+
+    /**Oggetto di tipo RecensioneManager usato per la gestione delle recensioni all' interno della servlet
+     *
+     */
     private RecensioneManager recensioneManager;
+
+    /**Oggetto di tipo GiftCardManager usato per la gestione delle GiftCard all' interno della servlet
+     *
+     */
     private GiftCardManager giftCardManager;
     public void init() throws ServletException{
         super.init();

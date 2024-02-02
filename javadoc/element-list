@@ -1,0 +1,12 @@
+controller
+model
+model.carrello
+model.errors
+model.ordine
+model.prodotto
+model.recensione
+model.richiestasupporto
+model.rispostasupporto
+model.storage
+model.utente
+model.validator

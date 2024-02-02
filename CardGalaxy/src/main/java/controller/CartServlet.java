@@ -16,10 +16,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 
+/**La classe <code>CartServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo Carrello
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "CartServlet", value = "/cart/*")
 public class CartServlet extends Controller implements ErrorHandler {
 
+    /**Oggetto di tipo CarrelloManager usato per la gestione del carrello all' interno della servlet
+     *
+     */
     private CarrelloManager carrelloManager;
+
+    /**Oggetto di tipo GiftCardManager usato per la gestione delle GiftCard all' interno della servlet
+     *
+     */
     private GiftCardManager giftCardManager;
     public void init() throws ServletException{
         super.init();

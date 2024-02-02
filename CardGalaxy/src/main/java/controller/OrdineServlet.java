@@ -18,10 +18,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
+/**La classe <code>OrdineServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo Ordine
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "OrdineServlet", value = "/orders/*")
 public class OrdineServlet extends Controller implements ErrorHandler {
 
+    /**Oggetto di tipo OrdineManager usato per la gestione degli ordini all' interno della servlet
+     *
+     */
     private OrdineManager ordineManager;
+
+    /**Oggetto di tipo CarrelloManager usato per la gestione del carrello all' interno della servlet
+     *
+     */
     private CarrelloManager carrelloManager;
     public void init() throws ServletException{
         super.init();

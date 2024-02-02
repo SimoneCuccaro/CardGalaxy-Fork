@@ -21,12 +21,32 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+/**La classe <code>RispostaSupportoServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo RispostaSupporto
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "RispostaSupportoServlet", value = "/response/*")
 public class RispostaSupportoServlet extends Controller implements ErrorHandler {
 
+    /**Oggetto di tipo RispostaSupportoManager usato per la gestione delle risposte all' interno della servlet
+     *
+     */
     private RispostaSupportoManager rispostaSupportoManager;
+
+    /**Oggetto di tipo RichiestaSupportoManager usato per la gestione delle richieste di supporto all' interno della servlet
+     *
+     */
     private RichiestaSupportoManager richiestaSupportoManager;
+
+    /**Oggetto di tipo UtenteManager usato per la gestione degli utenti all' interno della servlet
+     *
+     */
     private UtenteManager utenteManager;
+
     public void init() throws ServletException{
         super.init();
         rispostaSupportoManager=new RispostaSupportoManager();

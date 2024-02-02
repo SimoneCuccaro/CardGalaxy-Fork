@@ -23,6 +23,7 @@ public class RichiestaSupportoManager {
      *
      * @return lista contenente gli oggetti RichiestaSupporto presenti nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post richieste=richestasupporto->asSet()
      */
     public ArrayList<RichiestaSupporto> retrieveAllRequest(){
         try (Connection con = Manager.getConnection()) {
@@ -51,6 +52,8 @@ public class RichiestaSupportoManager {
      * @param id_richiesta id dell' oggetto RichiestaSupporto di cui si vogliono recuperare le informazioni
      * @return oggetto RichiestaSupporto con id fornito salvato nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id_richiesta!=null
+     * @post request=richiestasupporto->select(r|r.id_richiesta=id_richiesta)
      */
     public RichiestaSupporto retrieveRichiestaSupportoByID(int id_richiesta){
         RichiestaSupporto request;
@@ -79,6 +82,8 @@ public class RichiestaSupportoManager {
      * @param richiesta oggetto RichiestaSupporto da salvare nel database
      * @return booleano che conferma il successo dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre richiesta.richiesta!=null&amp;&amp;richiesta.oggetto_richiesta!=null&amp;&amp;utente->exist(u|u.id=richiestasupporto.id_utente)&amp;&amp;!(richiestasupporto->includes(richiesta))
+     * @post richiestasupporto->includes(richiesta)
      */
     public boolean inserisciRichiestaSupporto(RichiestaSupporto richiesta){
         try (Connection con = Manager.getConnection()) {

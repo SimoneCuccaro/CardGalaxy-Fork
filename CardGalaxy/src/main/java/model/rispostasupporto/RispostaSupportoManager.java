@@ -23,6 +23,7 @@ public class RispostaSupportoManager {
      *
      * @return lista contenente gli oggetti RispostaSupporto presenti nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post risposte=rispostasupporto->asSet()
      */
     public ArrayList<RispostaSupporto> retrieveTutteRisposte(){
         try (Connection con = Manager.getConnection()) {
@@ -50,6 +51,8 @@ public class RispostaSupportoManager {
      * @param risposta oggetto RispostaSupporto da salvare nel database
      * @return booleano che conferma il successo dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre risposta.id_utente!=null&amp;&amp;risposta.risposta!=null&amp;&amp;risposta.id_richiesta_supporto!0=null&amp;&amp;!(rispostasupporto->includes(risposta))
+     * @post rispostasupporto->includes(risposta)
      */
     public boolean inserisciRispostaSupporto(RispostaSupporto risposta){
         try (Connection con = Manager.getConnection()) {

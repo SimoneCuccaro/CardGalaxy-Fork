@@ -25,6 +25,7 @@ public class GiftCardManager {
      *
      * @return lista contenente gli oggetti GiftCard presenti nel database
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post giftCards=prodotto->asSet()
      */
     public ArrayList<GiftCard> retrieveTutteGiftCard() {
         try (Connection con = Manager.getConnection()) {
@@ -57,6 +58,8 @@ public class GiftCardManager {
      * @param id_prodotto id dell' oggetto GiftCard di cui si vogliono recuperare le informazioni
      * @return oggetto GiftCard con id fornito salvato nel database
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id_prodotto!=null
+     * @post gift=prodotto->select(p|p.id_prodotto=id_prodotto)
      */
     public GiftCard retrieveGiftCardByID(int id_prodotto) {
         GiftCard gift;
@@ -90,6 +93,8 @@ public class GiftCardManager {
      * @param gift oggetto GiftCard da salvare nel database
      * @return booleano che conferma il successo dell' operazione
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre gift.nome!=null&amp;&amp;gift.piattaforma!=null&amp;&amp;gift.descrizione!=null&amp;&amp;gift.prezzo!=null&amp;&amp;gift.foto!=null&amp;&amp;gift.isAvailable!=null&amp;&amp;!(prodotto->includes(gift))
+     * @post prodotto->includes(gift)
      */
     public boolean inserisciGiftCard(GiftCard gift) {
         try (Connection con = Manager.getConnection()) {
@@ -121,6 +126,8 @@ public class GiftCardManager {
      * @param gift oggetto GiftCard con le informazioni aggiornate
      * @return booleano che indica il successo dell' operazione
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre gift.nome!=null&amp;&amp;gift.piattaforma!=null&amp;&amp;gift.descrizione!=null&amp;&amp;gift.prezzo!=null&amp;&amp;gift.foto!=null&amp;&amp;gift.isAvailable!=null&amp;&amp;prodotto->exist(p|p.id_prodotto=gift.id_prodotto)
+     * @post prodotto->includes(gift)
      */
     public boolean aggiornaGiftCard(GiftCard gift) {
         try (Connection con = Manager.getConnection()) {
@@ -147,6 +154,8 @@ public class GiftCardManager {
      * @param id_prodotto id dell' oggetto GiftCard che si desidera non rendere visibile
      * @return booleano che indica il successo dell' operazione
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id_prodotto!=null&amp;&amp;prodotto->exist(p|p.id_prodotto=id_prodotto)
+     * @post !(prodotto->exist(p|p.id_prodotto=id_prodotto))
      */
     public boolean rimuoviGiftCard(int id_prodotto) {
         try (Connection con = Manager.getConnection()) {
@@ -165,6 +174,7 @@ public class GiftCardManager {
      *
      * @return intero che indica il numero di oggetti GiftCard salvati nel database
      * @throws RuntimeException genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post size=prodotto->count->asSet()
      */
     public int countAllGiftCard() {
         try (Connection con = Manager.getConnection()) {

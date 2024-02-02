@@ -22,6 +22,7 @@ public class UtenteManager extends Manager
      *
      * @return lista di tipo Utente contente tutti gli oggetti Utente presenti nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post utenti=utente->asSet()
      */
     public ArrayList<Utente> retrieveUtenti(){
         try(Connection con = Manager.getConnection()){
@@ -60,6 +61,8 @@ public class UtenteManager extends Manager
      * @param password password associata all' account utente di cui si vogliono ricavare il restante delle informazioni
      * @return oggetto Utente contenente tutte le informazioni relative all' account utente con i dati provvisti
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre username!=null,password!=null
+     * @post utente->select(u|u.username=username&amp;&amp;u.password=password)
      */
     public Utente retrieveUtentePass(String username, String password){
         try(Connection con = Manager.getConnection()){
@@ -97,6 +100,8 @@ public class UtenteManager extends Manager
      * @param id id dell' account utente di cui si vogliono recuperare le informazioni
      * @return oggetto Utente contenente le informazioni relative all' account utente con l' id fornito
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null
+     * @post u=utente->select(u|u.id=id)
      */
     public Utente retrieveUtente(int id){
         try(Connection con = Manager.getConnection()){
@@ -131,6 +136,8 @@ public class UtenteManager extends Manager
      * @param utente oggette Utente che si desidera salvare nel database
      * @return booleano che indica il successo dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre utente.email!=null&amp;&amp;utente.nome!=null&amp;&amp;utente.cognome!=null&amp;&amp;utente.username!=null&amp;&amp;utente.password!=null&amp;&amp;utente.indirizzo!=null&amp;&amp;utente.nazione!=null&amp;&amp;utente.citta!=null&amp;&amp;utente.cap!=null&amp;&amp;utente.data_nascita!=null&amp;&amp;utente.isadmin!=null&amp;&amp;!(utente->includes(utente))
+     * @post utente->includes(utente)
      */
     public boolean creaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
@@ -167,6 +174,8 @@ public class UtenteManager extends Manager
      * @param utente oggetto Utente con le informazioni aggiornate
      * @return booleano che indica il successo dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre utente.email!=null&amp;&amp;utente.nome!=null&amp;&amp;utente.cognome!=null&amp;&amp;utente.username!=null&amp;&amp;utente.password!=null&amp;&amp;utente.indirizzo!=null&amp;&amp;utente.nazione!=null&amp;&amp;utente.citta!=null&amp;&amp;utente.cap!=null&amp;&amp;utente.data_nascita!=null&amp;&amp;utente.isadmin!=null&amp;&amp;utente->exist(u|u.id=utente.id)
+     * @post utente->includes(utente)
      */
     public boolean aggiornaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
@@ -196,6 +205,8 @@ public class UtenteManager extends Manager
      * @param id id dell' account utente di cui si desiderano cancellare le informazioni
      * @return booleano che indica il successo dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null &amp;&amp; utente->exist(u|u.id=id)
+     * @post !(utente->exists(u|u.id=id))
      */
     public boolean cancellaUtente(int id){
         try(Connection con = Manager.getConnection()){
@@ -213,6 +224,7 @@ public class UtenteManager extends Manager
      *
      * @return intero che indica il numero di oggetti Utente salvati nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post size=utente->count->asSet()
      */
     public int countUsers (){
         try (Connection con = Manager.getConnection()) {

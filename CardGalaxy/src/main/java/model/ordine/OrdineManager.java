@@ -26,6 +26,7 @@ public class OrdineManager extends Manager {
      *
      * @return lista contenente tutti gli ordini presenti nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post ordini=ordine->asSet()
      */
     public ArrayList<Ordine> retrieveOrdini() {
         try (Connection con = Manager.getConnection()) {
@@ -54,6 +55,8 @@ public class OrdineManager extends Manager {
      * @param id id dell' utente di cui si vogliono ricavare gli ordini
      * @return lista degli ordini dell' utente passato in input
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null
+     * @post o=ordine->select(or|or.id_utente=id)->asSet()
      */
     public ArrayList<Ordine> retrieveOrdiniByUtente(int id) {
         try (Connection con = Manager.getConnection()) {
@@ -83,6 +86,8 @@ public class OrdineManager extends Manager {
      * @param id id dell' ordine di cui si vogliono recuperare i dettagli
      * @return oggetto ordine riempito con i dati relativi all'ordine con id passato in input
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null
+     * @post o=ordine->select(or|or.id_utente=id)
      */
     public Ordine retrieveOrdineById(int id) {
         try (Connection con = Manager.getConnection()) {
@@ -109,6 +114,7 @@ public class OrdineManager extends Manager {
      *
      * @return intero rappresentante il numero di ordini presenti nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post count=ordine->count->asSet()
      */
     public int contaOrdini() {
         try (Connection con = Manager.getConnection()) {
@@ -131,6 +137,8 @@ public class OrdineManager extends Manager {
      * @param ordine oggetto ordine da salvare nel database
      * @return booleano che conferma la riuscita dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre ordine.prezzo_totale!=null&amp;&amp;ordine.data_acquisto!=null&amp;&amp;dordine.id_utente&amp;&amp;!(ordine->includes(ordine))
+     * @post ordine->includes(ordine)
      */
     public boolean creaOrdine(Ordine ordine) {
         try (Connection con = Manager.getConnection()) {
@@ -158,6 +166,7 @@ public class OrdineManager extends Manager {
      *
      * @return id dell'ultimo ordine salavato nel database
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post lastId=ordine->select((max)id)
      */
     public int lastOrder() {
         try (Connection con = Manager.getConnection()) {
@@ -181,6 +190,8 @@ public class OrdineManager extends Manager {
      * @param codiceordine id dell'ordine di cui si voglio ottenere prodotti e rispettiva quantità
      * @return Hashtable di tipo GifCard,Integer con tutti i prodotti e la rispettiva quantità inerenti ad un ordine
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre codiceordine!=null
+     * @post prodotti=contenuto->select(c|c.id_ordine=codiceordine)->asSet()
      */
     public Hashtable<GiftCard, Integer> retriveProdotti(int codiceordine) {
         Hashtable<GiftCard, Integer> prodotti = new Hashtable<>();
@@ -214,6 +225,7 @@ public class OrdineManager extends Manager {
      *
      * @return valore double rappresentante la somma totale del prezzo degli ordini
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post guadagno=ordine->sum(prezzo_totale)
      */
     public double getGuadagno() {
         double guadagno = 0.0;
@@ -238,6 +250,8 @@ public class OrdineManager extends Manager {
      * @param idproduct intero che rappresenta l'id del prodotto di cui si deve aggiornare la quantità
      * @return booleano che conferma la riuscita dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre quantity!=null,idorder!=null,idproduct!=null
+     * @post contenuto->exist(c|c.id_ordine=idorder&amp;&amp;c.quantita=quantity&amp;&amp;c.id_prodotto=idproduct)
      */
     public boolean updateContenuto(int quantity, int idorder, int idproduct) {
         try (Connection con = Manager.getConnection()) {
@@ -258,6 +272,8 @@ public class OrdineManager extends Manager {
      * @param totale valore double cui si desidera aggiornare il totale dell' ordine
      * @return booleano che conferma la riuscita dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre totale!=null
+     * @post ordine->includes(ordine)
      */
     public boolean updateOrder(double totale) {
         try (Connection con = Manager.getConnection()) {
@@ -276,6 +292,8 @@ public class OrdineManager extends Manager {
      * @param id id dell'ordine che si desidera rimuovere dal database
      * @return booleano che conferma la riuscita dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null&amp;&amp;ordine->exist(o|o.id=id)
+     * @post !(ordine->exist(o|o.id=id))
      */
     public boolean removeOrder(int id){
         try(Connection con = Manager.getConnection()){
@@ -295,6 +313,8 @@ public class OrdineManager extends Manager {
      * @param items lista di oggetti CartItems che si vogliono salvare nell' ordine
      * @return booleano che conferma la riuscita dell' operazione
      * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre ordine->exist(o|o.id=id)&amp;&amp;items!=null
+     * @post contenuto->exist(c|c.id_ordine=ordine.id&amp;&amp;c.id_prodotto=items.giftCard.id_prodotto&amp;&amp;c.quantita=items.quantita)
      */
     public boolean saveContenuto(Ordine ordine, List<CartItems> items) {
         try (Connection con = Manager.getConnection()) {

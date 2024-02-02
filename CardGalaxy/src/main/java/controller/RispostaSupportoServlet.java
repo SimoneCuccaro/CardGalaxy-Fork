@@ -46,6 +46,7 @@ public class RispostaSupportoServlet extends Controller implements ErrorHandler 
      *
      */
     private UtenteManager utenteManager;
+
     public void init() throws ServletException{
         super.init();
         rispostaSupportoManager=new RispostaSupportoManager();

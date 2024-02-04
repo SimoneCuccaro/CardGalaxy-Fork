@@ -87,6 +87,20 @@ public class UtenteQuery extends TableQuery{
      */
     public String contaUtenti(){ return String.format("SELECT * FROM %s",this.table);}
 
+    /** Il metodo <code>contaUtenti</code> contiene la query usata per
+     * controllare se esiste già un oggetto Utente salvato nel database con uno specifico username
+     *
+     * @return  stringa contenente la query
+     */
+    public String checkUsername(){ return String.format("SELECT * FROM %s  order by username desc",this.table);}
+
+    /** Il metodo <code>contaUtenti</code> contiene la query usata per
+     * controllare se esiste già un oggetto Utente salvato nel database con una specifica email
+     *
+     * @return  stringa contenente la query
+     */
+    public String checkEmail(){ return String.format("SELECT * FROM %s order by email desc;",this.table);}
+
 
 }
 

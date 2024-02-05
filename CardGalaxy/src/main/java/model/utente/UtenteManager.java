@@ -242,4 +242,56 @@ public class UtenteManager extends Manager
             throw new RuntimeException(e);
         }
     }
+
+    /**Il metodo <code>checkUsername</code> consente di verificare la presenza di un username già
+     * in uso nel database
+     *
+     * @param username stringa che contiene l' username di cui verificare la presenza nel database
+     * @return booleano che indica la presenza o meno della stringa username nel database
+     * @pre username!=null
+     * @post true=utente->exist(u|u.username=username), false=!(utente->exist(u|u.username=username))
+     */
+    public boolean checkUsername(String username){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.checkUsername())) {
+                ResultSet set = ps.executeQuery();
+                String counter;
+                while (set.next()) {
+                    counter=set.getString("username");
+                    if(username.equalsIgnoreCase(counter))
+                        return true;
+                }
+                set.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**Il metodo <code>checkEmail</code> consente di verificare la presenza di una email già
+     * in uso nel database
+     *
+     * @param email stringa che contiene l' email di cui verificare la presenza nel database
+     * @return booleano che indica la presenza o meno della stringa email nel database
+     * @pre email!=null
+     * @post true=utente->exist(u|u.email=email), false=!(utente->exist(u|u.email=email))
+     */
+    public boolean checkEmail(String email){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.checkEmail())) {
+                ResultSet set = ps.executeQuery();
+                String counter;
+                while (set.next()) {
+                    counter=set.getString("email");
+                    if(email.equalsIgnoreCase(counter))
+                        return true;
+                }
+                set.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

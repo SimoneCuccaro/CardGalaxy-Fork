@@ -114,6 +114,13 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     // aggiungere alert di avvenuta operazione
                     request.setAttribute("back", "/WEB-INF/views/register.jsp");
                     validate(UtenteValidator.validateUtente(request));
+                    if(utenteManager.checkUsername(request.getParameter("user"))==true&&utenteManager.checkEmail(request.getParameter("email"))==true){
+                        throw new InvalidRequestException("Username e Email già in uso", List.of("Username e Email già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    } else if (utenteManager.checkUsername(request.getParameter("user"))==true&&utenteManager.checkEmail(request.getParameter("email"))==false){
+                        throw new InvalidRequestException("Username già in uso", List.of("Username già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    } else if (utenteManager.checkUsername(request.getParameter("user"))==false&&utenteManager.checkEmail(request.getParameter("email"))==true){
+                        throw new InvalidRequestException("Email già in uso", List.of("Email già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    }
                     Utente utente=new Utente();
                     utente.setEmail(request.getParameter("email"));
                     utente.setNome(request.getParameter("name"));
@@ -190,6 +197,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
             e.handle(request, response);
         }
     }
+
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -66,7 +66,7 @@ public class RichiestaSupportoManager {
                     request.setId_richiesta(rs.getInt("id_richiesta"));
                     request.setRichiesta(rs.getString("richiesta"));
                     request.setOggetto_richiesta(rs.getString("oggetto_richiesta"));
-                    request.setId_utente(Integer.parseInt(rs.getString("id_utente")));
+                    request.setId_utente(rs.getInt("id_utente"));
                 }
                 rs.close();
                 return request;

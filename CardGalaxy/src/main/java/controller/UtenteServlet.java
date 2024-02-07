@@ -103,6 +103,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     //effettuazione del logout
                     if(!getUtenteSession(request.getSession(false)).isAdmin()){
                         List<CartItems> items= (List<CartItems>) getSessionCart(request.getSession(false)).getItems();
+                        carrelloManager.rimuoviCarrelloUtente(getUtenteSession(request.getSession(false)).getId());
                         carrelloManager.saveToCart(getUtenteSession(request.getSession(false)).getId(),items);
                         session.removeAttribute("cart");
                     }

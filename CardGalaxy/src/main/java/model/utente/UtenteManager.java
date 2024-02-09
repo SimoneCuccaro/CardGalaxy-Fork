@@ -5,10 +5,25 @@ import model.storage.Manager;
 import java.sql.*;
 import java.util.ArrayList;
 
+/** Un oggetto <code>UtenteManager</code> serve a gestire la memorizzazione delle
+ * informazioni relative agli oggetti Utente all'interno del database
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 public class UtenteManager extends Manager
 {
     private static final UtenteQuery QUERY = new UtenteQuery("utente");
 
+    /**Il metodo <code>retrieveUtenti</code> viene usato per ricavare tutti gli oggetti di tipo Utente
+     * salvati nel database
+     *
+     * @return lista di tipo Utente contente tutti gli oggetti Utente presenti nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post utenti=utente->asSet()
+     */
     public ArrayList<Utente> retrieveUtenti(){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.tuttiUtenti())) {
@@ -39,6 +54,16 @@ public class UtenteManager extends Manager
     }
 
 
+    /**Il metodo <code>retrieveUtentePass</code> serve a ricavare le informazioni relative ad un utente
+     * a partire dal suo username e dalla sua password
+     *
+     * @param username username associato all' account utente di cui si vogliono ricavare il restante delle informazioni
+     * @param password password associata all' account utente di cui si vogliono ricavare il restante delle informazioni
+     * @return oggetto Utente contenente tutte le informazioni relative all' account utente con i dati provvisti
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre username!=null,password!=null
+     * @post utente->select(u|u.username=username&amp;&amp;u.password=password)
+     */
     public Utente retrieveUtentePass(String username, String password){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.singoloUtenteConPass())) {
@@ -69,6 +94,15 @@ public class UtenteManager extends Manager
         }
     }
 
+    /**Il metodo <code>retrieveUtente</code> serve ad ottenere le informazioni relative ad un account utente
+     * con un determinato id
+     *
+     * @param id id dell' account utente di cui si vogliono recuperare le informazioni
+     * @return oggetto Utente contenente le informazioni relative all' account utente con l' id fornito
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null
+     * @post u=utente->select(u|u.id=id)
+     */
     public Utente retrieveUtente(int id){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.singoloUtente())) {
@@ -97,6 +131,14 @@ public class UtenteManager extends Manager
         }
     }
 
+    /**Il metodo <code>creaUtente</code> consente di salvare un oggetto Utente all' interno del database
+     *
+     * @param utente oggette Utente che si desidera salvare nel database
+     * @return booleano che indica il successo dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre utente.email!=null&amp;&amp;utente.nome!=null&amp;&amp;utente.cognome!=null&amp;&amp;utente.username!=null&amp;&amp;utente.password!=null&amp;&amp;utente.indirizzo!=null&amp;&amp;utente.nazione!=null&amp;&amp;utente.citta!=null&amp;&amp;utente.cap!=null&amp;&amp;utente.data_nascita!=null&amp;&amp;utente.isadmin!=null&amp;&amp;!(utente->includes(utente))
+     * @post utente->includes(utente)
+     */
     public boolean creaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.inserisciUtente(),Statement.RETURN_GENERATED_KEYS)){
@@ -126,6 +168,15 @@ public class UtenteManager extends Manager
         }
     }
 
+    /**Il metodo <code>aggiornaUtente</code> consente di aggiornare le informazioni relative ad un account utente
+     * salvato all' interno del databse
+     *
+     * @param utente oggetto Utente con le informazioni aggiornate
+     * @return booleano che indica il successo dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre utente.email!=null&amp;&amp;utente.nome!=null&amp;&amp;utente.cognome!=null&amp;&amp;utente.username!=null&amp;&amp;utente.password!=null&amp;&amp;utente.indirizzo!=null&amp;&amp;utente.nazione!=null&amp;&amp;utente.citta!=null&amp;&amp;utente.cap!=null&amp;&amp;utente.data_nascita!=null&amp;&amp;utente.isadmin!=null&amp;&amp;utente->exist(u|u.id=utente.id)
+     * @post utente->includes(utente)
+     */
     public boolean aggiornaUtente(Utente utente){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.aggiornaUtente())){
@@ -149,12 +200,95 @@ public class UtenteManager extends Manager
         }
     }
 
+    /**Il metodo <code>cancellaUtente</code> consente di rimuovere un oggetto Utente dal database
+     *
+     * @param id id dell' account utente di cui si desiderano cancellare le informazioni
+     * @return booleano che indica il successo dell' operazione
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @pre id!=null &amp;&amp; utente->exist(u|u.id=id)
+     * @post !(utente->exists(u|u.id=id))
+     */
     public boolean cancellaUtente(int id){
         try(Connection con = Manager.getConnection()){
             try(PreparedStatement ps = con.prepareStatement(QUERY.eliminaUtente())){
                 ps.setInt(1,id);
                 ps.executeUpdate();
                 return true;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**Il metodo <code>countUsers</code> consente di contare quanti oggetti Utente sono salvati nel database
+     *
+     * @return intero che indica il numero di oggetti Utente salvati nel database
+     * @throws RuntimeException  genera una RuntimeException con un messaggio e relativo ad errori SQL
+     * @post size=utente->count->asSet()
+     */
+    public int countUsers (){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.contaUtenti())) {
+                ResultSet resultSet = ps.executeQuery();
+                int size = 0;
+                while (resultSet.next()) {
+                    if(!resultSet.getBoolean("is_admin")){
+                        size++;
+                    }
+                }
+                return size;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**Il metodo <code>checkUsername</code> consente di verificare la presenza di un username già
+     * in uso nel database
+     *
+     * @param username stringa che contiene l' username di cui verificare la presenza nel database
+     * @return booleano che indica la presenza o meno della stringa username nel database
+     * @pre username!=null
+     * @post true=utente->exist(u|u.username=username), false=!(utente->exist(u|u.username=username))
+     */
+    public boolean checkUsername(String username){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.checkUsername())) {
+                ResultSet set = ps.executeQuery();
+                String counter;
+                while (set.next()) {
+                    counter=set.getString("username");
+                    if(username.equalsIgnoreCase(counter))
+                        return true;
+                }
+                set.close();
+                return false;
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**Il metodo <code>checkEmail</code> consente di verificare la presenza di una email già
+     * in uso nel database
+     *
+     * @param email stringa che contiene l' email di cui verificare la presenza nel database
+     * @return booleano che indica la presenza o meno della stringa email nel database
+     * @pre email!=null
+     * @post true=utente->exist(u|u.email=email), false=!(utente->exist(u|u.email=email))
+     */
+    public boolean checkEmail(String email){
+        try (Connection con = Manager.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement(QUERY.checkEmail())) {
+                ResultSet set = ps.executeQuery();
+                String counter;
+                while (set.next()) {
+                    counter=set.getString("email");
+                    if(email.equalsIgnoreCase(counter))
+                        return true;
+                }
+                set.close();
+                return false;
             }
         }catch (SQLException e) {
             throw new RuntimeException(e);

@@ -2,32 +2,70 @@ package controller;
 
 import jakarta.servlet.annotation.MultipartConfig;
 import model.Controller;
+import model.carrello.Carrello;
+import model.carrello.CarrelloManager;
+import model.carrello.CarrelloSession;
+import model.carrello.CartItems;
 import model.errors.InvalidRequestException;
 import model.errors.ErrorHandler;
+import model.ordine.OrdineManager;
+import model.prodotto.GiftCard;
+import model.prodotto.GiftCardManager;
 import model.utente.Utente;
 import model.utente.UtenteManager;
 import model.utente.UtenteSession;
 import model.validator.UtenteValidator;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 
+/**La classe <code>UtenteServlet</code> rappresenta la servlet che gestisce gli oggetti di tipo Utente
+ * e le loro iterazioni con le interfaccie utente
+ *
+ * @author Giulio Palladino
+ * @author Simone Cuccaro
+ * @author Gianluca Trani
+ * @author Francesco Venuto
+ */
 @WebServlet(name = "UtenteServlet", value = "/user/*")
 @MultipartConfig
 public class UtenteServlet extends Controller implements ErrorHandler{
 
+    /**Oggetto di tipo UtenteManager usato per la gestione degli utenti all' interno della servlet
+     *
+     */
     private UtenteManager utenteManager;
+
+    /**Oggetto di tipo OrdineManager usato per la gestione degli ordini all' interno della servlet
+     *
+     */
+    private OrdineManager ordineManager;
+
+    /**Oggetto di tipo GiftCardManager usato per la gestione delle GiftCard all' interno della servlet
+     *
+     */
+    private GiftCardManager giftCardManager;
+
+    /**Oggetto di tipo CarrelloManager usato per la gestione del carrello all' interno della servlet
+     *
+     */
+    private CarrelloManager carrelloManager;
 
     public void init()throws ServletException{
         super.init();
         utenteManager=new UtenteManager();
+        ordineManager = new OrdineManager();
+        giftCardManager = new GiftCardManager();
+        carrelloManager=new CarrelloManager();
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -47,8 +85,14 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                         UtenteSession utenteSession = new UtenteSession(tmpUtente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
                         if (utenteSession.isAdmin()) {
+                            Boolean adminString=true;
+                            request.getSession(false).setAttribute("adminString",adminString);
                             response.sendRedirect(contextPath + "/user/admin");
                         } else {
+                            Boolean userString=true;
+                            request.getSession(false).setAttribute("loginString",userString);
+                            CarrelloSession cart=new CarrelloSession(carrelloManager.retrieveCarrelloByUtente(utenteSession.getId()));
+                            request.getSession(false).setAttribute("cart",cart);
                             response.sendRedirect(contextPath + "/user/profile");
                         }
                     } else {
@@ -57,6 +101,12 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                 break;
                 case "/logout":
                     //effettuazione del logout
+                    if(!getUtenteSession(request.getSession(false)).isAdmin()){
+                        List<CartItems> items= (List<CartItems>) getSessionCart(request.getSession(false)).getItems();
+                        carrelloManager.rimuoviCarrelloUtente(getUtenteSession(request.getSession(false)).getId());
+                        carrelloManager.saveToCart(getUtenteSession(request.getSession(false)).getId(),items);
+                        session.removeAttribute("cart");
+                    }
                     session.removeAttribute("utenteSession");
                     session.invalidate();
                     response.sendRedirect(contextPath + "/user/home");
@@ -65,6 +115,13 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     // aggiungere alert di avvenuta operazione
                     request.setAttribute("back", "/WEB-INF/views/register.jsp");
                     validate(UtenteValidator.validateUtente(request));
+                    if(utenteManager.checkUsername(request.getParameter("user"))==true&&utenteManager.checkEmail(request.getParameter("email"))==true){
+                        throw new InvalidRequestException("Username e Email già in uso", List.of("Username e Email già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    } else if (utenteManager.checkUsername(request.getParameter("user"))==true&&utenteManager.checkEmail(request.getParameter("email"))==false){
+                        throw new InvalidRequestException("Username già in uso", List.of("Username già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    } else if (utenteManager.checkUsername(request.getParameter("user"))==false&&utenteManager.checkEmail(request.getParameter("email"))==true){
+                        throw new InvalidRequestException("Email già in uso", List.of("Email già in uso"), HttpServletResponse.SC_BAD_REQUEST);
+                    }
                     Utente utente=new Utente();
                     utente.setEmail(request.getParameter("email"));
                     utente.setNome(request.getParameter("name"));
@@ -81,7 +138,11 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     if(utente!=null){
                         UtenteSession utenteSession = new UtenteSession(utente);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect(contextPath + "/user/home");
+                        CarrelloSession cart=new CarrelloSession();
+                        request.getSession(false).setAttribute("cart",cart);
+                        Boolean userString=true;
+                        request.getSession(false).setAttribute("registerString",userString);
+                        response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
                     }
@@ -104,26 +165,29 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                     u.setAdmin(false);
                     u.setId(getUtenteSession(session).getId());
                     utenteManager.aggiornaUtente(u);
+                    request.getSession(false).removeAttribute("user");
                     if(u!=null){
                         UtenteSession utenteSession = new UtenteSession(u);
                         request.getSession(true).setAttribute("utenteSession", utenteSession);
-                        response.sendRedirect(contextPath + "/user/home");
+                        Boolean updateString=true;
+                        request.getSession(false).setAttribute("updateString",updateString);
+                        response.sendRedirect(contextPath + "/user/profile");
                     }else{
                         internalError();
                     }
                     break;
                 case "/delete":
-                    // aggiungere alert di avvenuta operazione
-                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
                     utenteManager.cancellaUtente(getUtenteSession(session).getId());
                     session.removeAttribute("utenteSession");
-                    session.invalidate();
-                    response.sendRedirect(contextPath + "/user/home");
+                    session.removeAttribute("cart");
+                    Boolean deleteString=true;
+                    request.getSession(false).setAttribute("deleteString",deleteString);
+                    response.sendRedirect(contextPath + "/user/login");
                     break;
                 case "/remove":
-                    // aggiungere alert di avvenuta operazione
-                    // rimozione ordini utente, rimozione contenuto ordine, rimozione recensione + richieste supporto & risp supporto
                     utenteManager.cancellaUtente(Integer.parseInt(request.getParameter("customerid")));
+                    Boolean removeString=true;
+                    request.getSession(false).setAttribute("removeString",removeString);
                     response.sendRedirect(contextPath + "/user/showallusers");
                      break;
                 default:
@@ -134,6 +198,7 @@ public class UtenteServlet extends Controller implements ErrorHandler{
             e.handle(request, response);
         }
     }
+
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -155,25 +220,36 @@ public class UtenteServlet extends Controller implements ErrorHandler{
                             break;
                         case "/admin":
                             //pagina iniziale admin
+                            authorize(request.getSession(false));
+                            Integer allUsers = utenteManager.countUsers();
+                            Double allProfits = ordineManager.getGuadagno();
+                            Integer allCards = giftCardManager.countAllGiftCard();
+                            request.setAttribute("countUsers",allUsers);
+                            request.setAttribute("countProfits",allProfits);
+                            request.setAttribute("countCards",allCards);
                             request.getRequestDispatcher("/WEB-INF/admin-views/dashboard.jsp").forward(request, response);
                             break;
                         case "/profile":
                             //click su pagina personale
+                            authenticate(request.getSession(false));
                             request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
                             break;
                         case "/details":
                             //click su dettagli account(utente)
+                            authenticate(request.getSession(false));
                             Utente u = utenteManager.retrieveUtente(getUtenteSession(session).getId());
                             request.setAttribute("user",u);
                             request.getRequestDispatcher("/WEB-INF/views/accountdetails.jsp").forward(request, response);
                             break;
                         case "/modify":
                             //click su modifica account(utente)
+                            authenticate(request.getSession(false));
                             Utente ut = utenteManager.retrieveUtente(getUtenteSession(session).getId());
-                            request.setAttribute("user",ut);
+                            request.getSession(false).setAttribute("user",ut);
                             request.getRequestDispatcher("/WEB-INF/views/editaccount.jsp").forward(request, response);
                             break;
                         case "/showallusers":
+                            authorize(request.getSession(false));
                             ArrayList<Utente> utenti = utenteManager.retrieveUtenti();
                             utenti.removeIf(Utente::is_admin);
                             request.setAttribute("customers",utenti);

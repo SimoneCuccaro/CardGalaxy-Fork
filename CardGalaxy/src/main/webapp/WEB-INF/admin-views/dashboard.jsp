@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/admin.css">
     <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/statscard.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/CSS/alert.css">
     <title>Admin Dashboard</title>
     <%@include file="../utils/head.jsp"%>
 </head>
@@ -11,6 +12,12 @@
 <%@include file="../partials/adminsidebar.jsp"%>
 <main class="app">
     <div class="content align-center">
+        <c:if test="${sessionScope.adminString==true}">
+            <jsp:include page="../utils/goodAlert.jsp">
+                <jsp:param name="message" value="Welcome Admin"/>
+            </jsp:include>
+            <% request.getSession(false).removeAttribute("adminString"); %>
+        </c:if>
         <h1> General Stats </h1>
         <div class="cards">
             <div class="card">
@@ -20,7 +27,7 @@
                         Galaxy Profits
                     </p>
                     <p class="card-description">
-                        500€
+                        ${countProfits}&euro;
                     </p>
                 </div>
             </div>
@@ -33,7 +40,7 @@
                         Galaxy Customers
                     </p>
                     <p class="card-description">
-                        30
+                        ${countUsers}
                     </p>
                 </div>
             </div>
@@ -46,7 +53,7 @@
                         Galaxy Cards
                     </p>
                     <p class="card-description">
-                        54
+                        ${countCards}
                     </p>
                 </div>
             </div>

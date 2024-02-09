@@ -5,6 +5,9 @@
 .notification.success {
     background-color: green;
 }
+.notification.info{
+    background-color: blueviolet;
+}
 .notification .close{
     position: absolute;
     top:10px;
@@ -23,4 +26,5 @@
     padding:20px;
     margin-bottom: 10px;
     font-size: 20px;
+    font-family: "Agency FB", serif;
 }

@@ -7,7 +7,7 @@
         <a href="${contextPath}/user/showallusers"> Manage Customers </a>
         <a href="${contextPath}/products/showall"> Manage Products </a>
         <a href="${contextPath}/reviews/managereviews"> Manage Reviews </a>
-        <a href="#"> Manage Orders </a>
+        <a href="${contextPath}/orders/manageorders"> Manage Orders </a>
         <a href="${contextPath}/help/showall"> Help Requests </a>
     </nav>
 </aside>

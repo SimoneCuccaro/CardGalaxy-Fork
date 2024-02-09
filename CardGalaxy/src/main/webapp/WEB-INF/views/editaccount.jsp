@@ -21,12 +21,12 @@
       </c:if>
       <span> Email : </span>
       <label for="emailid">
-        <input class="larger" type="email" name="email" id="emailid" value="${user.email}"  required>
+        <input class="larger" type="email" name="email" id="emailid" value="${sessionScope.user.email}"  required>
       </label>
       <br>
       <span> Username : </span>
       <label for="userid">
-        <input class="larger" type="text" name="user" id="userid" value="${user.username}" required>
+        <input class="larger" type="text" name="user" id="userid" value="${sessionScope.user.username}" required>
       </label>
       <br>
       <span> Password : </span>
@@ -36,37 +36,37 @@
       <br>
       <span> Name : </span>
       <label for="nameid">
-        <input class="larger" type="text" name="name" id="nameid" value="${user.nome}" required>
+        <input class="larger" type="text" name="name" id="nameid" value="${sessionScope.user.nome}" required>
       </label>
       <br>
       <span> Surname : </span>
       <label for="surnameid">
-        <input class="larger" type="text" name="surname" id="surnameid" value="${user.cognome}" required>
+        <input class="larger" type="text" name="surname" id="surnameid" value="${sessionScope.user.cognome}" required>
       </label>
       <br>
       <span> Address : </span>
       <label for="addressid">
-        <input class="larger" type="text" name="address" id="addressid" value="${user.indirizzo}" required>
+        <input class="larger" type="text" name="address" id="addressid" value="${sessionScope.user.indirizzo}" required>
       </label>
       <br>
       <span> Nation : </span>
       <label for="nationid">
-        <input class="larger" type="text" name="nation" id="nationid" value="${user.nazione}" required>
+        <input class="larger" type="text" name="nation" id="nationid" value="${sessionScope.user.nazione}" required>
       </label>
       <br>
       <span> City : </span>
       <label for="cityid">
-        <input class="larger" type="text" name="city" id="cityid" value="${user.citta}" required>
+        <input class="larger" type="text" name="city" id="cityid" value="${sessionScope.user.citta}" required>
       </label>
       <br>
       <span> CAP : </span>
       <label for="capid">
-        <input class="larger" type="number" name="cap" id="capid" value="${user.cap}" required>
+        <input class="larger" type="number" name="cap" id="capid" value="${sessionScope.user.cap}" required>
       </label>
       <br>
       <span> Date of Birth : </span>
       <label for="bdayid">
-        <input class="larger" type="date" min="1923-01-01" max="2005-01-01" name="bday" id="bdayid" value="${user.data_nascita}" required>
+        <input class="larger" type="date" min="1923-01-01" max="2005-01-01" name="bday" id="bdayid" value="${sessionScope.user.data_nascita}" required>
       </label>
       <br>
       <button class="button" type="submit"> EDIT DETAILS </button>
